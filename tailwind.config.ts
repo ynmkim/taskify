@@ -19,7 +19,7 @@ const config = {
     },
     extend: {
       fontFamily: {
-        Pretendard: 'pre',
+        Pretendard: 'Pretendard',
       },
       colors: {
         border: "hsl(var(--border))",
@@ -78,11 +78,6 @@ const config = {
         'orange-FFA500': '#FFA500',
         'blue-76A6EA': '#76A5EA',
         'pink-E876EA': '#E876EA',
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
         "accordion-down": {
