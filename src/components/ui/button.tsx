@@ -9,15 +9,18 @@ const buttonVariants = cva(
   {
     variants: {
       text: {
-        default: 'text-violet-5534DA text-sm',
-        login: 'text-white text-lg',
-        confirm: 'text-gray-787486 text-[21px] md:text-[25px] lg:text-[28px]',
+        default: 'text-violet-5534DA text-[14px]',
+        login: 'text-white text-[18px]',
+        modal: 'text-gray-787486 text-[14px] lg:text-[16px]',
+        delete: 'text-violet-5534DA text-[12px] lg:text-[14px]',
+        input: 'text-violet-5534DA text-[12px]',
       },
       size: {
-        default: 'w-[109PX] h-7 md:w-[72px] md:[30px] lg:[84px] lg:h-8',
-        login: 'w-[351px] h-[50px] lg:w-[520px]',
-        confirm: 'w-[138px] h-[42px] lg:w-[120px] lg:h-12 ',
-        delete: 'w-[52px] h-7 lg:w-[82px] lg:h-8',
+        default: 'px-[37px] py-[7px] md:px-[23px] lg:px-[29px]',
+        login: 'px-[152px] py-[14px] lg:px-[236px]',
+        modal: 'px-14 py-[12px] lg:px-[46px] lg:py-[14px] ',
+        delete: 'px-[9px] py-[7px] lg:px-[29px]',
+        input: 'px-[31px] py-[9px]',
       },
       variant: {
         default: 'bg-white border border-gray-D9D9D9',
