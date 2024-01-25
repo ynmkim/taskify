@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
@@ -18,9 +18,6 @@ const config = {
       },
     },
     extend: {
-      fontFamily: {
-        Pretendard: 'pre',
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -55,29 +52,7 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        black: {
-          '000000': '#000000',
-          '171717': '#171717',
-          '333236': '#333236',
-          '4B4B4B': '#4B4B4B',
-        },
-        gray: {
-          '787486': '#787486',
-          '9FA6B2': '#9FA6B2',
-          'D9D9D9': '#D9D9D9',
-          'EEEEEE': '#EEEEEE',
-          'FAFAFA': '#FAFAFA',
-        },
-        violet: {
-          '5534DA': '#5534DA',
-          '8%': '#F1EFFD',
-        },
-        'red-D6173A': '#D6173A',
-        'green-7AC555': '#7AC555',
-        'purple-760DDE': '#760DDE',
-        'orange-FFA500': '#FFA500',
-        'blue-76A6EA': '#76A5EA',
-        'pink-E876EA': '#E876EA',
+        'pink-d25b68': '#D25B68',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -97,6 +72,14 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      backgroundColor: {
+        'pink-f4d7da': '#F4D7DA',
+        'orange-ffc85a': '#FFC85A',
+        'yellow-fdd446': '#FDD446',
+        'blue-9dd7ed': '#9DD7ED',
+        'brown-c4b1a2': '#C4B1A2',
+        'green-a3c4a2': '#A3C4A2',
       },
     },
   },
