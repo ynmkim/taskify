@@ -1,5 +1,9 @@
+import { Button } from '@/components/ui/button';
+
 export default function Home() {
   return (
-    <h2 className="flex text-9xl border bg-amber-300">HELLO</h2>
+    <Button size="delete" className=" h-">
+      로그인
+    </Button>
   );
 }
