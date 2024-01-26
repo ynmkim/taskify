@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    font-family: Inter, Pretendard, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    
+    font-family: Pretendard, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -71,6 +71,6 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gray-fafafa text-foreground;
   }
 }
