@@ -13,8 +13,8 @@ const TodoCard = ({image = false}:{image?:boolean}) => {
       <div className="flex flex-col gap-2.5">
         <p className="font-Pretendard font-medium text-black-333236">새로운 일정 관리</p>
         <div className="flex gap-1.5">
-          <Chip variant="primary" size="large" color="orange">프로젝트</Chip>
-          <Chip variant="primary" size="large" color="pink">백엔드</Chip>
+          <Chip variant="basic" size="large" color="orange">프로젝트</Chip>
+          <Chip variant="basic" size="large" color="pink">백엔드</Chip>
         </div>
       </div>
       <div className="flex w-[274px] justify-between">

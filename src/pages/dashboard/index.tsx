@@ -1,15 +1,16 @@
-import AddTodoButton from "@/components/domains/dashboard/column/AddTodoButton";
-import TodoCard from "@/components/domains/dashboard/column/TodoCard";
+import AddColumnButton from "@/components/domains/dashboard/column/AddColumnButton";
 import SideBar from "@/components/domains/dashboard/sidebar/SideBar";
+import Column from "@/containers/Column";
 
 export default function DashboardPage() {
   return (
-    <div className="flex gap-6">
+    <div className="flex">
       <SideBar />
-      <div className="flex flex-col gap-4 bg-gray-FAFAFA">
-        <AddTodoButton />
-        <TodoCard />
-        <TodoCard image={true}/>
+      <div className="flex flex-col lg:flex-row">
+        <Column />
+        <Column />
+        <Column />
+        <AddColumnButton />
       </div>
     </div>
   );
