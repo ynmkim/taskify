@@ -12,7 +12,7 @@ const SideBar = () => {
       </div>
       <div className="w-full flex flex-col gap-[18px]">
         <div className="flex items-center w-full justify-between px-6">
-          <p className="text-xs font-bold text-gray-787486">Dash Boards</p>
+          <p className="text-xs font-bold text-gray-787486 hidden md:block">Dash Boards</p>
           <button className="w-5 h-5 flex items-center justify-center"><FiPlusSquare className=" text-gray-787486"/></button>
         </div>
         <ul className="px-3 flex flex-col gap-[3px]">

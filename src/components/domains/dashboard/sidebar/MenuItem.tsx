@@ -9,7 +9,7 @@ const MenuItem = ({children, link}: {children:ReactNode, link:number}) => {
     <li className="rounded px-3">
       <Link href={`/dashboard/${link}`} className="py-3 flex items-center gap-4">
         <div className="w-2 h-2 rounded-full bg-green-7AC555" />
-        <div className="flex items-center gap-[6px]">
+        <div className="hidden md:flex items-center gap-[6px]">
           <p className="font-Pretendard text-lg font-medium text-gray-787486">
             {children}
           </p>
