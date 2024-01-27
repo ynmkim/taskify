@@ -11,6 +11,7 @@
     url('../../public/assets/fonts/Pretendard-Regular.woff') format('woff'),
     url('../../public/assets/fonts/Pretendard-Regular.woff2') format('woff2');
 }
+
 @font-face {
   font-family: Pretendard;
   font-weight: 500;
@@ -20,6 +21,7 @@
     url('../../public/assets/fonts/Pretendard-Medium.woff') format('woff'),
     url('../../public/assets/fonts/Pretendard-Medium.woff2') format('woff2');
 }
+
 @font-face {
   font-family: Pretendard;
   font-weight: 700;
