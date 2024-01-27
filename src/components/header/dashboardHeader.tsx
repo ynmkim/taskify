@@ -5,18 +5,8 @@ import GroupAvatar from '@/components/ui/avatarGroup';
 import { FaCrown } from "react-icons/fa";
 import { MdOutlineSettings } from "react-icons/md";
 import { FaRegSquarePlus } from "react-icons/fa6";
+import { Member } from '@/types/DashboardType';
 
-
-interface Member {
-  id: number;
-  userId: number;
-  email: string;
-  nickname: string;
-  profileImageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-  isOwner: boolean;
-}
 // 나중에 api연동하면 삭제될 임시 데이터입니다.
 const userData = {
   nickname: 'dongbin',
@@ -72,6 +62,22 @@ const members = [
   }
 ];
 
+const SlotSection = ({members}:{members:Member[]}) =>{
+  return(
+    <>
+      <nav className="flex flex-row items-center gap-4 mr-10">
+        <Button className='text-gray-787486 flex align-middle gap-2 w-[88px]'>
+          <span><MdOutlineSettings className="w-5 h-5" /></span><span>관리</span>
+        </Button>
+        <Button className='text-gray-787486 flex align-middle gap-2 w-[116px]'>
+          <span><FaRegSquarePlus className="w-5 h-5" /></span><span>초대하기</span>
+        </Button>
+      </nav>
+      <GroupAvatar members={members} totalCount={members.length} />
+      <div className='w-px h-[38px] mx-8 bg-gray-D9D9D9'/>
+    </>
+  )
+};
 
 const DashboardHeader: React.FC<{ columnName: string, type?: string }> = ({ columnName, type }) => {
   const isDashboard = type === 'myDashboard';
@@ -93,23 +99,6 @@ const DashboardHeader: React.FC<{ columnName: string, type?: string }> = ({ colu
       </div>
     </header>
   );
-};
-
-const SlotSection = ({members}:{members:Member[]}) =>{
-  return(
-    <>
-      <nav className="flex flex-row items-center gap-4 mr-10">
-        <Button className='text-gray-787486 flex align-middle gap-2 w-[88px]'>
-          <span><MdOutlineSettings className="w-5 h-5" /></span><span>관리</span>
-        </Button>
-        <Button className='text-gray-787486 flex align-middle gap-2 w-[116px]'>
-          <span><FaRegSquarePlus className="w-5 h-5" /></span><span>초대하기</span>
-        </Button>
-      </nav>
-      <GroupAvatar members={members} totalCount={members.length} />
-      <div className='w-px h-[38px] mx-8 bg-gray-D9D9D9'/>
-    </>
-  )
 };
 
 export default DashboardHeader;

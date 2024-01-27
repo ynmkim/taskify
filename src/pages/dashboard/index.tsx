@@ -1,6 +1,6 @@
 import AddColumnButton from "@/components/domains/dashboard/column/AddColumnButton";
 import SideBar from "@/components/domains/dashboard/sidebar/SideBar";
-import DashboardHeader from "@/components/header/DashboardHeader";
+import DashboardHeader from "@/components/header/dashboardHeader";
 import Column from "@/containers/Column";
 
 export default function DashboardPage() {
