@@ -12,4 +12,13 @@ export interface CustomInputProps {
   id?: string;
   labelContext?: string;
   placeholder?: string;
+  isError?: boolean;
+}
+
+export interface FormData {
+  email: string;
+  password: string;
+  passwordConfirm?: string;
+  nickname?: string;
+  agreement?: boolean;
 }
