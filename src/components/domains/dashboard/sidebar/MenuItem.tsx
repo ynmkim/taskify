@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import { FaCrown } from "react-icons/fa";
 
 const MenuItem = ({children, link}: {children:ReactNode, link:number}) => {
 
   return(
-    <li className="rounded pl-3 py-3">
+    <li className="rounded px-3 md:pl-3 md:pr-0 py-3">
       <Link href={`/dashboard/${link}`} className="flex items-center gap-4 justify-center md:justify-normal">
         <div className="w-2 h-2 rounded-full bg-green-7AC555" />
         <div className="hidden md:flex items-center gap-1 lg:gap-1.5">
@@ -14,7 +13,7 @@ const MenuItem = ({children, link}: {children:ReactNode, link:number}) => {
             {children}
           </p>
           <div>
-            <FaCrown fill="#FDD446"/>
+            <FaCrown className="w-[15px] h-3 lg:w-[17.6px] lg:h-[14px]" fill="#FDD446"/>
           </div>
         </div>
       </Link>
