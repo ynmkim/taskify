@@ -29,9 +29,9 @@ export interface TagProps
   color?: 'orange' | 'green' | 'pink' | 'blue';
 }
 
-function Chip({ className, color, size = 'large', ...props }: TagProps) {
+function Chip({ className,variant, color, size = 'large', ...props }: TagProps) {
   return (
-    <div className={cn(tagVariants({ color, size }), className)} {...props} />
+    <div className={cn(tagVariants({ variant, color, size }), className)} {...props} />
   );
 }
 
