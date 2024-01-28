@@ -6,33 +6,51 @@ import CustomInput from '@/components/auth/input/CustomInput';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
+import useSignUp from '@/hooks/useSignUp';
 
 export default function SignUp() {
   const [isChecked, setIsChecked] = useState(false);
+  // const [isActive, setIsActive] = useState(false);
 
   const {
     register,
     formState: { errors, isValid },
     watch,
     setValue,
+    // setError,
+    // clearErrors,
     handleSubmit,
   } = useForm<FormData>({
     mode: 'onBlur',
   });
 
   const userPwInput = watch('password');
+  // const agreement = watch('agreement');
 
   const handleAgreement = () => {
+    // if (agreement) {
+    //   setError('agreement', {
+    //     type: 'custom',
+    //     message: '이용약관에 동의해 주세요.',
+    //   });
+    // } else clearErrors();
     setIsChecked((prev) => !prev);
   };
 
+  const signUp = useSignUp();
+
   const handleSignUp = (data: FormData) => {
-    console.log(data);
+    signUp(data);
   };
 
   useEffect(() => {
     setValue('agreement', isChecked);
-  }, [isChecked]);
+  }, [isChecked, setValue]);
+
+  // useEffect(() => {
+  //   setIsActive(isValid && agreement ? true : false);
+  //   console.log(isValid, agreement);
+  // }, [isValid, agreement]);
 
   return (
     <div className="container flex flex-col items-center">
@@ -134,7 +152,6 @@ export default function SignUp() {
                 onClick={handleAgreement}
                 checked={isChecked}
               />
-
               <div>이용약관에 동의합니다.</div>
             </label>
             {errors.agreement && (
