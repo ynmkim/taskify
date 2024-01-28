@@ -7,10 +7,6 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
   ({ inputType, id, labelContext, placeholder, isError, ...props }, ref) => {
     const [isBlind, setIsBlind] = useState(true);
 
-    const handlePasswordBlind = () => {
-      setIsBlind((prev) => !prev);
-    };
-
     let type, autoComplete;
 
     switch (inputType) {
@@ -29,6 +25,10 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
       default:
         break;
     }
+
+    const handlePasswordBlind = () => {
+      setIsBlind((prev) => !prev);
+    };
 
     return (
       <div className="grid w-full items-center gap-1.5 text-black-333236">

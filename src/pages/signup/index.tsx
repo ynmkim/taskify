@@ -10,30 +10,22 @@ import useSignUp from '@/hooks/useSignUp';
 
 export default function SignUp() {
   const [isChecked, setIsChecked] = useState(false);
-  // const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   const {
     register,
     formState: { errors, isValid },
     watch,
     setValue,
-    // setError,
-    // clearErrors,
     handleSubmit,
   } = useForm<FormData>({
     mode: 'onBlur',
   });
 
   const userPwInput = watch('password');
-  // const agreement = watch('agreement');
+  const agreement = watch('agreement');
 
   const handleAgreement = () => {
-    // if (agreement) {
-    //   setError('agreement', {
-    //     type: 'custom',
-    //     message: '이용약관에 동의해 주세요.',
-    //   });
-    // } else clearErrors();
     setIsChecked((prev) => !prev);
   };
 
@@ -43,14 +35,22 @@ export default function SignUp() {
     signUp(data);
   };
 
+  const onSubmit = (data: FormData) => {
+    if (isActive) {
+      handleSignUp(data);
+    } else {
+      alert('이용약관에 동의해 주세요.');
+    }
+  };
+
   useEffect(() => {
     setValue('agreement', isChecked);
   }, [isChecked, setValue]);
 
-  // useEffect(() => {
-  //   setIsActive(isValid && agreement ? true : false);
-  //   console.log(isValid, agreement);
-  // }, [isValid, agreement]);
+  useEffect(() => {
+    setIsActive(isValid && agreement ? true : false);
+    // console.log(isValid, agreement, isActive);
+  }, [isValid, agreement, isActive]);
 
   return (
     <div className="container flex flex-col items-center">
@@ -65,7 +65,7 @@ export default function SignUp() {
       </div>
 
       <div className="flex flex-col items-center w-[351px] sm:w-[520px]">
-        <form className="flex flex-col items-center w-full mt-9 gap-4" onSubmit={handleSubmit(handleSignUp)} noValidate>
+        <form className="flex flex-col items-center w-full mt-9 gap-4" onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="w-full">
             <CustomInput
               inputType={InputType.Email}
@@ -146,9 +146,6 @@ export default function SignUp() {
               <Checkbox
                 id="agreement"
                 className="mr-2 w-5 h-5 border border-gray-D9D9D9 rounded data-[state=checked]:bg-violet-5534DA"
-                {...register('agreement', {
-                  required: '이용약관에 동의해 주세요.',
-                })}
                 onClick={handleAgreement}
                 checked={isChecked}
               />
@@ -160,7 +157,7 @@ export default function SignUp() {
           </div>
 
           <Button
-            className={`mt-5 w-full text-lg text-white font-medium py-3 ${isValid ? 'bg-violet-5534DA' : 'bg-gray-9FA6B2'} hover:bg-violet-5534DA`}
+            className={`mt-5 w-full text-lg text-white font-medium py-3 ${isActive ? 'bg-violet-5534DA' : 'bg-gray-9FA6B2'} hover:bg-violet-5534DA`}
           >
             가입하기
           </Button>
