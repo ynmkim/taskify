@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { InputType, FormData } from '@/../type';
+import { InputType, SignUpData } from '@/../type';
 import CustomInput from '@/components/auth/input/CustomInput';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
@@ -10,9 +10,9 @@ export default function SignUp() {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormData>({ mode: 'onBlur' });
+  } = useForm<SignUpData>({ mode: 'onBlur' });
 
-  const handleLogin = (data: FormData) => {
+  const handleLogin = (data: SignUpData) => {
     console.log(data);
   };
 

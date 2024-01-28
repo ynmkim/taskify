@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { InputType, FormData } from '@/../type';
+import { useRouter } from 'next/router';
+import { InputType, SignUpData } from '@/../type';
 import CustomInput from '@/components/auth/input/CustomInput';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
@@ -18,7 +19,7 @@ export default function SignUp() {
     watch,
     setValue,
     handleSubmit,
-  } = useForm<FormData>({
+  } = useForm<SignUpData>({
     mode: 'onBlur',
   });
 
@@ -29,13 +30,20 @@ export default function SignUp() {
     setIsChecked((prev) => !prev);
   };
 
+  const router = useRouter();
+
   const signUp = useSignUp();
 
-  const handleSignUp = (data: FormData) => {
-    signUp(data);
+  const handleSignUp = async (data: SignUpData) => {
+    const isSignUp = await signUp(data);
+
+    if (isSignUp) {
+      alert('가입이 완료되었습니다.');
+      router.push('/login');
+    }
   };
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: SignUpData) => {
     if (isActive) {
       handleSignUp(data);
     } else {

@@ -1,4 +1,4 @@
-const ROOT_URL = `https://sp-taskify-api.vercel.app/${2}-${10}`;
+const ROOT_URL = 'https://sp-taskify-api.vercel.app/10';
 
 export const SIGNUP_URL = `${ROOT_URL}/users`;
 

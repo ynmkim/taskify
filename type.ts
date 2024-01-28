@@ -1,4 +1,4 @@
-// Signup.tsx
+// Auth
 /* eslint-disable no-unused-vars */
 export enum InputType {
   Email = 'email',
@@ -15,10 +15,13 @@ export interface CustomInputProps {
   isError?: boolean;
 }
 
-export interface FormData {
+export interface LoginData {
   email: string;
   password: string;
-  passwordConfirm?: string;
-  nickname?: string;
-  agreement?: boolean;
+}
+
+export interface SignUpData extends LoginData {
+  nickname: string;
+  passwordConfirm: string;
+  agreement: boolean;
 }
