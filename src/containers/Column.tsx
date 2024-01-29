@@ -5,7 +5,7 @@ import { MdOutlineSettings } from "react-icons/md";
 
 const Column = () => {
   return(
-    <div className="flex flex-col bg-gray-FAFAFA gap-[25px] px-3 pt-[17px] pb-3 md:px-5 md:pb-5 md:pt-[22px] border-b lg:border-r border-gray-EEEEEE">
+    <div className="flex flex-col bg-gray-FAFAFA gap-[25px] px-3 pt-[17px] pb-3 md:px-5 md:pb-5 md:pt-[22px] border-b lg:border-r lg:border-b-0 lg:min-h-screen border-gray-EEEEEE">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-violet-5534DA"></div>
