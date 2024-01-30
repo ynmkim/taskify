@@ -47,7 +47,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, label, placeholde
   return (
     <>
       {isOpen && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-10">
           <div className="bg-white p-6 w-[540px] h-[276px] flex-shrink-0 rounded-md">
             <h2 className="text-2xl font-bold mb-4">{title}</h2>
             <label className="text-lg font-medium block mb-[10px] mt-[32px]">{label}</label>
