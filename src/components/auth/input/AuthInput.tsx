@@ -1,24 +1,25 @@
 /* eslint-disable react/display-name */
 import { forwardRef, useState } from 'react';
 import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
-import { InputType, CustomInputProps } from '@/../type';
+import { AuthInputType, AuthInputProps } from '@/../type';
+import CustomInput from '@/components/common/CustomInput';
 
-const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
+const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
   ({ inputType, id, labelContext, placeholder, isError, ...props }, ref) => {
     const [isBlind, setIsBlind] = useState(true);
 
     let type, autoComplete;
 
     switch (inputType) {
-      case InputType.Email:
+      case AuthInputType.Email:
         type = 'email';
         autoComplete = 'email';
         break;
-      case InputType.Password:
+      case AuthInputType.Password:
         type = isBlind ? 'password' : 'text';
         autoComplete = 'new-password';
         break;
-      case InputType.Nickname:
+      case AuthInputType.Nickname:
         type = 'text';
         autoComplete = 'off';
         break;
@@ -34,16 +35,16 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
       <div className="grid w-full items-center gap-1.5 text-black-333236">
         <label htmlFor={id}>{labelContext}</label>
         <div className="relative">
-          <input
+          <CustomInput
             {...props}
             ref={ref}
-            className={`block w-full border border-gray-D9D9D9 ${isError ? 'border-red-D6173A' : ''} rounded-lg px-3 py-3 placeholder:text-gray-9FA6B2 focus:  focus:outline-violet-5534DA`}
-            type={type}
             id={id}
+            type={type}
+            isError={isError}
             placeholder={placeholder}
             autoComplete={autoComplete}
           />
-          {inputType === InputType.Password && (
+          {inputType === AuthInputType.Password && (
             <div className="absolute inset-y-0 right-0 pr-4 flex items-center" onClick={handlePasswordBlind}>
               {isBlind ? (
                 <IoEyeOffOutline size={24} className="cursor-pointer" color="#9FA6B2" />
@@ -58,4 +59,4 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
   },
 );
 
-export default CustomInput;
+export default AuthInput;

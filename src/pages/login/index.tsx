@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { InputType, SignUpData } from '@/../type';
-import CustomInput from '@/components/auth/input/CustomInput';
+import { AuthInputType, SignUpData } from '@/../type';
+import AuthInput from '@/components/auth/input/AuthInput';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 
@@ -30,8 +30,8 @@ export default function SignUp() {
       <div className="flex flex-col items-center w-[351px] sm:w-[520px]">
         <form className="flex flex-col items-center w-full mt-9 gap-4" onSubmit={handleSubmit(handleLogin)} noValidate>
           <div className="w-full">
-            <CustomInput
-              inputType={InputType.Email}
+            <AuthInput
+              inputType={AuthInputType.Email}
               id="email"
               labelContext="이메일"
               placeholder="이메일을 입력해 주세요."
@@ -48,8 +48,8 @@ export default function SignUp() {
           </div>
 
           <div className="w-full">
-            <CustomInput
-              inputType={InputType.Password}
+            <AuthInput
+              inputType={AuthInputType.Password}
               id="password"
               labelContext="비밀번호"
               placeholder="비밀번호를 입력해 주세요."

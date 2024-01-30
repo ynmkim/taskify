@@ -1,14 +1,20 @@
+import { InputHTMLAttributes } from 'react';
+
 // Auth
+
 /* eslint-disable no-unused-vars */
-export enum InputType {
+export enum AuthInputType {
   Email = 'email',
   Password = 'password',
   Nickname = 'text',
 }
 /* eslint-enable no-unused-vars */
 
-export interface CustomInputProps {
-  inputType: InputType;
+export interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  isError?: boolean;
+}
+export interface AuthInputProps {
+  inputType: AuthInputType;
   id?: string;
   labelContext?: string;
   placeholder?: string;
