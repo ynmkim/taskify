@@ -1,19 +1,34 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { AuthInputType, SignUpData } from '@/../type';
+import { AuthInputType, LoginFormData } from '@/../type';
 import AuthInput from '@/components/auth/input/AuthInput';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
+import useLogin from '@/hooks/useLogin';
+import { useRouter } from 'next/router';
 
 export default function SignUp() {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<SignUpData>({ mode: 'onBlur' });
+  } = useForm<LoginFormData>({ mode: 'onBlur' });
 
-  const handleLogin = (data: SignUpData) => {
-    console.log(data);
+  const router = useRouter();
+
+  const logIn = useLogin();
+
+  const handleLogin = async (data: LoginFormData) => {
+    const loginResult = await logIn(data);
+
+    if (typeof loginResult === 'object') {
+      const acceesToken = loginResult.data.accessToken;
+      const userData = loginResult.data.user;
+
+      router.push('/mydashboard');
+    } else if (typeof loginResult === 'string') {
+      alert(loginResult);
+    }
   };
 
   return (
