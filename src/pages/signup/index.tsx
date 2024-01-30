@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { AuthInputType, SignUpData } from '@/../type';
+import { AuthInputType, SignUpFormData } from '@/../type';
 import AuthInput from '@/components/auth/input/AuthInput';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import useSignUp from '@/hooks/useSignUp';
 
 export default function SignUp() {
@@ -16,15 +16,22 @@ export default function SignUp() {
   const {
     register,
     formState: { errors, isValid },
-    watch,
+    control,
     setValue,
     handleSubmit,
-  } = useForm<SignUpData>({
+  } = useForm<SignUpFormData>({
     mode: 'onBlur',
   });
 
-  const userPwInput = watch('password');
-  const agreement = watch('agreement');
+  const userPwInput = useWatch({
+    control,
+    name: 'password',
+  });
+
+  const agreement = useWatch({
+    control,
+    name: 'agreement',
+  });
 
   const handleAgreement = () => {
     setIsChecked((prev) => !prev);
@@ -34,16 +41,19 @@ export default function SignUp() {
 
   const signUp = useSignUp();
 
-  const handleSignUp = async (data: SignUpData) => {
-    const isSignUp = await signUp(data);
+  const handleSignUp = async (data: SignUpFormData) => {
+    const signUpResult = await signUp(data);
 
-    if (isSignUp) {
+    if (typeof signUpResult === 'object') {
       alert('가입이 완료되었습니다.');
+
       router.push('/login');
+    } else if (typeof signUpResult === 'string') {
+      alert(signUpResult);
     }
   };
 
-  const onSubmit = (data: SignUpData) => {
+  const onSubmit = (data: SignUpFormData) => {
     if (isActive) {
       handleSignUp(data);
     } else {
@@ -155,7 +165,7 @@ export default function SignUp() {
                 id="agreement"
                 className="mr-2 w-5 h-5 border border-gray-D9D9D9 rounded data-[state=checked]:bg-violet-5534DA"
                 onClick={handleAgreement}
-                checked={isChecked}
+                checked={agreement}
               />
               <div>이용약관에 동의합니다.</div>
             </label>

@@ -21,12 +21,12 @@ export interface AuthInputProps {
   isError?: boolean;
 }
 
-export interface LoginData {
+export interface LoginFormData {
   email: string;
   password: string;
 }
 
-export interface SignUpData extends LoginData {
+export interface SignUpFormData extends LoginFormData {
   nickname: string;
   passwordConfirm: string;
   agreement: boolean;
