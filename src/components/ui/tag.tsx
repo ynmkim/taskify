@@ -27,11 +27,20 @@ export interface TagProps
   variant: 'primary' | 'basic';
   size: 'small' | 'large';
   color?: 'orange' | 'green' | 'pink' | 'blue';
+  children: React.ReactNode;
 }
 
-function Chip({ className, color, size = 'large', ...props }: TagProps) {
+function Chip({
+  children,
+  className,
+  color,
+  size = 'large',
+  ...props
+}: TagProps) {
   return (
-    <div className={cn(tagVariants({ color, size }), className)} {...props} />
+    <div className={cn(tagVariants({ color, size }), className)} {...props}>
+      {children}
+    </div>
   );
 }
 
