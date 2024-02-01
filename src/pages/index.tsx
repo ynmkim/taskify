@@ -1,7 +1,7 @@
 import Header from '@/components/home/Header';
 import Footer from '@/components/home/Footer';
 import Hero from '@/components/home/Hero';
-import Point from '@/components/home/Point';
+import Points from '@/components/home/Points';
 import Settings from '@/components/home/Settings';
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
       <Header />
       <div>
         <Hero />
-        <Point />
+        <Points />
         <Settings />
       </div>
       <Footer />
