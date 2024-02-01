@@ -21,11 +21,11 @@ RadioGroup.displayName = RadioGroupPrimitive.Root.displayName;
 const radioGroupItemVariants = cva(`rounded-full`, {
   variants: {
     color: {
-      green: 'bg-[#7AC555]',
-      purple: 'bg-[#760DDE]',
-      orange: 'bg-[#FFA500]',
-      blue: 'bg-[#76A5EA]',
-      pink: 'bg-[#E876EA]',
+      green: 'bg-green-7AC555',
+      purple: 'bg-purple-760DDE',
+      orange: 'bg-orange-FFA500',
+      blue: 'bg-blue-76A6EA',
+      pink: 'bg-pink-E876EA',
     },
     size: {
       small: 'w-7 h-7',

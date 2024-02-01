@@ -5,7 +5,7 @@ import { cn } from '@/libs/utils';
 const tagVariants = cva(`inline-flex items-center font-normal`, {
   variants: {
     variant: {
-      primary: `gap-1 rounded-full px-2 py-1 bg-[#F1EFFD] text-[#5534DA] before:content-[''] before:w-1.5 before:h-1.5 before:bg-[#5534DA] before:rounded-full`,
+      primary: `gap-1 rounded-full px-2 py-1 bg-violet-8% text-violet-5534DA before:content-[''] before:w-1.5 before:h-1.5 before:bg-violet-5534DA before:rounded-full`,
       basic: 'rounded px-1.5 py-1',
     },
     color: {
