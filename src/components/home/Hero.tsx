@@ -5,7 +5,13 @@ export default function Hero() {
   return (
     <div className="w-fit mx-auto flex flex-col items-center justify-center text-black-171717">
       <div className="relative w-[287px] h-[168px] md:w-[537.25px] md:h-[314.76px] lg:w-[722px] lg:h-[422.76px] mt-[42px] md:mt-[94px] mb-[26px] md:mb-12">
-        <Image src="/landing.jpg" alt="hero_img" fill priority />
+        <Image
+          src="/landing.jpg"
+          fill
+          sizes="(min-width: 768px) 537.25px, (min-width: 1024px) 722px, 287px"
+          alt="hero_img"
+          priority
+        />
       </div>
 
       <div className="font-bold text-center md:flex md:items-center md:gap-6 lg:gap-7">
