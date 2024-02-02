@@ -62,7 +62,7 @@ const Members: React.FC<MembersProps> = ({ members }) => {
                 <Avatar nickname={member.nickname} profileImageUrl={member.profileImageUrl} size='lg' />
                 {member.nickname}
               </div>
-              <Button className='w-[84px] h-[32px]'>삭제</Button>
+              <Button className='w-[52px] lg:w-[84px] md:w-[84px] h-[32px] px-[7px] py-[10px]'>삭제</Button>
             </div>
           ))}
         </div>
