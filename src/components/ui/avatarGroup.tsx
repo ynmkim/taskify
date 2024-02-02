@@ -43,7 +43,7 @@ const GroupAvatar: React.FC<GroupAvatarProps> = ({ members, totalCount }) => {
       ))}
       {totalCount > 4 && (
         <div className="relative">
-          <div className="rounded-full w-10 h-10 border-2 border-white bg-pink-f4d7da flex items-center justify-center text-pink-d25b68">
+          <div className="rounded-full w-10 h-10 border-2 border-white bg-pink-f4d7da flex items-center justify-center text-[#d25b68]">
             +{totalCount - 4}
           </div>
         </div>
