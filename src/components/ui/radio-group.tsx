@@ -26,7 +26,7 @@ const radioGroupItemVariants = cva(
         green: 'bg-green-7AC555',
         purple: 'bg-purple-760DDE',
         orange: 'bg-orange-FFA500',
-        blue: 'bg-blue-76A6EA',
+        blue: 'bg-blue-76A5EA',
         pink: 'bg-pink-E876EA',
       },
     },
