@@ -1,5 +1,5 @@
-import DashboaordCardTitle from '@/components/mydashboard/DashboaordCardTitle';
-import InvitedTable from '@/components/mydashboard/InvitedTable';
+import DashboaordCardTitle from '@/components/domains/mydashboard/DashboaordCardTitle';
+import InvitedTable from '@/components/domains/mydashboard/InvitedTable';
 import { SearchInput } from './SearchInput';
 import Image from 'next/image';
 import { totalCount } from './mock/invitations.json';
