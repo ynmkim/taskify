@@ -97,7 +97,7 @@ const DashboardHeader: React.FC<{ columnName: string, type?: string }> = ({ colu
         <div className='flex flex-row items-center'>
           {!isDashboard && <SlotSection members={members}/>}
           <Avatar size='lg' {...userData} />
-          <span className="ml-3 font-medium text-base">{userData.nickname}</span>
+          <span className="invisible lg:visible md:visible ml-3 font-medium text-base">{userData.nickname}</span>
         </div>
       </div>
     </header>

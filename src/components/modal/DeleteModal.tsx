@@ -22,8 +22,8 @@ const DeleteModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
     <>
       {isOpen && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
-          <div className="bg-white pt-[108px] pr-[28px] pb-[28px] pl-[160px] w-[540px] h-[276px] flex-shrink-0 rounded-md flex flex-col justify-between">
-            <span className="text-lg font-medium">컬럼의 모든 카드가 삭제됩니다.</span>
+          <div className="bg-white px-[24px] pt-[108px] pb-[28px] w-[327px] lg:w-[540px] md:w-[540px] h-[276px] flex-shrink-0 rounded-md flex flex-col justify-between">
+            <span className="w-[100%] text-base lg:text-lg md:text-lg font-medium text-center">컬럼의 모든 카드가 삭제됩니다.</span>
             <div className={`flex items-end justify-end`}>
               <Button variant="default" size="modal" text="modal" onClick={onClose} className="w-[120px] h-[48px] py-[14px] px-[46px] mr-[12px]">
                 취소
