@@ -85,7 +85,7 @@ export function CreateCardModal() {
               <FormField
                 control={form.control}
                 name="tags"
-                render={({ field: { ...rest } }) => (
+                render={({ field: {} }) => (
                   <FormItem>
                     <FormControl>
                       <AddTag label="태그" />

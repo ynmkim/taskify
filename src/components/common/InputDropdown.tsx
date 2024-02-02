@@ -4,17 +4,20 @@ import Label from '@/components/common/Label';
 
 interface InputDropdownProps {
   label: string;
-  value?: string;
-  onChange: (value: string | undefined) => void;
+  onChange: (value: Member) => void;
+}
+interface Member {
+  value: string;
+  label: string;
 }
 
 const InputDropdown = ({ label, onChange }: InputDropdownProps) => {
-  const members = [
+  const members: Member[] = [
     { value: '', label: '김동빈' },
     { value: '', label: '배유철' },
   ];
 
-  const handlememberChange = (select: string | undefined) => {
+  const handlememberChange = (select: Member) => {
     onChange(select);
   };
 
@@ -24,7 +27,7 @@ const InputDropdown = ({ label, onChange }: InputDropdownProps) => {
       <div className=" h-[42px] md:h-12 md:w-[217px] ">
         <Select
           options={members}
-          onChange={(select) => handlememberChange(select)}
+          onChange={(select) => handlememberChange(select as Member)}
           defaultValue={members[0]}
         />
       </div>

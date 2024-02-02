@@ -1,28 +1,26 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 import Label from '@/components/common/Label';
-import StateList from '@/components/common/StateList';
-import Select from 'react-select'; //라이브러리
+import Select from 'react-select'; // 라이브러리
 
 interface StateProps {
-  id: number;
-  title: string;
+  value: number;
+  label: string;
 }
 interface StateDropdownProps {
   label: string;
+  onChange: (value: StateProps) => void; // 타입 수정
 }
 
 const StateDropdown = forwardRef<HTMLInputElement, StateDropdownProps>(
-  ({ label }) => {
-    const [title, setTitle] = useState('To do'); //input에 보이는 값
-
-    const states = [
-      { id: 1, title: 'To Do' },
-      { id: 2, title: 'On Progress' },
-      { id: 3, title: 'Done' },
+  ({ label, onChange }) => {
+    const states: StateProps[] = [
+      { value: 1, label: 'To Do' },
+      { value: 2, label: 'On Progress' },
+      { value: 3, label: 'Done' },
     ];
 
     const handleStateClick = (state: StateProps) => {
-      setTitle(state.title);
+      onChange(state);
     };
 
     return (
@@ -32,8 +30,8 @@ const StateDropdown = forwardRef<HTMLInputElement, StateDropdownProps>(
           <div className="h-[42px] md:h-12 md:w-[217px] ">
             <Select
               options={states}
-              onChange={handleStateClick}
-              defaultValue={title}
+              onChange={(v) => handleStateClick(v as StateProps)} // 타입 캐스팅
+              defaultValue={states[0]}
             />
           </div>
         </div>

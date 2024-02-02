@@ -7,8 +7,8 @@ interface AddTagProps {
   label: string;
 }
 function AddTag({ label }: AddTagProps) {
-  const [text, setText] = useState(''); // 입력된 텍스트를 상태로 관리
-  const [chips, setChips] = useState([]); // Chip 컴포넌트들을 상태로 관리
+  const [text, setText] = useState<string>(''); // 입력된 텍스트를 상태로 관리
+  const [chips, setChips] = useState<React.ReactNode[]>([]); // Chip 컴포넌트들을 상태로 관리
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value); // 입력된 텍스트 업데이트
