@@ -1,21 +1,19 @@
-import { DialogModal } from '@/components/common/DialogModal';
-import { CreateCardModal } from '@/components/modal/CreateCardModal';
-import { EditCardModal } from '@/components/modal/EditCardModal.tsx/EditCardModal';
-import { Button } from '@/components/ui/button';
+import Header from '@/components/home/Header';
+import Footer from '@/components/home/Footer';
+import Hero from '@/components/home/Hero';
+import Points from '@/components/home/Points';
+import Settings from '@/components/home/Settings';
 
 export default function Home() {
   return (
     <div>
-      <Button text="login" size="login" variant="violet">
-        로그인
-      </Button>
-
-      <DialogModal name="생성">
-        <CreateCardModal />
-      </DialogModal>
-      <DialogModal name="수정">
-        <EditCardModal />
-      </DialogModal>
+      <Header />
+      <div>
+        <Hero />
+        <Points />
+        <Settings />
+      </div>
+      <Footer />
     </div>
   );
 }

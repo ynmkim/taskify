@@ -2,10 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: Pretendard;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local('Pretendard-Regular'),
+    url('../../public/assets/fonts/Pretendard-Regular.woff') format('woff'),
+    url('../../public/assets/fonts/Pretendard-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: Pretendard;
+  font-weight: 500;
+  font-display: swap;
+  src:
+    local('Pretendard-Medium'),
+    url('../../public/assets/fonts/Pretendard-Medium.woff') format('woff'),
+    url('../../public/assets/fonts/Pretendard-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: Pretendard;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    local('Pretendard-Bold'),
+    url('../../public/assets/fonts/Pretendard-Bold.woff') format('woff'),
+    url('../../public/assets/fonts/Pretendard-Bold.woff2') format('woff2');
+}
+
 @layer base {
   :root {
-    font-family: Inter, Pretendard, system-ui, Avenir, Helvetica, Arial,
-      sans-serif;
+    font-family: Pretendard, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -72,6 +101,14 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gray-fafafa text-foreground;
   }
+}
+
+.modal-open {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-open {
+  background-color: rgba(0, 0, 0, 0.7);
 }

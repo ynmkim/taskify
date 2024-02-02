@@ -2,8 +2,7 @@ import * as React from 'react';
 import Label from '@/components/common/Label';
 import { cn } from '@/libs/utils';
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   required?: boolean;
 }
@@ -17,10 +16,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <input
             type={type}
             value={value}
-            className={cn(
-              `block w-full rounded-md border border-solid px-[14px] py-[15px] md:text-[16px] lg:text-[16px] text-gray-9FA6B2 placeholder:text-gray40 focus:border-violet outline-0 h-[50px] `,
-              className,
-            )}
+            className={cn(`h-[42px] px-4 rounded-md border border-gray-D9D9D9 text-sm text-black-333236'`, className)}
             ref={ref}
             {...props}
           />

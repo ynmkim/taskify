@@ -2,12 +2,7 @@ import type { Config } from 'tailwindcss';
 
 const config = {
   darkMode: ['class'],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
+  content: ['./pages/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './app/**/*.{ts,tsx}', './src/**/*.{ts,tsx}'],
   prefix: '',
   theme: {
     container: {
@@ -64,20 +59,35 @@ const config = {
         gray: {
           '787486': '#787486',
           '9FA6B2': '#9FA6B2',
-          D9D9D9: '#D9D9D9',
-          EEEEEE: '#EEEEEE',
-          FAFAFA: '#FAFAFA',
+          'D9D9D9': '#D9D9D9',
+          'EEEEEE': '#EEEEEE',
+          'FAFAFA': '#FAFAFA',
         },
         violet: {
           '5534DA': '#5534DA',
           '8%': '#F1EFFD',
         },
+        green: {
+          '7AC555': '#7AC555',
+          'A3C4A2': '#A3C4A2',
+        },
+        pink: {
+          'E876EA': '#E876EA',
+          'F4D7DA': '#F4D7DA',
+
+        },
+        orange: {
+          'FFA500': '#FFA500',
+          'FFC85A': '#FFC85A'
+        },
+        blue: {
+          '76A5EA': '#76A5EA',
+          '9DD7ED': '#9DD7ED',
+        },
         'red-D6173A': '#D6173A',
-        'green-7AC555': '#7AC555',
         'purple-760DDE': '#760DDE',
-        'orange-FFA500': '#FFA500',
-        'blue-76A6EA': '#76A5EA',
-        'pink-E876EA': '#E876EA',
+        'yellow-FDD446': '#FDD446',
+        'brown-C4B1A2': '#C4B1A2',
       },
       keyframes: {
         'accordion-down': {
@@ -100,6 +110,8 @@ const config = {
         'blue-9dd7ed': '#9DD7ED',
         'brown-c4b1a2': '#C4B1A2',
         'green-a3c4a2': '#A3C4A2',
+        'gray-fafafa': '#FAFAFA',
+        'modal': 'rgba(0, 0, 0, 0.70)',
       },
     },
   },
