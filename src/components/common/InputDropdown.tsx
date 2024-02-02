@@ -4,25 +4,24 @@ import Label from '@/components/common/Label';
 
 interface InputDropdownProps {
   label: string;
-  required: boolean;
   value?: string;
-  onChange: (value: Object | number | null) => void;
+  onChange: (value: string | undefined) => void;
 }
 
-const InputDropdown = ({ label, required, onChange }: InputDropdownProps) => {
+const InputDropdown = ({ label, onChange }: InputDropdownProps) => {
   const members = [
     { value: '', label: '김동빈' },
     { value: '', label: '배유철' },
   ];
 
-  const handlememberChange = (select: Object | null) => {
+  const handlememberChange = (select: string | undefined) => {
     onChange(select);
   };
 
   return (
     <div>
-      <Label text={label} required={required} />
-      <div className="h-[42px] md:h-12 md:w-[217px] ">
+      <Label text={label} />
+      <div className=" h-[42px] md:h-12 md:w-[217px] ">
         <Select
           options={members}
           onChange={(select) => handlememberChange(select)}

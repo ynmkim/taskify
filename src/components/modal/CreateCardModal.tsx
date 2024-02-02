@@ -3,20 +3,14 @@ import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import ModalTitle from './ModalTitle';
-
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form';
+import ModalTitle from '@/components/modal/ModalTitle';
 import Textarea from '@/components/common/Textarea';
 import { DateTimePicker } from '@/components/common/DateTimePicker';
 import AddFile from '@/components/common/AddFile';
-import AddTag from '../common/AddTag';
-import InputDropdown from '../common/DropdownSelect';
+import AddTag from '@/components/common/AddTag';
+import InputDropdown from '@/components/common/InputDropdown';
+
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 
 export function CreateCardModal() {
   const form = useForm({
@@ -27,7 +21,7 @@ export function CreateCardModal() {
   return (
     <div>
       <Form {...form}>
-        <div className="max-h-[90vh] overflow-y-auto flex flex-col gap-[20px]">
+        <div className="scrollbar-hide max-h-[90vh] overflow-y-auto flex flex-col gap-[20px]">
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
             className="flex flex-col gap-8"
@@ -42,12 +36,10 @@ export function CreateCardModal() {
                     <FormControl>
                       <InputDropdown
                         label="담당자"
-                        required
                         // placeholder="이름을 입력해 주세요"
                         {...rest}
                       />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -65,7 +57,6 @@ export function CreateCardModal() {
                         {...rest}
                       />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -77,7 +68,6 @@ export function CreateCardModal() {
                     <FormControl>
                       <Textarea ref={ref} label="설명" {...rest} required />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -89,7 +79,6 @@ export function CreateCardModal() {
                     <FormControl>
                       <DateTimePicker {...rest} label="마감일" />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -101,7 +90,6 @@ export function CreateCardModal() {
                     <FormControl>
                       <AddTag label="태그" />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -113,7 +101,6 @@ export function CreateCardModal() {
                     <FormControl>
                       <AddFile label="이미지" {...rest} />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />

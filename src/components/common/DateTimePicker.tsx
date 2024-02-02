@@ -36,7 +36,7 @@ export function DateTimePicker({
   return (
     <div>
       <Label text={label} required={required} />
-      <div className="border border-gray30 focus:border-violet flex items-center gap-[10px] w-full h-[50px] rounded-md  mobile:w-[287px]">
+      <div className="border border-gray30 focus:border-violet flex items-center gap-[10px] sm:w-full h-[50px] rounded-md  w-[287px]">
         <DatePicker
           selected={value ? new Date(value) : null}
           onChange={handleDateChange}
@@ -44,7 +44,7 @@ export function DateTimePicker({
           dateFormat="yyyy년 MM월 dd일 HH시 mm분"
           showTimeInput
           placeholderText="날짜를 선택해주세요."
-          className="outline-0 cursor-pointer w-[240px] caret-transparent mobile:text-[14px] flex"
+          className="outline-0 cursor-pointer w-[240px] caret-transparent text-[14px] flex"
           locale={ko}
         />
       </div>

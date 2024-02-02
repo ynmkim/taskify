@@ -1,24 +1,17 @@
 import { useForm } from 'react-hook-form';
-// import { FormEvent } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import ModalTitle from './ModalTitle';
-
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form';
+import ModalTitle from '@/components/modal/ModalTitle';
 import Textarea from '@/components/common/Textarea';
 import { DateTimePicker } from '@/components/common/DateTimePicker';
 import AddFile from '@/components/common/AddFile';
-import AddTag from '../common/AddTag';
-import InputDropdown from '../common/DropdownSelect';
+import AddTag from '@/components/common/AddTag';
+import InputDropdown from '@/components/common/InputDropdown';
+import StateDropdown from '@/components/common/StateDropdown';
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 
-export function CreateCardModal() {
+export function EditCardModal() {
   const form = useForm({
     mode: 'onChange',
   });
@@ -27,30 +20,41 @@ export function CreateCardModal() {
   return (
     <div>
       <Form {...form}>
-        <div className="max-h-[90vh] overflow-y-auto flex flex-col gap-[20px]">
+        <div className="scrollbar-hide max-h-[90vh] overflow-y-auto flex flex-col gap-[20px]">
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
             className="flex flex-col gap-8"
           >
-            <ModalTitle>할 일 생성</ModalTitle>
+            <ModalTitle>할 일 수정</ModalTitle>
             <div className="flex flex-col gap-8 w-full ">
-              <FormField
-                control={form.control}
-                name="manager"
-                render={({ field: { ...rest } }) => (
-                  <FormItem>
-                    <FormControl>
-                      <InputDropdown
-                        label="담당자"
-                        required
-                        // placeholder="이름을 입력해 주세요"
-                        {...rest}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="flex flex-col gap-6 justify-between md:flex-row ">
+                <div className="w-[287px] sm:w-[217px]">
+                  <FormField
+                    control={form.control}
+                    name="state"
+                    render={({ field: { ...rest } }) => (
+                      <FormItem>
+                        <FormControl>
+                          <StateDropdown label="상태" {...rest} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="manager"
+                    render={({ field: { ...rest } }) => (
+                      <FormItem>
+                        <FormControl>
+                          <InputDropdown label="담당자" {...rest} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
               <FormField
                 control={form.control}
                 name="titile"
@@ -65,7 +69,6 @@ export function CreateCardModal() {
                         {...rest}
                       />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -77,7 +80,6 @@ export function CreateCardModal() {
                     <FormControl>
                       <Textarea ref={ref} label="설명" {...rest} required />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -89,7 +91,6 @@ export function CreateCardModal() {
                     <FormControl>
                       <DateTimePicker {...rest} label="마감일" />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -101,7 +102,6 @@ export function CreateCardModal() {
                     <FormControl>
                       <AddTag label="태그" />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -113,7 +113,6 @@ export function CreateCardModal() {
                     <FormControl>
                       <AddFile label="이미지" {...rest} />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />

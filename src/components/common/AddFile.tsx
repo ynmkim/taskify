@@ -26,7 +26,7 @@ const AddFile = ({ label, required }: CardLabelProps) => {
       <Label text={label} required={required} />
       <button
         type="button"
-        className="border border-solid rounded-md bg-gray10 w-76pxr h-76pxr relative overflow-hidden mobile:w-58pxr mobile:h-58pxr"
+        className="border border-solid rounded-md bg-gray10 relative overflow-hidden w-[58px] h-[58px] lg:h-[76px] lg:w-[76px]"
         onClick={handleButtonClick}
       >
         <input
@@ -65,7 +65,7 @@ const AddFile = ({ label, required }: CardLabelProps) => {
           </>
         ) : (
           <>
-            <div className="p-[24px] mobile:p-[18px]">
+            <div className="sm:p-[24px] p-[18px]">
               <LuPlus />
             </div>
           </>
