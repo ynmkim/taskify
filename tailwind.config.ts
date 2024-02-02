@@ -111,6 +111,7 @@ const config = {
         'brown-c4b1a2': '#C4B1A2',
         'green-a3c4a2': '#A3C4A2',
         'gray-fafafa': '#FAFAFA',
+        'modal': 'rgba(0, 0, 0, 0.70)',
       },
     },
   },
