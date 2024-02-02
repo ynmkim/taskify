@@ -1,6 +1,6 @@
 import AddTodoButton from "@/components/domains/dashboard/column/AddTodoButton";
 import TodoCard from "@/components/domains/dashboard/column/TodoCard";
-import Modal from "@/components/modal/column";
+import ColumnModal from "@/components/modal/ColumnModal";
 import { Badge } from "@/components/ui/badge";
 import useToggle from "@/hooks/useToggle";
 import { MdOutlineSettings } from "react-icons/md";
@@ -28,7 +28,7 @@ const Column = () => {
           <TodoCard image={true}/>
         </div>
       </div>
-      <Modal isOpen={isOpen} onClose={toggleModal} title="컬럼 관리" label="이름" placeholder="Done" confirmButtonText="변경" onConfirm={() => true} modalType="delete"/>
+      <ColumnModal isOpen={isOpen} onClose={toggleModal} title="컬럼 관리" label="이름" placeholder="Done" confirmButtonText="변경" onConfirm={() => true} modalType="delete"/>
     </>
   )
 };

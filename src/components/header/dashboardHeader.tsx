@@ -66,15 +66,15 @@ const SlotSection = ({members}:{members:Member[]}) =>{
   return(
     <>
       <nav className="flex flex-row items-center gap-4 mr-10">
-        <Button className='text-gray-787486 flex align-middle gap-2 w-[88px]'>
-          <span><MdOutlineSettings className="w-5 h-5" /></span><span>관리</span>
+        <Button className='text-gray-787486 flex align-middle gap-2 w-[50px] lg:w-[88px] md:w-[88px]'>
+          <span><MdOutlineSettings className="w-0 lg:w-5 md:w-5 h-5" /></span><span>관리</span>
         </Button>
-        <Button className='text-gray-787486 flex align-middle gap-2 w-[116px]'>
-          <span><FaRegSquarePlus className="w-5 h-5" /></span><span>초대하기</span>
+        <Button className='text-gray-787486 flex align-middle gap-2 w-[96px] lg:w-[116px] md:w-[116px]'>
+          <span><FaRegSquarePlus className="w-0 lg:w-5 md:w-5 h-5" /></span><span>초대하기</span>
         </Button>
       </nav>
       <GroupAvatar members={members} totalCount={members.length} />
-      <div className='w-px h-[38px] mx-8 bg-gray-D9D9D9'/>
+      <div className='w-[1px] h-[38px] mx-8 bg-[#d9d9d9]'/>
     </>
   )
 };
@@ -85,15 +85,18 @@ const DashboardHeader: React.FC<{ columnName: string, type?: string }> = ({ colu
   const getTitle = () => (isDashboard ? '내 대시보드' : columnName);
 
   return (
-    <header className='w-full pl-10 pr-20 bg-white border-b border-gray-D9D9D9'>
+    <header className='w-full h-[70px] pl-10 pr-5 lg:pr-20 md:pr-10 bg-white border-b border-gray-D9D9D9'>
       <div className="flex flex-row items-center justify-between h-[70px]">
-        <div className="flex items-center font-bold text-xl gap-2">
-          {getTitle()}
-          {!isDashboard && <FaCrown className="w-5 h-4" fill="#FDD446"/>}
-        </div>
+      {isDashboard && <div className="flex items-center font-bold text-xl gap-2">{getTitle()}</div>}
+        {!isDashboard &&
+          <div className="hidden lg:flex items-center font-bold text-xl gap-2 lg:w-[98px]">
+            {getTitle()}
+            {!isDashboard && <FaCrown className="w-5 h-4" fill="#FDD446"/>}
+          </div>
+        }
         <div className='flex flex-row items-center'>
           {!isDashboard && <SlotSection members={members}/>}
-          <Avatar {...userData} />
+          <Avatar size='lg' {...userData} />
           <span className="ml-3 font-medium text-base">{userData.nickname}</span>
         </div>
       </div>

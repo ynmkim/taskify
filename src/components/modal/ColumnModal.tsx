@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
-import DeleteModal from '@/components/modal/deleteColumn';
+import DeleteModal from '@/components/modal/DeleteModal';
 
-interface ModalProps {
+interface ColumnModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
@@ -13,7 +13,7 @@ interface ModalProps {
   modalType: 'delete' | '';
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, label, placeholder, confirmButtonText, onConfirm, modalType }) => {
+const ColumnModal: React.FC<ColumnModalProps> = ({ isOpen, onClose, title, label, placeholder, confirmButtonText, onConfirm, modalType }) => {
   const [inputValue, setInputValue] = React.useState('');
   const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
 
@@ -82,4 +82,4 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, label, placeholde
   );
 };
 
-export default Modal;
+export default ColumnModal;
