@@ -1,24 +1,8 @@
-import * as React from 'react';
-import { cn } from '@/libs/utils';
 import DashboardCardTitle from './DashboaordCardTitle';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Button } from '@/components/ui/button';
-
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
-
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, ...props }, ref) => {
-  return (
-    <input
-      type={type}
-      className={cn('h-[42px] px-4 rounded-md border border-gray-D9D9D9 text-sm text-black-333236', className)}
-      ref={ref}
-      {...props}
-    />
-  );
-});
-Input.displayName = 'Input';
-
-export { Input };
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export default function AddDashboardModal() {
   return (
@@ -28,7 +12,7 @@ export default function AddDashboardModal() {
           <DashboardCardTitle className="mb-6 md:mb-8">새로운 대시보드</DashboardCardTitle>
           <form className="mb-6 md:mb-7">
             <div className="flex flex-col gap-2.5 md:gap-3 mb-6 md:mb-7">
-              <label className="text-base md:text-lg font-medium text-black-333236">대시보드 이름</label>
+              <Label>대시보드 이름</Label>
               <Input type="text" />
             </div>
 
