@@ -98,7 +98,7 @@ const Invited: React.FC<InvitedProps> = ({ members }) => {
         placeholder="codeit@codeit.com"
         confirmButtonText="초대"
         onConfirm={handleInviteConfirm}
-        modalType="delete"
+        modalType=""
       />
     </div>
   );
