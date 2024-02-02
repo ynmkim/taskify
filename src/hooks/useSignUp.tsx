@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { instance } from '@/libs/axios';
 import { SignUpFormData } from '../../type';
 import { SIGNUP_URL } from '@/constants/apiUrl';
 
@@ -7,7 +8,7 @@ export default function useSignUp() {
     const { email, password, nickname } = data;
 
     try {
-      return await axios.post(SIGNUP_URL, { email, password, nickname });
+      return await instance.post(SIGNUP_URL, { email, password, nickname });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorMessage = error.response?.data.message;
