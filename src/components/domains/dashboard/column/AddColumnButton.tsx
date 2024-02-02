@@ -1,6 +1,6 @@
 import useToggle from "@/hooks/useToggle";
 import PlusChip from "./PlusChip";
-import Modal from "@/components/modal/column";
+import ColumnModal from "@/components/modal/ColumnModal";
 
 const AddColumnButton = () => {
   const { isOpen, toggleModal } = useToggle();
@@ -15,7 +15,7 @@ const AddColumnButton = () => {
           <PlusChip />
         </div>
       </button>
-      <Modal isOpen={isOpen} onClose={toggleModal} title="새 컬럼 생성" label="이름" placeholder="새로운 프로젝트" confirmButtonText="생성" onConfirm={() => true} modalType=""/>
+      <ColumnModal isOpen={isOpen} onClose={toggleModal} title="새 컬럼 생성" label="이름" placeholder="새로운 프로젝트" confirmButtonText="생성" onConfirm={() => true} modalType=""/>
     </>
   )
 };

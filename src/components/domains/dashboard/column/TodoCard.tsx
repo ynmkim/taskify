@@ -22,7 +22,7 @@ const TodoCard = ({image = false}:{image?:boolean}) => {
               <span><GoCalendar  className="w-[14px] h-[14px] md:w-[18px] md:h-[18px]"/></span>
               <p>2023.01.27</p>
             </div>
-            <Avatar nickname="B" className="w-[22px] h-[22px] font-semibold text-xs md:w-6 md:h-6"/>
+            <Avatar nickname="B" size="xs" className="w-[22px] h-[22px] font-semibold text-xs md:w-6 md:h-6"/>
           </div>
         </div>
       </div>

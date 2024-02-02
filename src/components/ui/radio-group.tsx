@@ -22,7 +22,7 @@ const radioGroupItemVariants = cva(`rounded-full w-7 h-7 md:w-[30px] md:h-[30px]
       pink: 'bg-pink-E876EA',
     },
   },
-});
+);
 
 export interface RadioGroupItemProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
