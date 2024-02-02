@@ -1,0 +1,51 @@
+{
+  "cursorId": 0,
+  "totalCount": 0,
+  "dashboards": [
+    {
+      "id": 1,
+      "title": "프론트엔드",
+      "color": "#7AC555",
+      "createdAt": "2024-01-30T14:49:11.136Z",
+      "updatedAt": "2024-01-30T14:49:11.136Z",
+      "createdByMe": true,
+      "userId": 0
+    },
+    {
+      "id": 2,
+      "title": "백엔드",
+      "color": "#760DDE",
+      "createdAt": "2024-01-30T14:49:11.136Z",
+      "updatedAt": "2024-01-30T14:49:11.136Z",
+      "createdByMe": false,
+      "userId": 0
+    },
+    {
+      "id": 3,
+      "title": "프로덕트디자인",
+      "color": "#FFA500",
+      "createdAt": "2024-01-30T14:49:11.136Z",
+      "updatedAt": "2024-01-30T14:49:11.136Z",
+      "createdByMe": true,
+      "userId": 0
+    },
+    {
+      "id": 4,
+      "title": "데이터사이언스",
+      "color": "#76A5EA",
+      "createdAt": "2024-01-30T14:49:11.136Z",
+      "updatedAt": "2024-01-30T14:49:11.136Z",
+      "createdByMe": false,
+      "userId": 0
+    },
+    {
+      "id": 5,
+      "title": "마케팅",
+      "color": "#E876EA",
+      "createdAt": "2024-01-30T14:49:11.136Z",
+      "updatedAt": "2024-01-30T14:49:11.136Z",
+      "createdByMe": false,
+      "userId": 0
+    }
+  ]
+}
