@@ -8,6 +8,7 @@ export default function Home() {
       <Link href='/mydashboard' className="w-fit h-10 border border-violet-5534DA rounded-md py-2 px-2">나의 대시보드</Link>
       <Link href='/dashboard' className="w-fit h-10 border border-violet-5534DA rounded-md py-2 px-2">대시보드</Link>
       <Link href='/mypage' className="w-fit h-10 border border-violet-5534DA rounded-md py-2 px-2">계정관리</Link>
+      <Link href='/dashboard/modal' className="w-fit h-10 border border-violet-5534DA rounded-md py-2 px-2">할일 카드 모달</Link>
     </div>
   );
 }
