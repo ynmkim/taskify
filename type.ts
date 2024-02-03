@@ -1,5 +1,15 @@
 import { InputHTMLAttributes } from 'react';
 
+// Home
+
+export interface SettingBoxProps {
+  src: string;
+  width: number;
+  height: number;
+  title: string;
+  description: string;
+}
+
 // Auth
 
 /* eslint-disable no-unused-vars */
