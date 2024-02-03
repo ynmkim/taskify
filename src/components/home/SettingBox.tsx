@@ -3,7 +3,7 @@ import { SettingBoxProps } from '../../../type';
 
 export default function SettingBox({ src, width, height, title, description }: SettingBoxProps) {
   return (
-    <div className="w-full md:w-[375px] lg:max-w-[32%] mx-auto">
+    <div className="w-full mx-auto md:w-[375px] lg:max-w-[32%] lg:mx-0">
       <div className="bg-black-4B4B4B px-9 h-[260px] rounded-t-lg flex justify-center items-center">
         <Image className="rounded-lg" src={src} width={width} height={height} alt="feature" />
       </div>

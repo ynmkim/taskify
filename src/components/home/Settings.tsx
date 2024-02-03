@@ -26,8 +26,10 @@ export default function Settings() {
   ];
   return (
     <div className="relative mt-[90px] mb-[120px] md:mb-40 w-11/12 max-w-[480px] md:max-w-[664px] lg:max-w-[1200px] mx-auto">
-      <div className="text-center text-xl mb-[42px] md:mb-9 md:text-2xl font-bold">생산성을 높이는 다양한 설정 ⚡</div>
-      <div className="flex flex-col gap-y-10 lg:flex-row lg:items-center lg:justify-between">
+      <div className="text-center lg:text-start text-xl mb-[42px] md:mb-9 md:text-2xl font-bold">
+        생산성을 높이는 다양한 설정 ⚡
+      </div>
+      <div className="flex flex-col gap-y-10 lg:gap-y-0 lg:flex-row lg:items-center lg:justify-between">
         {settings.map((setting, idx) => {
           return (
             <SettingBox
