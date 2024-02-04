@@ -12,7 +12,7 @@ interface AvatarInputProps {
 
 function AvatarInput({ className, name, value, onChange, ...props }: AvatarInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [preview, setPreview] = useState<string>('');
+  const [preview, setPreview] = useState('');
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const nextValue = e.target.files?.[0] || null;
