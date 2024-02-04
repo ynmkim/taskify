@@ -105,6 +105,27 @@
       "inviteAccepted": true,
       "createdAt": "2024-01-30T09:59:54.270Z",
       "updatedAt": "2024-01-30T09:59:54.270Z"
+    },
+    {
+      "id": 1,
+      "inviter": {
+        "nickname": "김윤미",
+        "email": "string",
+        "id": 1
+      },
+      "teamId": "string",
+      "dashboard": {
+        "title": "프론트엔드",
+        "id": 1
+      },
+      "invitee": {
+        "nickname": "string",
+        "email": "string",
+        "id": 1
+      },
+      "inviteAccepted": true,
+      "createdAt": "2024-01-30T09:59:54.270Z",
+      "updatedAt": "2024-01-30T09:59:54.270Z"
     }
   ]
 }
