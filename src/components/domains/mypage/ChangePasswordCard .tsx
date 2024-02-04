@@ -1,8 +1,8 @@
-import DashboardCardTitle from '../mydashboard/DashboaordCardTitle';
 import { cn } from '@/libs/utils';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/base-input';
 import { Button } from '@/components/ui/button';
+import DashboardCardTitle from '../mydashboard/DashboaordCardTitle';
 
 interface ChangePasswordCardProps {
   className?: string;
@@ -14,7 +14,7 @@ export default function ChangePasswordCard({ className, ...props }: ChangePasswo
       {...props}
     >
       <DashboardCardTitle className="mb-6 md:mb-8">비밀번호 변경</DashboardCardTitle>
-      
+
       <form className="flex flex-col gap-6">
         <div className="flex flex-col gap-2.5">
           <Label>현재 비밀번호</Label>

@@ -1,4 +1,4 @@
-import { dashboards } from './mock/dashboards.json';
+import { dashboards } from '@/pages/api/mock/dashboards.json';
 import Link from 'next/link';
 import { cn } from '@/libs/utils';
 import Image from 'next/image';

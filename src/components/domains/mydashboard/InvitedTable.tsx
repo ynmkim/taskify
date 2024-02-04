@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cn } from '@/libs/utils';
 import { Button } from '@/components/ui/button';
-import { invitations } from './mock/invitations.json';
+import { invitations } from '@/pages/api/mock/invitations.json';
 
 export default function InvitedTable() {
   return (
