@@ -1,4 +1,4 @@
-import DashboaordCardTitle from '@/components/domains/mydashboard/DashboaordCardTitle';
+import DashboaordCardTitle from '@/components/common/CardTitle';
 import InvitedTable from '@/components/domains/mydashboard/InvitedTable';
 import { SearchInput } from './SearchInput';
 import Image from 'next/image';
