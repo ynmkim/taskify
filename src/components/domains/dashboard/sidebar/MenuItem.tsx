@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import { FaCrown } from "react-icons/fa";
 
-const MenuItem = ({children, link}: {children:ReactNode, link:number}) => {
+const MenuItem = ({children, link, createdByMe}: {children:ReactNode, link:number ,createdByMe:boolean}) => {
 
   return(
     <li className="rounded px-3 md:pl-3 md:pr-0 py-3">
@@ -12,9 +12,12 @@ const MenuItem = ({children, link}: {children:ReactNode, link:number}) => {
           <p className="font-Pretendard text-base lg:text-lg font-medium text-gray-787486 leading-none">
             {children}
           </p>
-          <div>
-            <FaCrown className="w-[15px] h-3 lg:w-[17.6px] lg:h-[14px]" fill="#FDD446"/>
-          </div>
+          {
+            createdByMe &&
+            <div>
+              <FaCrown className="w-[15px] h-3 lg:w-[17.6px] lg:h-[14px]" fill="#FDD446"/>
+            </div>
+          }
         </div>
       </Link>
     </li>
