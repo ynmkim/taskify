@@ -91,8 +91,6 @@ const Invited: React.FC<InvitedProps> = ({ members }) => {
         </div>
       </div>
       <ColumnModal
-        isOpen={isInviteModalOpen}
-        onClose={closeInviteModal}
         title="초대하기"
         label="이메일"
         placeholder="codeit@codeit.com"
