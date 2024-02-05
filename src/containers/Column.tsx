@@ -1,8 +1,7 @@
+import ModifyColumnDialog from "@/components/dialog/ModifyColumnDialog";
 import AddTodoButton from "@/components/domains/dashboard/column/AddTodoButton";
 import TodoCard from "@/components/domains/dashboard/column/TodoCard";
-import ColumnModal from "@/components/modal/ColumnModal";
 import { Badge } from "@/components/ui/badge";
-import { MdOutlineSettings } from "react-icons/md";
 
 const Column = () => {
 
@@ -17,9 +16,9 @@ const Column = () => {
               <Badge>3</Badge>
             </div>
           </div>
-          <button>
-            <MdOutlineSettings className="w-6 h-6 text-gray-787486"/>
-          </button>
+          <div>
+            <ModifyColumnDialog />
+          </div>
         </div>
         <div className="flex flex-col gap-4">
           <AddTodoButton />
@@ -27,7 +26,6 @@ const Column = () => {
           <TodoCard image={true}/>
         </div>
       </div>
-      {/* <ColumnModal title="컬럼 관리" label="이름" placeholder="Done" confirmButtonText="변경" onConfirm={() => true} modalType="delete"/> */}
     </>
   )
 };
