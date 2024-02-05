@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
+import axios from 'axios';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  dashboardId: Number;
+  columnId: Number;
 }
 
-const DeleteModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
+const DeleteModal: React.FC<ModalProps> = ({ isOpen, onClose, dashboardId, columnId}) => {
   React.useEffect(() => {
     if (isOpen) {
       document.body.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
@@ -18,6 +21,16 @@ const DeleteModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
     };
   }, [isOpen]);
 
+  React.useEffect(() => {
+    axios.get(`https://sp-taskify-api.vercel.app/2-10/columns?${dashboardId}`)
+  })
+  function deleteColumn() {
+    axios.delete(`https://sp-taskify-api.vercel.app/2-10/columns/${columnId}`).then(()=> {
+      alert('컬럼이 삭제되었습니다.')
+    })
+  }
+  
+
   return (
     <>
       {isOpen && (
@@ -28,7 +41,7 @@ const DeleteModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
               <Button variant="default" size="modal" text="modal" onClick={onClose} className="w-[120px] h-[48px] py-[14px] px-[46px] mr-[12px]">
                 취소
               </Button>
-              <Button variant="violet" size="modal" text="login" className="w-[120px] h-[48px] py-[14px] px-[46px]">
+              <Button variant="violet" size="modal" text="login" onClick={deleteColumn} className="w-[120px] h-[48px] py-[14px] px-[46px]">
                 삭제
               </Button>
             </div>

@@ -6,6 +6,7 @@ import { FaCrown } from "react-icons/fa";
 import { MdOutlineSettings } from "react-icons/md";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { Member } from '@/types/DashboardType';
+import Link from 'next/link';
 
 // 나중에 api연동하면 삭제될 임시 데이터입니다.
 const userData = {
@@ -62,18 +63,27 @@ const members = [
   }
 ];
 
+interface SlotSectionProps {
+  members: Member[];
+  dashboardId?: number;
+}
+
 const SlotSection = ({members}:{members:Member[]}) =>{
   return(
     <>
       <nav className="flex flex-row items-center gap-4 mr-10">
-        <Button className='text-gray-787486 flex align-middle gap-2 w-[50px] lg:w-[88px] md:w-[88px]'>
+        <Link href={`/mypage`}>
+          <Button  className='text-gray-787486 flex align-middle gap-2 w-[50px] lg:w-[88px] md:w-[88px]'>
           <span><MdOutlineSettings className="w-0 lg:w-5 md:w-5 h-5" /></span><span>관리</span>
-        </Button>
-        <Button className='text-gray-787486 flex align-middle gap-2 w-[96px] lg:w-[116px] md:w-[116px]'>
-          <span><FaRegSquarePlus className="w-0 lg:w-5 md:w-5 h-5" /></span><span>초대하기</span>
-        </Button>
+          </Button>
+        </Link>
+        <Link href={``}>
+          <Button className='text-gray-787486 flex align-middle gap-2 w-[96px] lg:w-[116px] md:w-[116px]'>
+            <span><FaRegSquarePlus className="w-0 lg:w-5 md:w-5 h-5" /></span><span>초대하기</span>
+          </Button>
+        </Link>
       </nav>
-      <GroupAvatar members={members} totalCount={members.length} />
+      <GroupAvatar members={members} totalCount={members.length} dashboardId={1} />
       <div className='w-[1px] h-[38px] mx-8 bg-[#d9d9d9]'/>
     </>
   )

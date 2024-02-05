@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 
 interface Member {
   id: number;
@@ -15,6 +16,7 @@ interface Member {
 interface GroupAvatarProps {
   members: Member[];
   totalCount: number;
+  dashboardId: number;
 }
 
 const getRandomColorClass = () => {
@@ -23,7 +25,12 @@ const getRandomColorClass = () => {
   return randomColor;
 };
 
-const GroupAvatar: React.FC<GroupAvatarProps> = ({ members, totalCount }) => {
+
+const GroupAvatar: React.FC<GroupAvatarProps> = ({ members, totalCount, dashboardId }) => {
+  useEffect(() => {
+    axios.get(`https://sp-taskify-api.vercel.app/2-10/members?page=1&size=20&dashboardId=${dashboardId}`)
+  })
+
   return (
     <>
       <div className="hidden lg:flex space-x-[-0.6rem]">

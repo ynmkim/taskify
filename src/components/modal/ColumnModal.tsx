@@ -16,6 +16,11 @@ interface ColumnModalProps {
 const ColumnModal: React.FC<ColumnModalProps> = ({ isOpen, onClose, title, label, placeholder, confirmButtonText, onConfirm, modalType }) => {
   const [inputValue, setInputValue] = React.useState('');
   const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+  const emailRegEx = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+  const emailValidCheck = (username: string) => {
+    return emailRegEx.test(username);
+  }
 
   const handleConfirm = () => {
     onConfirm(inputValue);
@@ -30,6 +35,7 @@ const ColumnModal: React.FC<ColumnModalProps> = ({ isOpen, onClose, title, label
   const handleDeleteCancel = () => {
     setIsDeleteModalOpen(false);
   };
+
 
   React.useEffect(() => {
     if (isOpen) {
@@ -57,7 +63,7 @@ const ColumnModal: React.FC<ColumnModalProps> = ({ isOpen, onClose, title, label
                 className="w-full border border-gray-300 rounded-lg px-3 py-3 placeholder:text-gray-500 focus:outline-violet-500"
                 value={inputValue}
                 placeholder={placeholder}
-                onChange={(e) => setInputValue(e.target.value)}
+                onChange={(e) => {setInputValue(e.target.value); emailValidCheck(e.target.value)}}
               />
               <div className={`mt-[28px] ${modalType === 'delete' ? 'lg:mt-[44px] md:mt-[44px]' : 'mt-[28px]'} flex flex-col lg:flex-row md:flex-row items-start lg:items-end md:items-end ${modalType === 'delete' ? 'justify-between' : 'justify-end'}`}>
                 {modalType === 'delete' && (
@@ -69,12 +75,16 @@ const ColumnModal: React.FC<ColumnModalProps> = ({ isOpen, onClose, title, label
                   <Button variant="default" size="modal" text="modal" onClick={onClose} className="w-[132px] lg:w-[120px] md:w-[120px] h-[42px] lg:h-[48px] md:h-[48px] py-[12px] lg:py-[14px] md:py-[14px] px-[56px] lg:px-[46px] md:px-[46px] mr-[12px]">
                     취소
                   </Button>
-                  <Button variant="violet" size="modal" text="login" onClick={handleConfirm} className="text-sm lg:text-base md:text-base w-[132px] lg:w-[120px] md:w-[120px] h-[42px] lg:h-[48px] md:h-[48px] py-[12px] lg:py-[14px] md:py-[14px] px-[56px] lg:px-[46px] md:px-[46px]">
-                    {confirmButtonText}
-                  </Button>
+                  {emailValidCheck(inputValue) ? (
+                    <Button variant="violet" size="modal" text="login" onClick={handleConfirm} className="text-sm lg:text-base md:text-base w-[132px] lg:w-[120px] md:w-[120px] h-[42px] lg:h-[48px] md:h-[48px] py-[12px] lg:py-[14px] md:py-[14px] px-[56px] lg:px-[46px] md:px-[46px]">
+                      {confirmButtonText}
+                    </Button>
+                  ) : <Button variant="violet" size="modal" text="login" onClick={handleConfirm} disabled className="text-sm lg:text-base md:text-base w-[132px] lg:w-[120px] md:w-[120px] h-[42px] lg:h-[48px] md:h-[48px] py-[12px] lg:py-[14px] md:py-[14px] px-[56px] lg:px-[46px] md:px-[46px]">
+                      {confirmButtonText}
+                    </Button>}
                 </div>
               </div>
-            </div>) :  <DeleteModal isOpen={isDeleteModalOpen} onClose={handleDeleteCancel} />
+            </div>) :  <DeleteModal isOpen={isDeleteModalOpen} onClose={handleDeleteCancel} dashboardId={1} columnId={1} />
           }
         </div>
       )}

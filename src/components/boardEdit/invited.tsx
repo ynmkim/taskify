@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 import { RiAddBoxLine } from "react-icons/ri";
 import { Button } from '../ui/button';
 import ColumnModal from '../modal/ColumnModal';
+import axios from 'axios';
 
 interface Member {
   id: number;
@@ -16,19 +17,19 @@ interface Member {
 }
 
 interface InvitedProps {
-  members: Member[];
   className?: string;
+  dashboardId: number;
+  members: Member[];
 }
 
-const Invited: React.FC<InvitedProps> = ({ members }) => {
+const Invited: React.FC<InvitedProps> = ({ dashboardId, members ,className }) => {
   const membersPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const startIndex = (currentPage - 1) * membersPerPage;
   const endIndex = startIndex + membersPerPage;
   const currentMembers = members.slice(startIndex, endIndex);
-
-  const totalPages = Math.ceil(members.length / membersPerPage);
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
@@ -49,9 +50,70 @@ const Invited: React.FC<InvitedProps> = ({ members }) => {
     setIsInviteModalOpen(false);
   };
 
-  const handleInviteConfirm = (inputValue: string) => {
-    closeInviteModal();
+  const handleInviteConfirm = async (inputValue: string) => {
+    try {
+      const response = await fetch(
+        `https://sp-taskify-api.vercel.app/2-10/dashboards/${dashboardId}/invitations`,
+        {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nzk4LCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA3MTA5NzA3LCJpc3MiOiJzcC10YXNraWZ5In0.CvyV3tAh6cO-F8uvRuOtPbZbeYRBXUWYis8Lig8Ejy0',
+          },
+          body: JSON.stringify({
+            email: inputValue,
+          }),
+        }
+      );
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+      const data = await response.json();
+      closeInviteModal();
+    } catch (error) {
+      alert(`Error sending invitation: ${(error as Error).message}`);
+    }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `https://sp-taskify-api.vercel.app/2-10/dashboards/${dashboardId}/invitations`,
+          {
+            params: {
+              page: currentPage,
+              size: membersPerPage,
+            },
+            headers: {
+              accept: 'application/json',
+              Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nzk4LCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA3MTA5NzA3LCJpc3MiOiJzcC10YXNraWZ5In0.CvyV3tAh6cO-F8uvRuOtPbZbeYRBXUWYis8Lig8Ejy0',
+            },
+          }
+        );
+
+        setTotalPages(Math.ceil(response.data.totalCount / membersPerPage));
+      } catch (error) {
+        alert(`Error fetching data: ${(error as Error).message}`);
+      }
+    };
+
+    fetchData();
+  }, [currentPage, dashboardId]);
+
+  function deleteMember(memberId: number) {
+    axios
+      .delete(`https://sp-taskify-api.vercel.app/2-10/members/${memberId}`)
+      .then(() => {
+        alert('멤버가 삭제되었습니다.');
+      })
+      .catch((error) => {
+        alert(`Error deleting member: ${error.message}`);
+      });
+  }
 
   return (
     <div className="bg-white pt-[24px] lg:pt-[32px] md:pt-[32px] px-[20px] lg:px-[28px] md:px-[20px] pb-[19px] lg:pb-[28px] md:pb-[28px] rounded-md shadow-md w-[100%] h-[404px]">
@@ -85,7 +147,12 @@ const Invited: React.FC<InvitedProps> = ({ members }) => {
               <div className='flex flex-row gap-[12px] items-center text-[14px] lg:text-[16px] md:text-[16px]'>
                 {member.email}
               </div>
-              <Button className='w-[50px] px-[10px] lg:px-[37px] md:px-[37px] lg:w-[84px] md:w-[84px] h-[32px]'>취소</Button>
+              <Button
+                className='w-[50px] px-[10px] lg:px-[37px] md:px-[37px] lg:w-[84px] md:w-[84px] h-[32px]'
+                onClick={() => deleteMember(member.id)}
+              >
+                취소
+              </Button>
             </div>
           ))}
         </div>
@@ -98,7 +165,7 @@ const Invited: React.FC<InvitedProps> = ({ members }) => {
         placeholder="codeit@codeit.com"
         confirmButtonText="초대"
         onConfirm={handleInviteConfirm}
-        modalType="delete"
+        modalType=""
       />
     </div>
   );
