@@ -1,68 +1,59 @@
 import * as React from 'react';
 import { cn } from '@/libs/utils';
 import { Button } from '@/components/ui/button';
-import { invitations } from './mock/invitations.json';
+import { invitations } from '@/pages/api/mock/invitations.json';
 
 export default function InvitedTable() {
   return (
-    <Table>
-      <colgroup>
-        <col className="w-full md:w-1/3" />
-        <col className="w-full md:w-1/3" />
-        <col className="w-full md:w-1/3" />
-      </colgroup>
-      <TableHeader>
-        <TableRow className="border-0">
-          <TableHead>이름</TableHead>
-          <TableHead>초대자</TableHead>
-          <TableHead>수락 여부</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {invitations.map((invitation) => (
-          <TableRow key={invitation.id}>
-            <TableCell>
-              <div className="flex gap-4">
-                <span className="basis-10 md:hidden block text-gray-9FA6B2 text-sm whitespace-nowrap">이름</span>
-                <span className="grow">{invitation.dashboard.title}</span>
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="flex gap-4">
-                <span className="basis-10 md:hidden block text-gray-9FA6B2 text-sm">초대자</span>
-                <span className="grow">{invitation.inviter.nickname}</span>
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="flex justify-between md:justify-start gap-2.5">
-                <Button variant="violet" size="input" text="input" className="w-full h-8 md:w-[84px] md:h-8">
-                  수락
-                </Button>
-                <Button size="input" text="input" className="w-full h-8 md:w-[84px] md:h-8">
-                  거절
-                </Button>
-              </div>
-            </TableCell>
+    <div className="max-h-[712px] md:max-h-[459px] overflow-auto">
+      <Table className="table-fixed">
+        <TableHeader className="sticky top-0 hidden md:table-header-group bg-white">
+          <TableRow className="border-0">
+            <TableHead>이름</TableHead>
+            <TableHead>초대자</TableHead>
+            <TableHead>수락 여부</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {invitations.map((invitation) => (
+            <TableRow key={invitation.id}>
+              <TableCell>
+                <div className="flex gap-4">
+                  <span className="basis-10 md:hidden block text-gray-9FA6B2 text-sm whitespace-nowrap">이름</span>
+                  <span className="grow">{invitation.dashboard.title}</span>
+                </div>
+              </TableCell>
+              <TableCell>
+                <div className="flex gap-4">
+                  <span className="basis-10 md:hidden block text-gray-9FA6B2 text-sm">초대자</span>
+                  <span className="grow">{invitation.inviter.nickname}</span>
+                </div>
+              </TableCell>
+              <TableCell>
+                <div className="flex justify-between md:justify-start gap-2.5">
+                  <Button variant="violet" size="input" text="input" className="w-full h-8 md:w-[84px] md:h-8">
+                    수락
+                  </Button>
+                  <Button size="input" text="input" className="w-full h-8 md:w-[84px] md:h-8">
+                    거절
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
-  ({ className, ...props }, ref) => (
-    <div className="relative w-full overflow-auto">
-      <table ref={ref} className={cn('w-full text-sm', className)} {...props} />
-    </div>
-  ),
+  ({ className, ...props }, ref) => <table ref={ref} className={cn('w-full text-sm', className)} {...props} />,
 );
 Table.displayName = 'Table';
 
 const TableHeader = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(
-  ({ className, ...props }, ref) => (
-    <thead ref={ref} className={cn('hidden md:table-header-group', className)} {...props} />
-  ),
+  ({ className, ...props }, ref) => <thead ref={ref} className={cn(className)} {...props} />,
 );
 TableHeader.displayName = 'TableHeader';
 
@@ -87,7 +78,7 @@ const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<
   ({ className, ...props }, ref) => (
     <th
       ref={ref}
-      className={cn('py-1  border-0 text-left align-middle text-base font-normal text-gray-9FA6B2', className)}
+      className={cn('py-1 border-0 text-left align-middle text-base font-normal text-gray-9FA6B2', className)}
       {...props}
     />
   ),
@@ -99,13 +90,14 @@ const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<
     <td
       ref={ref}
       className={cn(
-        'block md:table-cell md:py-[27px] py-2 first:pt-4 last:pb-4 align-middle text-sm md:text-base text-black-333236',
+        'block md:table-cell py-[5px] first:pt-4 last:pt-[11px] last:pb-4 md:first:pt-[27px] md:last:pt-[27px] md:last:pb-[26px] md:pt-[27px] md:pb-[26px] align-middle text-sm md:text-base text-black-333236',
         className,
       )}
       {...props}
     />
   ),
 );
+
 TableCell.displayName = 'TableCell';
 
 const TableCaption = React.forwardRef<HTMLTableCaptionElement, React.HTMLAttributes<HTMLTableCaptionElement>>(

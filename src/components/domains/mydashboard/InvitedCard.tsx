@@ -2,7 +2,7 @@ import DashboaordCardTitle from '@/components/domains/mydashboard/DashboaordCard
 import InvitedTable from '@/components/domains/mydashboard/InvitedTable';
 import { SearchInput } from './SearchInput';
 import Image from 'next/image';
-import { totalCount } from './mock/invitations.json';
+import { totalCount } from '@/pages/api/mock/invitations.json';
 
 function EmptyView() {
   return (
@@ -23,7 +23,7 @@ export default function InvitedCard() {
         <EmptyView />
       ) : (
         <>
-          <SearchInput placeholder="검색" className="mb-5" />
+          <SearchInput placeholder="검색" className="mb-2 md:mb-5" />
           <InvitedTable />
         </>
       )}
