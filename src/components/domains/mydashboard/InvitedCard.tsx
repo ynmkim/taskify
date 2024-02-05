@@ -23,7 +23,7 @@ export default function InvitedCard() {
         <EmptyView />
       ) : (
         <>
-          <SearchInput placeholder="검색" className="mb-5" />
+          <SearchInput placeholder="검색" className="mb-2 md:mb-5" />
           <InvitedTable />
         </>
       )}
