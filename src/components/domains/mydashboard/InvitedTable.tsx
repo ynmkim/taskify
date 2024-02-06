@@ -5,23 +5,18 @@ import { invitations } from '@/pages/api/mock/invitations.json';
 
 export default function InvitedTable() {
   return (
-    <div className="relative w-full overflow-auto">
-      <Table>
-        <colgroup>
-          <col className="w-full md:w-1/3" />
-          <col className="w-full md:w-1/3" />
-          <col className="w-full md:w-1/3" />
-        </colgroup>
-        <TableHeader className="hidden md:table-header-group">
+    <div className="max-h-[712px] md:max-h-[459px] overflow-auto">
+      <Table className="table-fixed">
+        <TableHeader className="sticky top-0 hidden md:table-header-group bg-white">
           <TableRow className="border-0">
             <TableHead>이름</TableHead>
             <TableHead>초대자</TableHead>
             <TableHead>수락 여부</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody className="block max-h-[600px] md:max-h-[360px] overflow-y-scroll">
+        <TableBody>
           {invitations.map((invitation) => (
-            <TableRow key={invitation.id} className="table w-full">
+            <TableRow key={invitation.id}>
               <TableCell>
                 <div className="flex gap-4">
                   <span className="basis-10 md:hidden block text-gray-9FA6B2 text-sm whitespace-nowrap">이름</span>
@@ -83,7 +78,7 @@ const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<
   ({ className, ...props }, ref) => (
     <th
       ref={ref}
-      className={cn('py-1  border-0 text-left align-middle text-base font-normal text-gray-9FA6B2', className)}
+      className={cn('py-1 border-0 text-left align-middle text-base font-normal text-gray-9FA6B2', className)}
       {...props}
     />
   ),
@@ -95,13 +90,14 @@ const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<
     <td
       ref={ref}
       className={cn(
-        'block md:table-cell py-2 md:py-[27px] first:pt-4 last:pb-4 md:first:pt-[30px] md:last:pb-[29px] align-middle text-sm md:text-base text-black-333236',
+        'block md:table-cell py-[5px] first:pt-4 last:pt-[11px] last:pb-4 md:first:pt-[27px] md:last:pt-[27px] md:last:pb-[26px] md:pt-[27px] md:pb-[26px] align-middle text-sm md:text-base text-black-333236',
         className,
       )}
       {...props}
     />
   ),
 );
+
 TableCell.displayName = 'TableCell';
 
 const TableCaption = React.forwardRef<HTMLTableCaptionElement, React.HTMLAttributes<HTMLTableCaptionElement>>(
