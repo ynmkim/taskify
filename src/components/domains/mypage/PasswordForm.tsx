@@ -3,10 +3,11 @@ import { Input } from '@/components/ui/base-input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/libs/utils';
 
-interface ChangePasswordCardProps {
+interface PasswordFormProps {
   className?: string;
 }
-export default function ChangePasswordCard({ className, ...props }: ChangePasswordCardProps) {
+
+export default function PasswordCard({ className, ...props }: PasswordFormProps) {
   return (
     <form className={cn('flex flex-col gap-6', className)} {...props}>
       <div className="flex flex-col gap-2.5">
