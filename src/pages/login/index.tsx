@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import useLogin from '@/hooks/useLogin';
+import LocalStorage from '@/libs/localstorage';
 import { AuthInputType, LoginFormData } from '@/../type';
 import AuthInput from '@/components/auth/input/AuthInput';
 import { Button } from '@/components/ui/button';
-import { useForm } from 'react-hook-form';
-import useLogin from '@/hooks/useLogin';
-import { useRouter } from 'next/router';
 
 export default function SignUp() {
   const {
@@ -25,8 +26,8 @@ export default function SignUp() {
       const accessToken = loginResult.data.accessToken;
       const userData = loginResult.data.user;
 
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('userData', JSON.stringify(userData));
+      LocalStorage.setItem('accessToken', accessToken);
+      LocalStorage.setItem('userData', JSON.stringify(userData));
 
       router.push('/mydashboard');
     } else if (typeof loginResult === 'string') {
