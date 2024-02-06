@@ -22,8 +22,11 @@ export default function SignUp() {
     const loginResult = await logIn(data);
 
     if (typeof loginResult === 'object') {
-      const acceesToken = loginResult.data.accessToken;
+      const accessToken = loginResult.data.accessToken;
       const userData = loginResult.data.user;
+
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('userData', JSON.stringify(userData));
 
       router.push('/mydashboard');
     } else if (typeof loginResult === 'string') {
