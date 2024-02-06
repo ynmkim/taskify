@@ -45,13 +45,7 @@ function AvatarInput({ className, name, value, onChange, ...props }: AvatarInput
     >
       {value && (
         <div className="relative w-full h-full">
-          <Image
-            src={preview}
-            alt="이미지 미리보기"
-            className={cn('block w-full h-full object-center object-cover', { 'opacity-50': preview })}
-            layout="fill"
-            objectFit="cover"
-          />
+          <Image fill src={preview} alt="이미지 미리보기" className={cn('object-cover', { 'opacity-50': preview })} />
         </div>
       )}
       <button
@@ -59,7 +53,7 @@ function AvatarInput({ className, name, value, onChange, ...props }: AvatarInput
         onClick={handleUploadClick}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 md:w-[30px] md:h-[30px] cursor-pointer"
       >
-        <Image src="/plus_upload.svg" alt="이미지 업로드" className="w-full h-full" layout="fill" objectFit="cover" />
+        <Image fill src="/plus_upload.svg" alt="이미지 업로드" className="object-cover" />
       </button>
       <Input
         type="file"
