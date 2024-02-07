@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType, GetServerSidePropsContext } from 'next';
 import { parse } from 'cookie';
 import { instance } from '@/libs/axios';
 import { INVITATION_URL } from '@/constants/apiUrl';
+import { useInvitationStore } from '@/store/invitationStore';
 import InvitedCard from '@/components/domains/mydashboard/InvitedCard';
 import DashboardList from '@/components/domains/mydashboard/DashboardList';
 import Pagination from '@/components/domains/mydashboard/Pagination';
@@ -9,7 +11,14 @@ import Pagination from '@/components/domains/mydashboard/Pagination';
 import DashboardHeader from '@/components/header/dashboardHeader';
 import SideBar from '@/components/domains/dashboard/sidebar/SideBar';
 
-export default function MyDashboardPage({}: InferGetServerSidePropsType<GetServerSideProps>) {
+export default function MyDashboardPage({ invitationData }: InferGetServerSidePropsType<GetServerSideProps>) {
+  const setInvitationData = useInvitationStore((state) => state.setInvitationData);
+
+  useEffect(() => {
+    setInvitationData(invitationData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="flex w-screen bg-gray-FAFAFA">
       <SideBar />

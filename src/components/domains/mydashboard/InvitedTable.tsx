@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { cn } from '@/libs/utils';
 import { Button } from '@/components/ui/button';
-import { invitations } from '@/pages/api/mock/invitations.json';
+import { useInvitationStore } from '@/store/invitationStore';
 
 export default function InvitedTable() {
+  const invitaionData = useInvitationStore((state) => state.invitationData);
+  const invitaionList = invitaionData.invitations;
+
   return (
     <div className="max-h-[712px] md:max-h-[459px] overflow-auto">
       <Table className="table-fixed">
@@ -15,7 +18,7 @@ export default function InvitedTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invitations.map((invitation) => (
+          {invitaionList.map((invitation) => (
             <TableRow key={invitation.id}>
               <TableCell>
                 <div className="flex gap-4">

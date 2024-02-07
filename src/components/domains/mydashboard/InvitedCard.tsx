@@ -2,7 +2,7 @@ import DashboaordCardTitle from '@/components/domains/mydashboard/DashboaordCard
 import InvitedTable from '@/components/domains/mydashboard/InvitedTable';
 import { SearchInput } from './SearchInput';
 import Image from 'next/image';
-import { totalCount } from '@/pages/api/mock/invitations.json';
+import { useInvitationStore } from '@/store/invitationStore';
 
 function EmptyView() {
   return (
@@ -16,10 +16,13 @@ function EmptyView() {
 }
 
 export default function InvitedCard() {
+  const invitaionData = useInvitationStore((state) => state.invitationData);
+  const invitaionList = invitaionData.invitations;
+
   return (
     <div className="max-w-[1022px] pt-6 pb-5 px-4 md:pt-8 md:pb-0 md:px-7 rounded-lg bg-white">
       <DashboaordCardTitle className="mb-6">초대받은 대시보드</DashboaordCardTitle>
-      {totalCount === 0 ? (
+      {invitaionList.length === 0 ? (
         <EmptyView />
       ) : (
         <>
