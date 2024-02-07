@@ -26,7 +26,7 @@ export default function SignUp() {
       const accessToken = loginResult.data.accessToken;
       const userData = loginResult.data.user;
 
-      LocalStorage.setItem('accessToken', accessToken);
+      document.cookie = `accessToken = ${accessToken}`;
       LocalStorage.setItem('userData', JSON.stringify(userData));
 
       router.push('/mydashboard');

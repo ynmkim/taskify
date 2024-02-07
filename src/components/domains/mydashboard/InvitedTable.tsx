@@ -2,16 +2,8 @@ import * as React from 'react';
 import { cn } from '@/libs/utils';
 import { Button } from '@/components/ui/button';
 import { invitations } from '@/pages/api/mock/invitations.json';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import axios from 'axios';
-import { instance } from '@/libs/axios';
-import { INVITATION_URL } from '@/constants/apiUrl';
 
-export default async function InvitedTable({ data }: InferGetServerSidePropsType<GetServerSideProps>) {
-  const datas = await instance.get(INVITATION_URL, {
-    headers: { Authorization: 'Bearer' },
-  });
-  console.log(datas);
+export default function InvitedTable() {
   return (
     <div className="max-h-[712px] md:max-h-[459px] overflow-auto">
       <Table className="table-fixed">
@@ -114,11 +106,3 @@ const TableCaption = React.forwardRef<HTMLTableCaptionElement, React.HTMLAttribu
 TableCaption.displayName = 'TableCaption';
 
 export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption };
-
-export async function getServerSideProps() {
-  const data = await instance.get(INVITATION_URL);
-
-  return {
-    props: { data },
-  };
-}

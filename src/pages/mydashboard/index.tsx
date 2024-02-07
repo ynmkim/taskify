@@ -1,3 +1,7 @@
+import { GetServerSideProps, InferGetServerSidePropsType, GetServerSidePropsContext } from 'next';
+import { parse } from 'cookie';
+import { instance } from '@/libs/axios';
+import { INVITATION_URL } from '@/constants/apiUrl';
 import InvitedCard from '@/components/domains/mydashboard/InvitedCard';
 import DashboardList from '@/components/domains/mydashboard/DashboardList';
 import Pagination from '@/components/domains/mydashboard/Pagination';
@@ -5,7 +9,7 @@ import Pagination from '@/components/domains/mydashboard/Pagination';
 import DashboardHeader from '@/components/header/dashboardHeader';
 import SideBar from '@/components/domains/dashboard/sidebar/SideBar';
 
-export default function MyDashboardPage() {
+export default function MyDashboardPage({}: InferGetServerSidePropsType<GetServerSideProps>) {
   return (
     <div className="flex w-screen bg-gray-FAFAFA">
       <SideBar />
@@ -22,4 +26,19 @@ export default function MyDashboardPage() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps({ req }: GetServerSidePropsContext) {
+  const cookies = parse(req.headers.cookie || '');
+  const accessToken = cookies.accessToken;
+
+  const response = await instance.get(INVITATION_URL, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+
+  const invitationData = response.data;
+
+  return {
+    props: { invitationData },
+  };
 }
