@@ -1,24 +1,20 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import SideBar from "./sidebar/SideBar";
 import { useDashboard } from "@/contexts/useDashboard";
+import { Dashboard } from "@/types/DashboardType";
+import { getDashboard } from "@/libs/network";
 
 const Layout = ({ children }: {children:ReactNode}) => {
-  const { dashboards, updateDashboards, isLoading } = useDashboard();
+  const [dashboards, setDashboards] = useState<Dashboard[]>([]);
   
   useEffect(() => {
     const getDashboardData = async() => {
-      updateDashboards();
-    }
+      const dashboardData = await getDashboard();
+      setDashboards(dashboardData);
+    };
+
     getDashboardData();
   },[]);
-
-  useEffect(() => {
-    console.log(dashboards);
-  }, [dashboards])
-  
-  if (isLoading) {
-    return <div>Loading...</div>;  // 로딩 UI
-  }
 
   return(
     <div className="flex">

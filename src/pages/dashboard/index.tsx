@@ -7,15 +7,6 @@ import { ReactElement, useEffect } from "react";
 
 export default function DashboardPage() {
 
-  const { dashboards, updateDashboards } = useDashboard();
-
-  useEffect(() => {
-    updateDashboards();
-  },[]);
-
-  useEffect(() => {
-    console.log(dashboards);
-  },[dashboards]);
   return (
     <>
         <DashboardHeader columnName="비브리지" />

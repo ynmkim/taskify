@@ -3,17 +3,10 @@ import DashboardList from '@/components/domains/mydashboard/DashboardList';
 import Pagination from '@/components/domains/mydashboard/Pagination';
 // import AddDashboardModal from '@/components/domains/mydashboard/AddDashboardModal';
 import DashboardHeader from '@/components/header/dashboardHeader';
-import SideBar from '@/components/domains/dashboard/sidebar/SideBar';
-import Layout from '@/components/domains/dashboard/Layout';
-import { useDashboard } from '@/contexts/useDashboard';
-import { useEffect } from 'react';
+import Layout from '@/components/domains/dashboard/layout';
+import { ReactElement } from 'react';
 
 export default function MyDashboardPage() {
-  const { updateDashboards } = useDashboard();
-
-  useEffect(() => {
-    updateDashboards();
-  },[]);
 
   return (
     <>
@@ -29,4 +22,12 @@ export default function MyDashboardPage() {
     </>
 
   );
+}
+
+MyDashboardPage.getLayout = function getLayout(page:ReactElement) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  )
 }
