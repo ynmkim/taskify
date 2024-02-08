@@ -28,14 +28,12 @@ export interface CreateCardModalForm {
 export interface ModalProps {
   isOpen: boolean;
   onCancel: () => void;
-  dashboardId?: number;
+  dashboardId: number;
   columnId?: number;
   getCards: () => void;
 }
 
-export function CreateCardModal({ dashboardId, columnId }: ModalProps) {
-  columnId = 9712;
-  dashboardId = 2930;
+export function CreateCardModal({ dashboardId = 2930, columnId = 9712 }: ModalProps) {
   const form = useForm<CreateCardModalForm>({
     mode: 'onChange',
   });
