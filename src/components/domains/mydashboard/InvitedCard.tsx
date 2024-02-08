@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from './TableLayout';
-import DashboaordCardTitle from '@/components/domains/mydashboard/DashboaordCardTitle';
+import CardTitle from '@/components/common/CardTitle';
 import EmptyView from './EmptyView';
 import { SearchInput } from './SearchInput';
 import { Button } from '@/components/ui/button';
@@ -28,7 +28,7 @@ export default function InvitedCard(initialInvitationData: InvitationData) {
 
   return (
     <div className="max-w-[1022px] pt-6 pb-5 px-4 md:pt-8 md:pb-0 md:px-7 rounded-lg bg-white">
-      <DashboaordCardTitle className="mb-6">초대받은 대시보드</DashboaordCardTitle>
+      <CardTitle className="mb-6">초대받은 대시보드</CardTitle>
       {invitationList.length === 0 ? (
         <EmptyView />
       ) : (
