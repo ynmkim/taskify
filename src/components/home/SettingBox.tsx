@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { SettingBoxProps } from '../../../type';
+import { SettingBoxProps } from '@/types/HomeType';
 
 export default function SettingBox({ src, width, height, title, description }: SettingBoxProps) {
   return (

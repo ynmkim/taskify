@@ -1,0 +1,26 @@
+### 대시보드 초대
+POST https://sp-taskify-api.vercel.app/2-10/dashboards/2930/invitations
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nzk4LCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA2OTYzNTY5LCJpc3MiOiJzcC10YXNraWZ5In0.4k4gGN7IlhMem3pl93isjoMynL0JoU6tZv9uugBrWQQ
+
+{
+  "email": "test@test.com",
+}
+
+### 대시보드 생성
+POST https://sp-taskify-api.vercel.app/2-10/dashboards
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nzk4LCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA2OTYzNTY5LCJpc3MiOiJzcC10YXNraWZ5In0.4k4gGN7IlhMem3pl93isjoMynL0JoU6tZv9uugBrWQQ
+
+{
+  "title": "test5",
+  "color": "#7AC555"
+}
+
+### 대시보드 조회
+GET https://sp-taskify-api.vercel.app/2-10/dashboards?navigationMethod=infiniteScroll
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nzk4LCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA2OTYzNTY5LCJpc3MiOiJzcC10YXNraWZ5In0.4k4gGN7IlhMem3pl93isjoMynL0JoU6tZv9uugBrWQQ
