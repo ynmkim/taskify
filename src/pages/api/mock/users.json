@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "email": "test@codeit.com",
+  "nickname": "김코드잇",
+  "profileImageUrl": "string",
+  "createdAt": "2024-02-03T13:03:50.893Z",
+  "updatedAt": "2024-02-03T13:03:50.893Z"
+}

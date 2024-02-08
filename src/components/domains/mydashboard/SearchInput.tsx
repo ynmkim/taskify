@@ -10,7 +10,7 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(({ clas
   return (
     <div className={cn('relative h-10', className)}>
       <div className="absolute top-1/2 left-3 md:left-4 -translate-y-1/2 w-[22px] h-[22px] md:w-6 md:h-6">
-        <Image src="/search.svg" alt="" layout="fill" objectFit="cover" />
+        <Image fill src="/search.svg" alt="" className="object-cover" />
       </div>
       <input
         type="text"

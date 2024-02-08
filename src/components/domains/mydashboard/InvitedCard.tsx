@@ -1,14 +1,14 @@
-import DashboaordCardTitle from '@/components/domains/mydashboard/DashboaordCardTitle';
+import DashboaordCardTitle from '@/components/common/CardTitle';
 import InvitedTable from '@/components/domains/mydashboard/InvitedTable';
 import { SearchInput } from './SearchInput';
 import Image from 'next/image';
-import { totalCount } from './mock/invitations.json';
+import { totalCount } from '@/pages/api/mock/invitations.json';
 
 function EmptyView() {
   return (
     <div className="flex flex-col justify-center items-center gap-6 pt-[85px] pb-[154px] md:pt-[46px] md:pb-[128px]">
       <div className="relative w-[60px] h-[60px] md:w-[100px] md:h-[100px]">
-        <Image src="/empty_view.svg" alt="" layout="fill" objectFit="cover" />
+        <Image fill src="/empty_view.svg" alt="" className="object-cover" />
       </div>
       <p className="text-sm md:text-lg text-gray-9FA6B2 ">아직 초대받은 대시보드가 없어요</p>
     </div>
@@ -23,7 +23,7 @@ export default function InvitedCard() {
         <EmptyView />
       ) : (
         <>
-          <SearchInput placeholder="검색" className="mb-5" />
+          <SearchInput placeholder="검색" className="mb-2 md:mb-5" />
           <InvitedTable />
         </>
       )}
