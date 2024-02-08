@@ -4,12 +4,19 @@ import Pagination from '@/components/domains/mydashboard/Pagination';
 // import AddDashboardModal from '@/components/domains/mydashboard/AddDashboardModal';
 import DashboardHeader from '@/components/header/dashboardHeader';
 import SideBar from '@/components/domains/dashboard/sidebar/SideBar';
+import Layout from '@/components/domains/dashboard/Layout';
+import { useDashboard } from '@/contexts/useDashboard';
+import { useEffect } from 'react';
 
 export default function MyDashboardPage() {
+  const { updateDashboards } = useDashboard();
+
+  useEffect(() => {
+    updateDashboards();
+  },[]);
+
   return (
-    <div className="flex w-screen bg-gray-FAFAFA">
-      <SideBar />
-      <div className="flex flex-col w-full">
+    <>
         <DashboardHeader columnName="내 대시보드" type="myDashboard" />
         <main className="grow p-6 md:p-10">
           <div className="flex flex-col items-end max-w-[1022px] mb-6 sm:mb-10 md:mb-11 ">
@@ -19,7 +26,7 @@ export default function MyDashboardPage() {
           <InvitedCard />
           {/* <AddDashboardModal /> */}
         </main>
-      </div>
-    </div>
+    </>
+
   );
 }

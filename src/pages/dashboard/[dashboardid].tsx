@@ -1,17 +1,38 @@
+import AddColumnDialog from "@/components/dialog/AddColumnDialog";
 import SideBar from "@/components/domains/dashboard/sidebar/SideBar";
-import { getDashboard } from "@/libs/network";
-import { Dashboard } from "@/types/DashboardType";
+import DashboardHeader from "@/components/header/dashboardHeader";
+import Column from "@/containers/Column";
+import { useDashboard } from "@/contexts/useDashboard";
+import { useEffect } from "react";
 
-export async function getServerSideProps() {
-  const data = await getDashboard();
+export default function DashboardIdPage() {
 
-  return {
-    props: {data}
-  }
-}
+  const { dashboards, updateDashboards } = useDashboard();
 
-export default function DashboardIdPage({ data }:{ data:Dashboard[]}) {
+  useEffect(() => {
+    updateDashboards();
+  },[]);
+
+  useEffect(() => {
+    console.log(dashboards);
+  },[dashboards]);
   return (
-    <SideBar dashboards={data}/>
+    <div className="flex">
+      <SideBar dashboards={dashboards}/>
+      <main className="flex flex-col max-w-[100vw]">
+        <DashboardHeader columnName="비브리지" />
+        <div className="flex flex-col lg:flex-row w-full bg-gray-FAFAFA overflow-scroll">
+          <Column />
+          <Column />
+          <Column />
+          <div>
+            <AddColumnDialog />
+          </div>
+        </div>
+      </main>
+    </div>
+
+
   );
 }
+

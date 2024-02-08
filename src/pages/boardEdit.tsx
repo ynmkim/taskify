@@ -8,6 +8,7 @@ import SideBar from '@/components/domains/dashboard/sidebar/SideBar';
 import DashboardHeader from '@/components/header/dashboardHeader';
 
 import { IoIosArrowBack } from 'react-icons/io';
+import { useDashboard } from '@/contexts/useDashboard';
 
 const apiResponse = {
   members: [
@@ -72,9 +73,11 @@ const apiResponse = {
 
 
 const BoardEdit: React.FC = () => {
+  const { dashboards } = useDashboard();
+
   return (
     <div className='flex flex-row'> 
-      <SideBar />
+      <SideBar dashboards={dashboards}/>
       <div className='w-[100%]'>
         <DashboardHeader columnName='비브리지' type='' />
         <div className='flex flex-col gap-[40px] mx-[20px] w-[284px] md:w-[554px] lg:w-[620px]'>

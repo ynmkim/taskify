@@ -1,24 +1,23 @@
 import AddColumnDialog from "@/components/dialog/AddColumnDialog";
-import SideBar from "@/components/domains/dashboard/sidebar/SideBar";
+import Layout from "@/components/domains/dashboard/layout";
 import DashboardHeader from "@/components/header/dashboardHeader";
 import Column from "@/containers/Column";
-import { getDashboard } from "@/libs/network";
-import { Dashboard } from "@/types/DashboardType";
+import { useDashboard } from "@/contexts/useDashboard";
+import { ReactElement, useEffect } from "react";
 
-export async function getServerSideProps() {
-  const data = await getDashboard();
+export default function DashboardPage() {
 
-  return {
-    props: {data}
-  }
-}
+  const { dashboards, updateDashboards } = useDashboard();
 
-export default function DashboardPage({ data }:{ data:Dashboard[]}) {
+  useEffect(() => {
+    updateDashboards();
+  },[]);
 
+  useEffect(() => {
+    console.log(dashboards);
+  },[dashboards]);
   return (
-    <div className="flex">
-      <SideBar dashboards={data}/>
-      <main className="flex flex-col max-w-[100vw]">
+    <>
         <DashboardHeader columnName="비브리지" />
         <div className="flex flex-col lg:flex-row w-full bg-gray-FAFAFA overflow-scroll">
           <Column />
@@ -28,7 +27,15 @@ export default function DashboardPage({ data }:{ data:Dashboard[]}) {
             <AddColumnDialog />
           </div>
         </div>
-      </main>
-    </div>
+    </>
+
   );
+}
+
+DashboardPage.getLayout = function getLayout(page:ReactElement) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  )
 }
