@@ -11,6 +11,7 @@ import DashboardHeader from '@/components/header/dashboardHeader';
 import SideBar from '@/components/domains/dashboard/sidebar/SideBar';
 
 export default function MyDashboardPage({ invitationData }: InferGetServerSidePropsType<GetServerSideProps>) {
+  console.log('=== Initial Data ===', 'cursor:', invitationData.cursorId, 'invitations', invitationData.invitations);
   return (
     <div className="flex w-screen bg-gray-FAFAFA">
       <SideBar />
