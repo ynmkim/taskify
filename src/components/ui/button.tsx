@@ -24,7 +24,7 @@ const buttonVariants = cva(
       },
       variant: {
         default: 'bg-white border border-gray-D9D9D9',
-        violet: 'bg-violet-5534DA text-white disabled:bg-gray',
+        violet: 'bg-violet-5534DA text-white disabled:bg-gray-9FA6B2',
       },
     },
     defaultVariants: {
@@ -44,13 +44,7 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, text, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, text, className }))}
-        ref={ref}
-        {...props}
-      />
-    );
+    return <Comp className={cn(buttonVariants({ variant, size, text, className }))} ref={ref} {...props} />;
   },
 );
 Button.displayName = 'Button';

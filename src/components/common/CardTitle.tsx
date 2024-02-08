@@ -6,7 +6,7 @@ interface TitleProps {
   className?: string;
 }
 
-export default function DashboardCardTitle({ className, children, ...props }: TitleProps) {
+export default function CardTitle({ className, children, ...props }: TitleProps) {
   return (
     <h2 className={cn('text-xl md:text-2xl font-bold text-black-333236', className)} {...props}>
       {children}
