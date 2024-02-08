@@ -15,7 +15,9 @@ const SideBar = ({dashboards}:{dashboards:Dashboard[]}) => {
       <div className="w-[67px] md:w-40 lg:w-[300px] flex flex-col gap-[18px]">
         <div className="flex items-center w-full justify-between px-6">
           <p className="text-xs font-bold text-gray-787486 hidden md:block">Dash Boards</p>
-          <AddDashboardDialog />
+          <div>
+            <AddDashboardDialog />
+          </div>
         </div>
         <ul className="px-3 flex flex-col gap-[3px] justify-center">
           {dashboards.map((data) => <MenuItem key={data.id} link={data.id} createdByMe={data.createdByMe}>{data.title}</MenuItem>)}
