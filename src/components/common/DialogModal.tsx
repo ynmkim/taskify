@@ -13,7 +13,9 @@ export function DialogModal({ children, name, ...rest }: DialogModalProps) {
       <DialogTrigger asChild>
         <Button>{name}</Button>
       </DialogTrigger>
-      <DialogContent {...rest}>{children}</DialogContent>
+      <DialogContent className=" px-5 pb-5 pt-7 md:px-7 md:pt-8 md:pb-7" {...rest}>
+        {children}
+      </DialogContent>
     </Dialog>
   );
 }
