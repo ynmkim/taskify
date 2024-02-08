@@ -24,11 +24,12 @@ export interface CreateCardModalForm {
   dashboardId: number;
   columnId: number;
 }
+
 export interface ModalProps {
   isOpen: boolean;
   onCancel: () => void;
-  dashboardId: number;
-  columnId: number;
+  dashboardId?: number;
+  columnId?: number;
   getCards: () => void;
 }
 
@@ -64,8 +65,6 @@ export function CreateCardModal({ dashboardId, columnId }: ModalProps) {
   const onSubmit = async () => {
     await postCard();
   };
-
-  console.log(form.formState.isValid);
 
   return (
     <div>
