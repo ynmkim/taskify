@@ -1,11 +1,27 @@
-import * as React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { cn } from '@/libs/utils';
+import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from './TableLayout';
+
 import { Button } from '@/components/ui/button';
 import { useInvitationStore } from '@/store/invitationStore';
+import { Invitation } from '@/types/InvitationType';
 
 export default function InvitedTable() {
   const invitaionData = useInvitationStore((state) => state.invitationData);
-  const invitaionList = invitaionData.invitations;
+  const cursorId: number | null = invitaionData.cursorId;
+  const invitationList: Invitation[] = invitaionData.invitations;
+  // useInvitation에서 set해서 invitaionData를 바꾸면 useState 필요없는지 고민
+  // const [cursorId, setCursorId] = useState<number | null>(invitaionData.cursorId);
+  // const [invitationList, setInvitationList] = useState<Invitation[]>(invitaionData.invitations);
+
+  console.log('cursorId', cursorId, 'invitaions', invitationList);
+
+  const lastElementRef = useRef<HTMLTableRowElement>(null);
+  useEffect(() => {
+    if (lastElementRef.current) {
+      console.log('lastEl', lastElementRef.current.id);
+    }
+  });
 
   return (
     <div className="max-h-[712px] md:max-h-[459px] overflow-auto">
@@ -18,8 +34,12 @@ export default function InvitedTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invitaionList.map((invitation) => (
-            <TableRow key={invitation.id}>
+          {invitationList.map((invitation, idx) => (
+            <TableRow
+              key={invitation.id}
+              id={invitation.id.toString()}
+              ref={idx === invitationList.length - 1 ? lastElementRef : null}
+            >
               <TableCell>
                 <div className="flex gap-4">
                   <span className="basis-10 md:hidden block text-gray-9FA6B2 text-sm whitespace-nowrap">이름</span>
@@ -49,63 +69,3 @@ export default function InvitedTable() {
     </div>
   );
 }
-
-const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
-  ({ className, ...props }, ref) => <table ref={ref} className={cn('w-full text-sm', className)} {...props} />,
-);
-Table.displayName = 'Table';
-
-const TableHeader = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(
-  ({ className, ...props }, ref) => <thead ref={ref} className={cn(className)} {...props} />,
-);
-TableHeader.displayName = 'TableHeader';
-
-const TableBody = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(
-  ({ className, ...props }, ref) => <tbody ref={ref} className={cn(className)} {...props} />,
-);
-TableBody.displayName = 'TableBody';
-
-const TableFooter = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(
-  ({ className, ...props }, ref) => <tfoot ref={ref} className={cn('border-t font-medium', className)} {...props} />,
-);
-TableFooter.displayName = 'TableFooter';
-
-const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
-  ({ className, ...props }, ref) => (
-    <tr ref={ref} className={cn('border-b-[1px] border-[#EEEEEE] last:border-0', className)} {...props} />
-  ),
-);
-TableRow.displayName = 'TableRow';
-
-const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<HTMLTableCellElement>>(
-  ({ className, ...props }, ref) => (
-    <th
-      ref={ref}
-      className={cn('py-1 border-0 text-left align-middle text-base font-normal text-gray-9FA6B2', className)}
-      {...props}
-    />
-  ),
-);
-TableHead.displayName = 'TableHead';
-
-const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTableCellElement>>(
-  ({ className, ...props }, ref) => (
-    <td
-      ref={ref}
-      className={cn(
-        'block md:table-cell py-[5px] first:pt-4 last:pt-[11px] last:pb-4 md:first:pt-[27px] md:last:pt-[27px] md:last:pb-[26px] md:pt-[27px] md:pb-[26px] align-middle text-sm md:text-base text-black-333236',
-        className,
-      )}
-      {...props}
-    />
-  ),
-);
-
-TableCell.displayName = 'TableCell';
-
-const TableCaption = React.forwardRef<HTMLTableCaptionElement, React.HTMLAttributes<HTMLTableCaptionElement>>(
-  ({ className, ...props }, ref) => <caption ref={ref} className={cn(className)} {...props} />,
-);
-TableCaption.displayName = 'TableCaption';
-
-export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption };

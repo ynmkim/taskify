@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import { forwardRef, useState } from 'react';
 import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
-import { AuthInputType, AuthInputProps } from '@/../type';
+import { AuthInputType, AuthInputProps } from '@/types/AuthType';
 import CustomInput from '@/components/common/CustomInput';
 
 const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
