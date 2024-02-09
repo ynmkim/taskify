@@ -27,15 +27,16 @@ export const postDashboard = async () => {
   }
 };
 
-export const getDashboard = async() => {
+export const getDashboard = async(pageNumber:number) => {
   try {
     const response = await instance.get('/dashboards', {
       params: {
-        navigationMethod: 'infiniteScroll'
+        navigationMethod: 'pagination',
+        page: pageNumber
       }, 
       headers: header
     });
-    return response.data.dashboards;
+    return response.data;
   } catch (error) {
     alert(error);
   }
@@ -114,6 +115,21 @@ export const getCard = async(id:number) => {
     alert(error)
   }
 };
+
+export const getMoreCard = async(id:number, cursor:number) => {
+  try{
+    const response = await instance.get('/cards', {
+      params: {
+        columnId:id,
+        cursorId:cursor
+      },
+      headers:header
+    })
+    return response;
+  } catch (error) {
+    alert(error)
+  }
+}
 
 export const postImage = async() => {
   const data = {

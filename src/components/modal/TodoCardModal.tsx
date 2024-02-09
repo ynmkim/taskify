@@ -7,8 +7,11 @@ import { Button } from "../ui/button";
 import Comment from "./Comment";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { Card } from "@/types/DashboardType";
 
-const TodoCardModal = () => {
+const colorArray:Array<'orange'|'pink'|'blue'|'green'> = ['orange', 'pink', 'blue', 'green'];
+
+const TodoCardModal = ({card, columnTitle}:{card:Card, columnTitle:string}) => {
   return(
     <div className="px-5 py-7 md:px-7 md:py-8 bg-white flex flex-col gap-6 w-[327px] md:w-[680px] lg:w-[730px] rounded-lg">
       <div className="flex md:items-center md:justify-between flex-col md:flex-row gap-1 md:gap-0">
@@ -29,21 +32,21 @@ const TodoCardModal = () => {
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex flex-col gap-4 order-2 md:order-1">
           <div className="flex gap-5">
-            <Chip variant="primary" size="large">To Do</Chip>
+            <Chip variant="primary" size="large">{columnTitle}</Chip>
             <div className="w-px h-5 bg-gray-D9D9D9" />
             <div className="flex gap-1.5">
-              <Chip variant="basic" color="orange" size="large">프로젝트</Chip>
-              <Chip variant="basic" color="green" size="large">일반</Chip>
-              <Chip variant="basic" color="pink" size="large">백엔드</Chip>
-              <Chip variant="basic" color="blue" size="large">상</Chip>
+            {card.tags.map((tag, idx) => <Chip variant="basic" size="large" color={colorArray[idx % 4]} key={idx}>{tag}</Chip>)}
             </div>
           </div>
           <p className="font-Pretendard text-xs">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, nemo numquam quaerat ex quae ipsum praesentium voluptatem rem sed quibusdam quo accusamus nobis, vel inventore! Inventore nemo fuga vitae qui?
+            {card.description}
           </p>
-          <div className="relative w-[287px] h-[167px] md:w-[420px] md:h-[245px] lg:w-[450px] lg:h-[263px]">
-            <Image src='/landing.jpg' alt="임시" fill/>
-          </div>
+          {
+            card.imageUrl && 
+            <div className="relative w-[287px] h-[167px] md:w-[420px] md:h-[245px] lg:w-[450px] lg:h-[263px]">
+              <Image src={card.imageUrl} alt="임시" fill/>
+            </div>
+          }
           <form action="" className="w-[287px] md:w-[420px] lg:w-[450px] flex flex-col gap-2.5 relative">
             <label className="font-Pretendard text-base font-medium text-black-333236">댓글</label>
             <textarea className="border rounded-md px-4 py-4 h-[110px]" placeholder="댓글 입력하기"/>
@@ -59,12 +62,12 @@ const TodoCardModal = () => {
             <p className="font-Pretendard font-semibold text-[10px] md:text-xs">담당자</p>
             <div className="flex items-center gap-2">
               <Avatar size="m" nickname="B"/>
-              <p className="font-Pretendard text-xs md:text-sm text-black-333236">배유철</p>
+              <p className="font-Pretendard text-xs md:text-sm text-black-333236">{card.assignee.nickname}</p>
             </div>
           </div>
           <div className="flex flex-col gap-1.5">
             <p className="font-Pretendard font-semibold text-[10px] md:text-xs">마감일</p>
-            <p className="font-Pretendard text-xs md:text-sm text-black-333236 flex items-center grow md:grow-0 md:items-start md:block">2022.12.30 19:00</p>
+            <p className="font-Pretendard text-xs md:text-sm text-black-333236 flex items-center grow md:grow-0 md:items-start md:block">{card.dueDate}</p>
           </div>
         </div>
       </div>

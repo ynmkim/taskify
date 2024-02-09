@@ -19,7 +19,7 @@ export interface Card {
     nickname:string;
     id:number;
   };
-  imageUrl:string;
+  imageUrl:string | null;
   teamId:string;
   columnId:string;
   createdAt:string;

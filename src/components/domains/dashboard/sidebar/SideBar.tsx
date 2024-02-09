@@ -2,8 +2,13 @@ import Image from "next/image";
 import MenuItem from "./MenuItem";
 import { Dashboard } from "@/types/DashboardType";
 import AddDashboardDialog from "@/components/dialog/AddDashboardDialog";
+import { forwardRef } from "react";
 
-const SideBar = ({dashboards}:{dashboards:Dashboard[]}) => {
+interface SideBarProps {
+  dashboards: Dashboard[];
+}
+
+const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({dashboards}, ref) => {
   return(
     <div className="w-[67px] md:w-40 lg:w-[300px] min-h-screen flex flex-col gap-14 pt-5 bg-white border-r border-gray-D9D9D9">
       <div className="relative px-6 hidden md:block">
@@ -22,9 +27,13 @@ const SideBar = ({dashboards}:{dashboards:Dashboard[]}) => {
         <ul className="px-3 flex flex-col gap-[3px] justify-center">
           {dashboards.map((data) => <MenuItem key={data.id} link={data.id} createdByMe={data.createdByMe}>{data.title}</MenuItem>)}
         </ul>
+        <div ref={ref}></div>
       </div>
     </div>
   )
-};
+});
+
+SideBar.displayName = "SideBar";
+
 
 export default SideBar;
