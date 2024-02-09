@@ -1,6 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
 import SideBar from "./sidebar/SideBar";
-import { useDashboard } from "@/contexts/useDashboard";
 import { Dashboard } from "@/types/DashboardType";
 import { getDashboard } from "@/libs/network";
 

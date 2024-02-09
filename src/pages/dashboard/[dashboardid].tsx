@@ -1,38 +1,75 @@
 import AddColumnDialog from "@/components/dialog/AddColumnDialog";
-import SideBar from "@/components/domains/dashboard/sidebar/SideBar";
+import Layout from "@/components/domains/dashboard/layout";
 import DashboardHeader from "@/components/header/dashboardHeader";
 import Column from "@/containers/Column";
-import { useDashboard } from "@/contexts/useDashboard";
-import { useEffect } from "react";
+import { getColumns, getDetailedDashboardData } from "@/libs/network";
+import { ColumnType, Dashboard } from "@/types/DashboardType";
+import { useRouter } from "next/router";
+import { ReactElement, useEffect, useState } from "react";
 
 export default function DashboardIdPage() {
-
-  const { dashboards, updateDashboards } = useDashboard();
+  const router = useRouter();
+  const [dashboard, setDashbaord] = useState<Dashboard>({  
+    id:0,
+    title:'',
+    color:'',
+    createdAt:'',
+    updatedAt:'',
+    createdByMe:false,
+    userId:0
+  });
+  
+  const [columns, setColumns] = useState<ColumnType[]>([]);
 
   useEffect(() => {
-    updateDashboards();
-  },[]);
+    const getDashbaordData = async() => {
+      if(typeof(router.query.dashboardid) === 'string'){
+        try{
+          const dashboardData = await getDetailedDashboardData(router.query.dashboardid);
+          if(dashboardData){
+            setDashbaord(dashboardData.data);
+          }
+        } catch(error) {
+          alert(error);
+        }
+      }
+    };
 
-  useEffect(() => {
-    console.log(dashboards);
-  },[dashboards]);
+    const getColumnData = async() => {
+      if(typeof(router.query.dashboardid) === 'string'){
+        try{
+          const columnData = await getColumns(router.query.dashboardid);
+          if(columnData){
+            setColumns(columnData.data);
+          }
+        } catch(error){
+          alert(error);
+        }
+      }
+    }
+
+    getDashbaordData();
+    getColumnData();
+  },[router.query.dashboardid]);
+
   return (
-    <div className="flex">
-      <SideBar dashboards={dashboards}/>
-      <main className="flex flex-col max-w-[100vw]">
-        <DashboardHeader columnName="비브리지" />
+    <>
+        <DashboardHeader dashboardName={dashboard.title} createdByMe={dashboard.createdByMe}/>
         <div className="flex flex-col lg:flex-row w-full bg-gray-FAFAFA overflow-scroll">
-          <Column />
-          <Column />
-          <Column />
+          {columns.map((column) => <Column key={column.id} title={column.title} id={column.id}/>)}
           <div>
             <AddColumnDialog />
           </div>
         </div>
-      </main>
-    </div>
-
-
+    </>
   );
+}
+
+DashboardIdPage.getLayout = function getLayout(page:ReactElement) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  )
 }
 

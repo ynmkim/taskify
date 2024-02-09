@@ -79,7 +79,7 @@ const BoardEdit: React.FC = () => {
     <div className='flex flex-row'> 
       <SideBar dashboards={dashboards}/>
       <div className='w-[100%]'>
-        <DashboardHeader columnName='비브리지' type='' />
+        <DashboardHeader dashboardName='비브리지' type='' />
         <div className='flex flex-col gap-[40px] mx-[20px] w-[284px] md:w-[554px] lg:w-[620px]'>
           <div className='flex flex-col gap-[25px]'>
             <Link href='#' className='flex flex-fow items-center text-base font-medium mt-[20px] gap-[6px]'>

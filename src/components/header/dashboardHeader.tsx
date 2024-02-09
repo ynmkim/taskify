@@ -79,10 +79,10 @@ const SlotSection = ({members}:{members:Member[]}) =>{
   )
 };
 
-const DashboardHeader: React.FC<{ columnName: string, type?: string }> = ({ columnName, type }) => {
+const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdByMe?:boolean }> = ({ dashboardName, type, createdByMe }) => {
   const isDashboard = type === 'myDashboard';
 
-  const getTitle = () => (isDashboard ? '내 대시보드' : columnName);
+  const getTitle = () => (isDashboard ? '내 대시보드' : dashboardName);
 
   return (
     <header className='w-full h-[70px] pl-10 pr-5 lg:pr-20 md:pr-10 bg-white border-b border-gray-D9D9D9'>
@@ -91,7 +91,7 @@ const DashboardHeader: React.FC<{ columnName: string, type?: string }> = ({ colu
         {!isDashboard &&
           <div className="hidden lg:flex items-center font-bold text-xl gap-2 lg:w-[98px]">
             {getTitle()}
-            {!isDashboard && <FaCrown className="w-5 h-4" fill="#FDD446"/>}
+            {createdByMe && <FaCrown className="w-5 h-4" fill="#FDD446"/>}
           </div>
         }
         <div className='flex flex-row items-center'>

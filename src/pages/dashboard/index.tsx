@@ -9,7 +9,7 @@ export default function DashboardPage() {
 
   return (
     <>
-        <DashboardHeader columnName="비브리지" />
+        <DashboardHeader dashboardName="비브리지" />
         <div className="flex flex-col lg:flex-row w-full bg-gray-FAFAFA overflow-scroll">
           <Column />
           <Column />

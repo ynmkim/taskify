@@ -26,7 +26,7 @@ export interface Card {
   updatedAt:string;
 }
 
-export interface Column {
+export interface ColumnType {
   id:number;
   title:string;
   teamId:string;

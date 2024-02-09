@@ -41,6 +41,17 @@ export const getDashboard = async() => {
   }
 };
 
+export const getDetailedDashboardData = async(id:string) => {
+  try {
+    const response = await instance.get(`/dashboards/${Number(id)}`, {
+      headers: header
+    });
+    return response;
+  } catch (error) {
+    alert(error);
+  }
+};
+
 export const postColumn = async() => {
   const data = {
     title: 'To Do',
@@ -55,11 +66,11 @@ export const postColumn = async() => {
   }
 };
 
-export const getColumns = async() => {
+export const getColumns = async(id:string) => {
   try {
     const response = await instance.get('/columns', {
       params: {
-        dashboardId: 2930
+        dashboardId: Number(id)
       }, 
       headers: header
     });
@@ -86,6 +97,19 @@ export const postCard = async() => {
   try{
     const response = await instance.post('/cards', data, {headers:header})
     return response.data;
+  } catch (error) {
+    alert(error)
+  }
+};
+export const getCard = async(id:number) => {
+  try{
+    const response = await instance.get('/cards', {
+      params: {
+        columnId:id
+      },
+      headers:header
+    })
+    return response;
   } catch (error) {
     alert(error)
   }
