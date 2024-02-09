@@ -1,4 +1,4 @@
-import DashboardCardTitle from './DashboaordCardTitle';
+import CardTitle from '../../common/CardTitle';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/base-input';
@@ -8,7 +8,7 @@ import { DialogClose } from '@radix-ui/react-dialog';
 export default function AddDashboardModal() {
   return (
     <div className="w-[540px] py-7 px-5 md:pt-8 md:pb-7 md:px-7 rounded-lg bg-white">
-      <DashboardCardTitle className="mb-6 md:mb-8">새로운 대시보드</DashboardCardTitle>
+      <CardTitle className="mb-6 md:mb-8">새로운 대시보드</CardTitle>
       <form className="mb-6 md:mb-7">
         <div className="flex flex-col gap-2.5 md:gap-3 mb-6 md:mb-7">
           <Label>대시보드 이름</Label>

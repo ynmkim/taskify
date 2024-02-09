@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { CustomInputProps } from '../../../type';
+import { CustomInputProps } from '@/types/AuthType';
 
 const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(({ isError, ...props }, ref) => {
   return (

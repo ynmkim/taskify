@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { instance } from '@/libs/axios';
 import { LOGIN_URL } from '@/constants/apiUrl';
-import { LoginFormData } from '../../type';
+import { LoginFormData } from '@/types/AuthType';
 
-export default function useLogin() {
+export default function fetchLogin() {
   const logIn = async (data: LoginFormData) => {
     const { email, password } = data;
 
