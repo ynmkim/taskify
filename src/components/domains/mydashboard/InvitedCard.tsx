@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from './TableLayout';
 import CardTitle from '@/components/common/CardTitle';
 import EmptyView from './EmptyView';
@@ -6,6 +6,7 @@ import { SearchInput } from './SearchInput';
 import { Button } from '@/components/ui/button';
 import { Invitation, InvitationData } from '@/types/InvitationType';
 import fetchInvitation from '@/api/fetchInvitation';
+import searchInvitation from '@/api/searchInvitation';
 import replyInvitation from '@/api/replyInvitation';
 
 export default function InvitedCard(initialInvitationData: InvitationData) {
@@ -14,6 +15,27 @@ export default function InvitedCard(initialInvitationData: InvitationData) {
 
   const lastElementRef = useRef<HTMLTableRowElement>(null);
 
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const input = e.currentTarget.value;
+
+      searchInvitation(input).then((res) => {
+        if (res) {
+          setInvitationList(res.invitations);
+          setCursorId(null);
+        }
+      });
+    }
+  };
+
+  const handleReplyInvitation = (invitationId: number, inviteAccepted: boolean) => {
+    replyInvitation(invitationId, inviteAccepted).then(() => {
+      setInvitationList((prev) => {
+        return prev.filter((e) => e.id !== invitationId);
+      });
+    });
+  };
+
   const handleIntersect = useCallback(
     (entries: IntersectionObserverEntry[]): void => {
       entries.forEach((entry) => {
@@ -21,11 +43,9 @@ export default function InvitedCard(initialInvitationData: InvitationData) {
           fetchInvitation(cursorId)
             .then((res) => {
               if (res) {
-                // TODO: 하나의 함수에서 set 두개 사용 금지. (but 동작은 잘 되고 log가 이상함)
-                // 리팩토링 필요
                 setInvitationList((prev) => [...prev, ...res.invitations]);
                 setCursorId(res.cursorId);
-                console.log('새로운 cursorId:', cursorId, '추가된 invitations:', invitationList);
+                // console.log('추가된 invitations:', res.invitations, '새로운 cursorId:', res.cursorId);
               }
             })
             .catch((error) => {
@@ -48,23 +68,14 @@ export default function InvitedCard(initialInvitationData: InvitationData) {
     };
   }, [handleIntersect, lastElementRef]);
 
-  const handleReplyInvitation = (invitationId: number, inviteAccepted: boolean) => {
-    replyInvitation(invitationId, inviteAccepted).then(() => {
-      setInvitationList((prev) => {
-        return prev.filter((e) => e.id !== invitationId);
-      });
-    });
-  };
-
   return (
     <div className="max-w-[1022px] pt-6 pb-5 px-4 md:pt-8 md:pb-0 md:px-7 rounded-lg bg-white">
       <CardTitle className="mb-6">초대받은 대시보드</CardTitle>
-      {/* TODO: invitationList(화면단)으로 체크하면 렌더링 되지않은 뒤쪽 데이터 체크 불가 */}
       {invitationList.length === 0 ? (
         <EmptyView />
       ) : (
         <>
-          <SearchInput placeholder="검색" className="mb-2 md:mb-5" />
+          <SearchInput onKeyDown={handleSearch} placeholder="검색" className="mb-2 md:mb-5" />
           <div className="max-h-[712px] md:max-h-[459px] overflow-auto">
             <Table className="table-fixed">
               <TableHeader className="sticky top-0 hidden md:table-header-group bg-white">
