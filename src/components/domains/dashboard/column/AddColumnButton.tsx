@@ -1,5 +1,4 @@
 import PlusChip from "./PlusChip";
-import ColumnModal from "@/components/modal/ColumnModal";
 
 const AddColumnButton = () => {
 
@@ -11,7 +10,6 @@ const AddColumnButton = () => {
           <PlusChip />
         </div>
       </button>
-      {/* <ColumnModal title="새 컬럼 생성" label="이름" placeholder="새로운 프로젝트" confirmButtonText="생성" onConfirm={() => true} modalType=""/> */}
     </>
   )
 };

@@ -6,7 +6,6 @@ import { INVITATION_URL } from '@/constants/apiUrl';
 import InvitedCard from '@/components/domains/mydashboard/InvitedCard';
 import DashboardList from '@/components/domains/mydashboard/DashboardList';
 import Pagination from '@/components/domains/mydashboard/Pagination';
-// import AddDashboardModal from '@/components/domains/mydashboard/AddDashboardModal';
 import DashboardHeader from '@/components/header/dashboardHeader';
 import Layout from '@/components/domains/dashboard/layout';
 import { ReactElement } from 'react';
@@ -21,7 +20,6 @@ export default function MyDashboardPage({ invitationData }: InferGetServerSidePr
             <Pagination />
           </div>
           <InvitedCard {...invitationData} />
-          {/* <AddDashboardModal /> */}
         </main>
     </>
 
