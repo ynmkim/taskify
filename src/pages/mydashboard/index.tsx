@@ -11,6 +11,7 @@ import Layout from '@/components/domains/dashboard/layout';
 import { ReactElement } from 'react';
 
 export default function MyDashboardPage({ invitationData }: InferGetServerSidePropsType<GetServerSideProps>) {
+  // console.log('=== Initial Data ===', 'invitations', invitationData.invitations, 'cursor:', invitationData.cursorId);
   return (
     <>
         <DashboardHeader dashboardName="내 대시보드" type="myDashboard" />
