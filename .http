@@ -1,8 +1,8 @@
 ### 대시보드 초대
-POST https://sp-taskify-api.vercel.app/2-10/dashboards/2930/invitations
+POST https://sp-taskify-api.vercel.app/2-10/dashboards/3516/invitations
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nzk4LCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA2OTYzNTY5LCJpc3MiOiJzcC10YXNraWZ5In0.4k4gGN7IlhMem3pl93isjoMynL0JoU6tZv9uugBrWQQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTkzLCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA3NDIyNDE4LCJpc3MiOiJzcC10YXNraWZ5In0.00Dg1L53I943WCXuSNmmJpzMl2-RuPBqGLDThPzZkLo
 
 {
   "email": "test@test.com",
@@ -12,10 +12,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nzk4LCJ0ZWFtS
 POST https://sp-taskify-api.vercel.app/2-10/dashboards
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nzk4LCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA2OTYzNTY5LCJpc3MiOiJzcC10YXNraWZ5In0.4k4gGN7IlhMem3pl93isjoMynL0JoU6tZv9uugBrWQQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTkzLCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA3NDIyNDE4LCJpc3MiOiJzcC10YXNraWZ5In0.00Dg1L53I943WCXuSNmmJpzMl2-RuPBqGLDThPzZkLo
 
 {
-  "title": "test5",
+  "title": "h",
   "color": "#7AC555"
 }
 
@@ -23,4 +23,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nzk4LCJ0ZWFtS
 GET https://sp-taskify-api.vercel.app/2-10/dashboards?navigationMethod=infiniteScroll
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nzk4LCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA2OTYzNTY5LCJpc3MiOiJzcC10YXNraWZ5In0.4k4gGN7IlhMem3pl93isjoMynL0JoU6tZv9uugBrWQQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTkzLCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA3NDIyNDE4LCJpc3MiOiJzcC10YXNraWZ5In0.00Dg1L53I943WCXuSNmmJpzMl2-RuPBqGLDThPzZkLo
