@@ -54,7 +54,7 @@ export default function DashboardIdPage() {
 
   return (
     <>
-        <DashboardHeader dashboardName={dashboard.title} createdByMe={dashboard.createdByMe}/>
+        <DashboardHeader dashboardName={dashboard.title} createdByMe={dashboard.createdByMe} dashboardid={dashboard.id}/>
         <div className="flex flex-col lg:flex-row w-full bg-gray-FAFAFA overflow-scroll">
           {columns.map((column) => <Column key={column.id} title={column.title} id={column.id}/>)}
           <div>

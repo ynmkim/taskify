@@ -6,6 +6,7 @@ import { FaCrown } from "react-icons/fa";
 import { MdOutlineSettings } from "react-icons/md";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { Member } from '@/types/DashboardType';
+import Link from 'next/link';
 
 // 나중에 api연동하면 삭제될 임시 데이터입니다.
 const userData = {
@@ -62,13 +63,18 @@ const members = [
   }
 ];
 
-const SlotSection = ({members}:{members:Member[]}) =>{
+const SlotSection = ({members, dashboardid, createdByMe}:{members:Member[], dashboardid:number, createdByMe:boolean}) =>{
   return(
     <>
       <nav className="flex flex-row items-center gap-4 mr-10">
-        <Button className='text-gray-787486 flex align-middle gap-2 w-[50px] lg:w-[88px] md:w-[88px]'>
-          <span><MdOutlineSettings className="w-0 lg:w-5 md:w-5 h-5" /></span><span>관리</span>
-        </Button>
+        {
+          createdByMe && 
+            <Link href={`/dashboard/${dashboardid}/edit`}>
+              <Button className='text-gray-787486 flex align-middle gap-2 w-[50px] lg:w-[88px] md:w-[88px]'>
+                <span><MdOutlineSettings className="w-0 lg:w-5 md:w-5 h-5" /></span><span>관리</span>
+              </Button>
+            </Link>
+        }
         <Button className='text-gray-787486 flex align-middle gap-2 w-[96px] lg:w-[116px] md:w-[116px]'>
           <span><FaRegSquarePlus className="w-0 lg:w-5 md:w-5 h-5" /></span><span>초대하기</span>
         </Button>
@@ -79,7 +85,7 @@ const SlotSection = ({members}:{members:Member[]}) =>{
   )
 };
 
-const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdByMe?:boolean }> = ({ dashboardName, type, createdByMe }) => {
+const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdByMe:boolean, dashboardid:number }> = ({ dashboardName, type, createdByMe, dashboardid }) => {
   const isDashboard = type === 'myDashboard';
 
   const getTitle = () => (isDashboard ? '내 대시보드' : dashboardName);
@@ -95,7 +101,7 @@ const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdB
           </div>
         }
         <div className='flex flex-row items-center'>
-          {!isDashboard && <SlotSection members={members}/>}
+          {!isDashboard && <SlotSection members={members} dashboardid={dashboardid} createdByMe={createdByMe}/>}
           <Avatar size='lg' {...userData} />
           <span className="invisible lg:visible md:visible ml-3 font-medium text-base">{userData.nickname}</span>
         </div>
