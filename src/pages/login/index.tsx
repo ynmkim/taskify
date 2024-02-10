@@ -2,9 +2,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import useLogin from '@/hooks/useLogin';
+import fetchLogin from '@/api/fetchLogin';
 import LocalStorage from '@/libs/localstorage';
-import { AuthInputType, LoginFormData } from '@/../type';
+import { AuthInputType, LoginFormData } from '@/types/AuthType';
 import AuthInput from '@/components/auth/input/AuthInput';
 import { Button } from '@/components/ui/button';
 
@@ -17,7 +17,7 @@ export default function SignUp() {
 
   const router = useRouter();
 
-  const logIn = useLogin();
+  const logIn = fetchLogin();
 
   const handleLogin = async (data: LoginFormData) => {
     const loginResult = await logIn(data);
@@ -26,7 +26,7 @@ export default function SignUp() {
       const accessToken = loginResult.data.accessToken;
       const userData = loginResult.data.user;
 
-      LocalStorage.setItem('accessToken', accessToken);
+      document.cookie = `accessToken = ${accessToken}`;
       LocalStorage.setItem('userData', JSON.stringify(userData));
 
       router.push('/mydashboard');
