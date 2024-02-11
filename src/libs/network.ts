@@ -131,15 +131,13 @@ export const getMoreCard = async(id:number, cursor:number) => {
   }
 }
 
-export const postImage = async() => {
-  const data = {
-    image: "/tree.jpg"
-    }
-
+export const deleteCard = async(cardId:number) => {
   try{
-    const response = await instance.post('/columns/9712/card-image', data, {headers:imageHeader})
-    return response.data;
-  } catch (error) {
-    alert(error)
+    const response = await instance.delete(`/cards/${cardId}`, {
+      headers:header
+    })
+    return response;
+  } catch(error) {
+    alert(error);
   }
-};
+}

@@ -2,7 +2,7 @@ import AddTodoDialog from "@/components/dialog/AddTodoDialog";
 import ModifyColumnDialog from "@/components/dialog/ModifyColumnDialog";
 import TodoCardDialog from "@/components/dialog/TodoCardDialog";
 import { Badge } from "@/components/ui/badge";
-import { getCard, getMoreCard } from "@/libs/network";
+import { deleteCard, getCard, getMoreCard } from "@/libs/network";
 import { Card } from "@/types/DashboardType";
 import { useEffect, useState, useRef } from "react";
 
@@ -63,6 +63,11 @@ const Column = ({title, id}:{title:string, id:number}) => {
     };
   }, [totalCount, cards.length]);
 
+  const handleDeleteTodoCard = async (cardId:number) => {
+    await deleteCard(cardId);
+    setCards((prevs) => prevs.filter((prev) => prev.id !== cardId));
+  };
+
   return(
     <div className="flex flex-col bg-gray-FAFAFA gap-[25px] px-3 pt-[17px] pb-3 md:px-5 md:pb-5 md:pt-[22px] border-b lg:border-r lg:border-b-0 lg:min-h-screen border-gray-EEEEEE">
       <div className="flex justify-between items-center">
@@ -79,7 +84,7 @@ const Column = ({title, id}:{title:string, id:number}) => {
       </div>
       <div className="flex flex-col gap-4">
         <AddTodoDialog />
-        {cards?.map((card) => <TodoCardDialog key={card.id} card={card} columnTitle={title}/>)}
+        {cards?.map((card) => <TodoCardDialog key={card.id} card={card} columnTitle={title} onClick={handleDeleteTodoCard}/>)}
         <div ref={observerRef}></div>
       </div>
     </div>

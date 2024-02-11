@@ -11,21 +11,21 @@ import { Card } from "@/types/DashboardType";
 
 const colorArray:Array<'orange'|'pink'|'blue'|'green'> = ['orange', 'pink', 'blue', 'green'];
 
-const TodoCardModal = ({card, columnTitle}:{card:Card, columnTitle:string}) => {
+const TodoCardModal = ({card, columnTitle, onClick}:{card:Card, columnTitle:string, onClick:() => void}) => {
   return(
     <div className="px-5 py-7 md:px-7 md:py-8 bg-white flex flex-col gap-6 w-[327px] md:w-[680px] lg:w-[730px] rounded-lg">
       <div className="flex md:items-center md:justify-between flex-col md:flex-row gap-1 md:gap-0">
         <p className="text-black-333236 font-Pretendard text-2xl leading-none font-bold order-2 md:order-1">새로운 일정 관리 Taskify</p>
         <div className="flex items-center gap-6 justify-end md:order-2">
           <Popover>
-            <PopoverTrigger><button className="flex items-center"><IoEllipsisVerticalSharp className="w-5 h-5 md:w-7 md:h-7"/></button></PopoverTrigger>
+            <PopoverTrigger><div className="flex items-center"><IoEllipsisVerticalSharp className="w-5 h-5 md:w-7 md:h-7"/></div></PopoverTrigger>
             <PopoverContent className="flex flex-col w-[86px] md:w[93px] lg:w-[110px] border rounded-md border-gray-D9D9D9 bg-white shadow px-1.5 py-1.5">
               <button className="rounded font-Pretendard py-1 px-4 text-violet-5534DA bg-violet-8%">수정하기</button>
-              <button className="rounded font-Pretendard py-1 px-4">삭제하기</button>
+              <button className="rounded font-Pretendard py-1 px-4" onClick={onClick}>삭제하기</button>
             </PopoverContent>
           </Popover>
           <DialogClose>
-            <button><IoClose className="w-6 h-6 md:w-7 md:h-7"/></button>
+            <div><IoClose className="w-6 h-6 md:w-7 md:h-7"/></div>
           </DialogClose>
         </div>
       </div>
