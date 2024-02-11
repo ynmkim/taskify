@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from "@radix-ui/react-dialog";
+import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from "../ui/dialog";
 import AddTodoButton from "../domains/dashboard/column/AddTodoButton";
 import { CreateCardModal } from "../modal/CreateCardModal";
 

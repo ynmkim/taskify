@@ -6,7 +6,7 @@ import { INVITATION_URL } from '@/constants/apiUrl';
 import InvitedCard from '@/components/domains/mydashboard/InvitedCard';
 import DashboardList from '@/components/domains/mydashboard/DashboardList';
 import Pagination from '@/components/domains/mydashboard/Pagination';
-import DashboardHeader from '@/components/header/dashboardHeader';
+import DashboardHeader from '@/components/modal/dashboardHeader';
 import Layout from '@/components/domains/dashboard/layout';
 import { ReactElement } from 'react';
 

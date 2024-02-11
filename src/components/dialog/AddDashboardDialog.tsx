@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from "@radix-ui/react-dialog";
+import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from "../ui/dialog";
 import { FiPlusSquare } from "react-icons/fi";
 import AddDashboardModal from "../domains/mydashboard/AddDashboardModal";
 

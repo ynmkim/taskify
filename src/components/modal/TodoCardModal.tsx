@@ -11,7 +11,7 @@ import { Card } from "@/types/DashboardType";
 
 const colorArray:Array<'orange'|'pink'|'blue'|'green'> = ['orange', 'pink', 'blue', 'green'];
 
-const TodoCardModal = ({card, columnTitle, onClick}:{card:Card, columnTitle:string, onClick:() => void}) => {
+const TodoCardModal = ({card, columnTitle, onClick, toggleModal}:{card:Card, columnTitle:string, onClick:() => void, toggleModal:() => void}) => {
   return(
     <div className="px-5 py-7 md:px-7 md:py-8 bg-white flex flex-col gap-6 w-[327px] md:w-[680px] lg:w-[730px] rounded-lg">
       <div className="flex md:items-center md:justify-between flex-col md:flex-row gap-1 md:gap-0">
@@ -24,7 +24,7 @@ const TodoCardModal = ({card, columnTitle, onClick}:{card:Card, columnTitle:stri
               <button className="rounded font-Pretendard py-1 px-4" onClick={onClick}>삭제하기</button>
             </PopoverContent>
           </Popover>
-          <DialogClose>
+          <DialogClose onClick={toggleModal}>
             <div><IoClose className="w-6 h-6 md:w-7 md:h-7"/></div>
           </DialogClose>
         </div>
@@ -61,7 +61,7 @@ const TodoCardModal = ({card, columnTitle, onClick}:{card:Card, columnTitle:stri
           <div className="flex flex-col gap-1.5">
             <p className="font-Pretendard font-semibold text-[10px] md:text-xs">담당자</p>
             <div className="flex items-center gap-2">
-              <Avatar size="m" nickname="B"/>
+              {/* <Avatar size="m" {...card.assignee} /> */}
               <p className="font-Pretendard text-xs md:text-sm text-black-333236">{card.assignee.nickname}</p>
             </div>
           </div>

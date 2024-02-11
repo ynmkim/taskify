@@ -1,6 +1,6 @@
 import AddColumnDialog from "@/components/dialog/AddColumnDialog";
 import Layout from "@/components/domains/dashboard/layout";
-import DashboardHeader from "@/components/header/dashboardHeader";
+import DashboardHeader from "@/components/modal/dashboardHeader";
 import Column from "@/containers/Column";
 import { getColumns, getDetailedDashboardData } from "@/libs/network";
 import { ColumnType, Dashboard } from "@/types/DashboardType";
@@ -58,7 +58,7 @@ export default function DashboardIdPage() {
         <div className="flex flex-col lg:flex-row w-full bg-gray-FAFAFA overflow-scroll">
           {columns.map((column) => <Column key={column.id} title={column.title} id={column.id}/>)}
           <div>
-            <AddColumnDialog dashboardid={router.query.dashboardid}/>
+            <AddColumnDialog dashboardid={Number(router.query.dashboardid)}/>
           </div>
         </div>
     </>

@@ -8,11 +8,6 @@ const header = {
     'Content-Type': 'application/json'
 }
 
-const imageHeader = {
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'multipart/form-data'
-}
-
 export const postDashboard = async () => {
   const data = {
     title: 'test1',

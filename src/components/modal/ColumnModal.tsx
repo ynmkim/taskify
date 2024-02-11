@@ -12,11 +12,12 @@ interface ColumnModalProps {
   value:string;
   onChange:(e:ChangeEvent<HTMLInputElement>) => void;
   onConfirm: () => void;
+  toggleModal:() => void;
   modalType: 'delete' | 'invite' | 'column'; 
 }
 
 
-const ColumnModal = ({ title, label, placeholder, confirmButtonText, value, onChange, onConfirm, modalType }:ColumnModalProps) => {
+const ColumnModal = ({ title, label, placeholder, confirmButtonText, value, onChange, onConfirm, modalType, toggleModal }:ColumnModalProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const handleDeleteClick = () => {
@@ -49,10 +50,10 @@ const ColumnModal = ({ title, label, placeholder, confirmButtonText, value, onCh
               </button>
             )}
             <div>
-              <DialogClose>
-                <Button variant="default" size="modal" text="modal" className="w-[132px] lg:w-[120px] md:w-[120px] h-[42px] lg:h-[48px] md:h-[48px] py-[12px] lg:py-[14px] md:py-[14px] px-[56px] lg:px-[46px] md:px-[46px] mr-[12px]">
+              <DialogClose onClick={toggleModal}>
+                <div className="w-[132px] lg:w-[120px] md:w-[120px] h-[42px] lg:h-[48px] md:h-[48px] py-[12px] lg:py-[14px] md:py-[14px] px-[56px] lg:px-[46px] md:px-[46px] mr-[12px]">
                   취소
-                </Button>
+                </div>
               </DialogClose>
               <Button variant="violet" size="modal" text="login" onClick={onConfirm} className="text-sm lg:text-base md:text-base w-[132px] lg:w-[120px] md:w-[120px] h-[42px] lg:h-[48px] md:h-[48px] py-[12px] lg:py-[14px] md:py-[14px] px-[56px] lg:px-[46px] md:px-[46px]">
                 {confirmButtonText}

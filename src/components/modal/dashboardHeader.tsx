@@ -8,7 +8,7 @@ import { FaRegSquarePlus } from "react-icons/fa6";
 import { Member } from '@/types/DashboardType';
 import Link from 'next/link';
 import { axiosAuthInstance } from '@/libs/axios';
-import ColumnModal from '../modal/ColumnModal';
+import ColumnModal from './ColumnModal';
 import useStore from '@/state/dashboardTitleState';
 import InvitationDialog from '../dialog/InvitationDialog';
 
@@ -34,6 +34,19 @@ const SlotSection = ({dashboardid, createdByMe}:{dashboardid:number, createdByMe
   // const closeInviteModal = () => {
   //   setIsInviteModalOpen(false);
   // };
+
+  const handleConfirmFunction = async (inputValue: string) => {
+    try {
+      if(dashboardid) {
+        await authInstance.post(`dashboards/${dashboardid}/invitations`, {
+          email: inputValue
+        });
+      }
+      alert('구성원으로 초대하였습니다: ' + inputValue);
+    } catch (error) {
+      alert('초대하는데 실패하였습니다: ' + (error as Error).message);
+    }
+  };
   
   useEffect(() => {
     if (dashboardid) {
