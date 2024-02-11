@@ -39,6 +39,7 @@ export interface CreateCard {
 
 export interface Column {
   id: number;
+  dashboardId: number;
   title: string;
   teamId: string;
   createdAt: string;

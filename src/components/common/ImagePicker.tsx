@@ -89,22 +89,3 @@ const ImagePicker = React.forwardRef(function ImagePicker(
 });
 
 export default ImagePicker;
-
-// const send = () => {};
-
-// const imgReset = () => {
-//   if (imgRef.current) {
-//     imgRef.current.value = '';
-//     URL.revokeObjectURL(imgUrl);
-//     setImgUrl('');
-//   }
-// };
-{
-  /* <button
-              type="button"
-              className="p-[24px] "
-              onClick={imgReset}
-            >
-              삭제하기
-            </button> */
-}

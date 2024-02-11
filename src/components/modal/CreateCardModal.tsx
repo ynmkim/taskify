@@ -1,14 +1,13 @@
 import { useForm } from 'react-hook-form';
-
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { DateTimePicker } from '@/components/common/DateTimePicker';
+
 import ModalTitle from '@/components/modal/ModalTitle';
 import Textarea from '@/components/common/Textarea';
-import { DateTimePicker } from '@/components/common/DateTimePicker';
 import ImagePicker from '@/components/common/ImagePicker';
 import AddTag from '@/components/common/AddTag';
 import InputDropdown from '@/components/common/InputDropdown';
-
 import { DialogClose } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import usePostCard from '@/hooks/usePostCard';
@@ -37,7 +36,6 @@ export function CreateCardModal({ dashboardId = 2930, columnId = 9712 }: ModalPr
   const form = useForm<CreateCardModalForm>({
     mode: 'onChange',
   });
-
   // const assigneeUserId = form.watch('manager') ? Number(form.watch('manager')) : undefined;
 
   const assigneeUserId = 798;
@@ -67,7 +65,7 @@ export function CreateCardModal({ dashboardId = 2930, columnId = 9712 }: ModalPr
   return (
     <div>
       <Form {...form}>
-        <div className="scrollbar-hide max-h-[90vh] overflow-y-auto flex flex-col gap-[20px]">
+        <div className="scrollbar-hide max-h-[90vh] overflow-y-auto flex flex-col ">
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8">
             <ModalTitle>할 일 생성</ModalTitle>
             <div className="flex flex-col gap-8 w-full ">
@@ -85,10 +83,18 @@ export function CreateCardModal({ dashboardId = 2930, columnId = 9712 }: ModalPr
               <FormField
                 control={form.control}
                 name="title"
+                rules={{ required: '제목은 필수로 작성해주세요.' }}
                 render={({ field: { ref, ...rest } }) => (
                   <FormItem>
                     <FormControl>
-                      <Input ref={ref} label="제목" required placeholder="제목을 입력해 주세요" {...rest} />
+                      <Input
+                        ref={ref}
+                        label="제목"
+                        required
+                        requiredValue={form.formState.errors.title?.message}
+                        placeholder="제목을 입력해 주세요"
+                        {...rest}
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -96,10 +102,17 @@ export function CreateCardModal({ dashboardId = 2930, columnId = 9712 }: ModalPr
               <FormField
                 control={form.control}
                 name="description"
+                rules={{ required: '설명은 필수로 작성해주세요.' }}
                 render={({ field: { ref, ...rest } }) => (
                   <FormItem>
                     <FormControl>
-                      <Textarea ref={ref} label="설명" {...rest} required />
+                      <Textarea
+                        ref={ref}
+                        label="설명"
+                        {...rest}
+                        required
+                        requiredValue={form.formState.errors.description?.message}
+                      />
                     </FormControl>
                   </FormItem>
                 )}

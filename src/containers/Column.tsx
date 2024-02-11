@@ -2,6 +2,7 @@ import AddTodoButton from '@/components/domains/dashboard/column/AddTodoButton';
 import TodoCard from '@/components/domains/dashboard/column/TodoCard';
 import ColumnModal from '@/components/modal/ColumnModal';
 import { CreateCardModal } from '@/components/modal/CreateCardModal';
+import { EditCardModal } from '@/components/modal/EditCardModal.tsx';
 import { Badge } from '@/components/ui/badge';
 import useToggle from '@/hooks/useToggle';
 import { MdOutlineSettings } from 'react-icons/md';
@@ -26,6 +27,9 @@ const Column = () => {
         <div className="flex flex-col gap-4">
           <AddTodoButton>
             <CreateCardModal />
+          </AddTodoButton>
+          <AddTodoButton>
+            <EditCardModal />
           </AddTodoButton>
           <TodoCard />
           <TodoCard image={true} />

@@ -1,44 +1,53 @@
-import { forwardRef } from 'react';
+import Select from 'react-select';
+import React, { useEffect, useState } from 'react';
 import Label from '@/components/common/Label';
-import Select from 'react-select'; // 라이브러리
 
-interface StateProps {
-  value: number;
-  label: string;
-}
+import { Member } from '@/types/DashboardType';
+import { useAsync } from '@/hooks/useAsync';
+import { axiosAuthInstance } from '@/libs/axiosAuthInstance';
+import { Column } from '@/types/DashboardType';
+
 interface StateDropdownProps {
   label: string;
-  onChange: (value: StateProps) => void; // 타입 수정
+  stateTitle: string;
+  onChange: (value: Member | null) => void;
+  states: Column[];
 }
 
-const StateDropdown = forwardRef<HTMLInputElement, StateDropdownProps>(
-  ({ label, onChange }) => {
-    const states: StateProps[] = [
-      { value: 1, label: 'To Do' },
-      { value: 2, label: 'On Progress' },
-      { value: 3, label: 'Done' },
-    ];
+const StateDropdown = ({ label, stateTitle, onChange, states }: StateDropdownProps) => {
+  const [title, setTitle] = useState(stateTitle); //input에 보이는 값
 
-    const handleStateClick = (state: StateProps) => {
-      onChange(state);
+  const members = states?.map((state) => {
+    return {
+      value: state.id,
+      label: state.title,
     };
+  });
 
-    return (
-      <div>
-        <Label text={label} />
-        <div>
-          <div className="h-[42px] md:h-12 md:w-[217px] ">
-            <Select
-              options={states}
-              onChange={(v) => handleStateClick(v as StateProps)} // 타입 캐스팅
-              defaultValue={states[0]}
-            />
-          </div>
-        </div>
+  const handleStateChange = (state: Column) => {
+    onChange(state.id);
+    setTitle(state.title);
+  };
+
+  return (
+    <div>
+      <Label text={label} />
+      <div className=" h-[42px] w-full md:h-12 md:w-[217px] ">
+        <Select
+          className="text-[14px] md:text-[16px]"
+          inputId="contact"
+          options={members}
+          onChange={(state) => handleStateChange(state as Column)}
+          placeholder="이름을 입력해 주세요"
+          components={{
+            // 구분선 숨김
+            IndicatorSeparator: () => null,
+          }}
+        />
       </div>
-    );
-  },
-);
+    </div>
+  );
+};
 
-StateDropdown.displayName = 'StateDropdown';
+StateDropdown.displayName = 'InputDropdown';
 export default StateDropdown;

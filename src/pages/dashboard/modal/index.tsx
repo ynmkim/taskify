@@ -1,7 +1,5 @@
-import TodoCardModal from "@/components/modal/TodoCardModal";
+import TodoCardModal from '@/components/modal/TodoCardModal';
 
-export default function ModalPage () {
-  return(
-    <TodoCardModal />
-  )
+export default function ModalPage() {
+  return <TodoCardModal />;
 }

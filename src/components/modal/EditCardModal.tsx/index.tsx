@@ -1,19 +1,25 @@
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { DialogClose } from '@/components/ui/dialog';
+
 import ModalTitle from '@/components/modal/ModalTitle';
 import Textarea from '@/components/common/Textarea';
 import { DateTimePicker } from '@/components/common/DateTimePicker';
 import ImagePicker from '@/components/common/ImagePicker';
 import AddTag from '@/components/common/AddTag';
 import InputDropdown from '@/components/common/InputDropdown';
-
-import { DialogClose } from '@/components/ui/dialog';
+import StateDropdown from '@/components/common/StateDropdown';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
-import usePostCard from '@/hooks/usePostCard';
 
-export interface CreateCardModalForm {
+import usePutCard from '@/hooks/usePutCard';
+import { Column, Card } from '@/types/DashboardType';
+import { useRouter } from 'next/router';
+import useGetColum from '@/hooks/useGetColums';
+
+export interface EditCardModalForm {
   manager: string;
   title: string;
   description: string;
@@ -23,35 +29,39 @@ export interface CreateCardModalForm {
   assigneeUserId: number;
   dashboardId: number;
   columnId: number;
+  states: Column[];
 }
 export interface ModalProps {
-  isOpen: boolean;
   onCancel: () => void;
   dashboardId: number;
   columnId: number;
   getCards: () => void;
+  card: Card;
+  state: Column;
+  states: Column[];
 }
 
-export function CreateCardModal({ dashboardId, columnId }: ModalProps) {
-  columnId = 9712;
-  dashboardId = 2930;
-  const form = useForm<CreateCardModalForm>({
+export function EditCardModal({ columnId, card }: ModalProps) {
+  columnId = 971;
+  const dashboardId = 2930;
+  const form = useForm<EditCardModalForm>({
     mode: 'onChange',
   });
 
   // const assigneeUserId = form.watch('manager') ? Number(form.watch('manager')) : undefined;
-
   const assigneeUserId = 798;
-  const { execute: postCard } = usePostCard({
-    assigneeUserId,
-    dashboardId,
-    columnId,
-    title: form.watch('title'),
-    description: form.watch('description'),
-    dueDate: form.watch('dueDate')?.toString(),
-    imageUrl: form.watch('imageUrl'),
-    tags: form.watch('tags'),
-  });
+
+  //대시보드에서 받아와야 Columns 데이터
+  const { execute: getColum, columns: states } = useGetColum(dashboardId);
+  useEffect(() => {
+    getColum();
+  }, [dashboardId]);
+
+  // const state = states?.[0];
+
+  // console.log(states);
+
+  // const [StateId, setStateId] = useState<number>(state.id);
 
   const handleImageSelect = (imageUrl: string) => {
     form.setValue('imageUrl', imageUrl);
@@ -60,38 +70,75 @@ export function CreateCardModal({ dashboardId, columnId }: ModalProps) {
   const onTagListChange = (newTagList: string[]) => {
     form.setValue('tags', newTagList);
   };
+  // const handleStateChange = (newStateId: number) => {
+  //   setStateId(newStateId);
+  // };
+
+  // const { execute: putCard } = usePutCard({
+  //   assigneeUserId,
+  //   title: form.watch('title'),
+  //   description: form.watch('description'),
+  //   dueDate: form.watch('dueDate')?.toString(),
+  //   imageUrl: form.watch('imageUrl'),
+  //   tags: form.watch('tags'),
+  //   cardId: card?.id,
+  //   columnId: StateId,
+  // });
 
   const onSubmit = async () => {
-    await postCard();
+    await putCard();
   };
-
-  console.log(form.formState.isValid);
 
   return (
     <div>
       <Form {...form}>
         <div className="scrollbar-hide max-h-[90vh] overflow-y-auto flex flex-col gap-[20px]">
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8">
-            <ModalTitle>할 일 생성</ModalTitle>
+            <ModalTitle>할 일 수정</ModalTitle>
             <div className="flex flex-col gap-8 w-full ">
-              <FormField
-                control={form.control}
-                name="manager"
-                render={({ field: { onChange } }) => (
-                  <FormItem>
-                    <FormControl>
-                      <InputDropdown label="담당자" dashboardId={dashboardId} onChange={onChange} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+              <div className="flex flex-col gap-6 md:flex-row md:justify-between">
+                <div className="w-[287px] md:w-[217px]">
+                  <FormField
+                    control={form.control}
+                    name="manager"
+                    render={({ field: { onChange } }) => (
+                      <FormItem>
+                        <FormControl>
+                          {/* <StateDropdown label="상태" onChange={onChange} states={states} stateTitle={state.title} /> */}
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="manager"
+                    render={({ field: { onChange } }) => (
+                      <FormItem>
+                        <FormControl>
+                          <InputDropdown label="담당자" dashboardId={dashboardId} onChange={onChange} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
               <FormField
                 control={form.control}
                 name="title"
+                rules={{ required: '제목은 필수로 작성해주세요.' }}
                 render={({ field: { ref, ...rest } }) => (
                   <FormItem>
                     <FormControl>
-                      <Input ref={ref} label="제목" required placeholder="제목을 입력해 주세요" {...rest} />
+                      <Input
+                        ref={ref}
+                        label="제목"
+                        required
+                        requiredValue={form.formState.errors.title?.message}
+                        placeholder="제목을 입력해 주세요"
+                        {...rest}
+                      />
                     </FormControl>
                   </FormItem>
                 )}

@@ -27,7 +27,7 @@ const InputDropdown = ({ label, onChange, dashboardId }: InputDropdownProps) => 
     };
   });
 
-  const handlememberChange = (select: Member) => {
+  const handleMemberChange = (select: Member) => {
     onChange(select);
   };
 
@@ -39,7 +39,7 @@ const InputDropdown = ({ label, onChange, dashboardId }: InputDropdownProps) => 
           className="text-[14px] md:text-[16px]"
           inputId="contact"
           options={members}
-          onChange={(select) => handlememberChange(select as Member)}
+          onChange={(select) => handleMemberChange(select as Member)}
           placeholder="이름을 입력해 주세요"
           components={{
             // 구분선 숨김
