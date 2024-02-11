@@ -12,7 +12,7 @@ export default function MyPage() {
       <div className="flex w-screen bg-gray-FAFAFA">
         <SideBar />
         <div className="flex flex-col w-full">
-          <DashboardHeader columnName="내 대시보드" type="myDashboard" />
+          <DashboardHeader type="myDashboard" />
           <main className="grow p-6 md:p-10">
             <Card className="md:max-w-[620px] mb-3">
               <CardTitle className="mb-6 md:mb-8">프로필</CardTitle>

@@ -1,36 +1,73 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import axios from 'axios';
+import { axiosAuthInstance } from '@/libs/axios';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  dashboardId: Number;
-  columnId: Number;
+  dashboardid?: string | string[] | number | undefined;
+  columnId?: string | string[] | number | undefined;
+  inputValue?: string;
+  onDeleteSuccess?: () => void;
 }
 
-const DeleteModal: React.FC<ModalProps> = ({ isOpen, onClose, dashboardId, columnId}) => {
-  React.useEffect(() => {
-    if (isOpen) {
-      document.body.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-    } else {
-      document.body.style.backgroundColor = 'initial';
-    }
-    return () => {
-      document.body.style.backgroundColor = 'initial';
+const authInstance = axiosAuthInstance();
+
+const DeleteModal: React.FC<ModalProps> = ({ isOpen, onClose, dashboardid, columnId, inputValue, onDeleteSuccess }) => {
+  const [columns, setColumns] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (dashboardid) {
+          const response = await authInstance.get(`columns?dashboardId=${dashboardid}`);
+          const responseData = response.data.data;
+          setColumns(responseData);
+        }
+      } catch (error) {
+        alert('컬럼을 가져오는 중 오류가 발생했습니다: ' + (error as Error).message);
+      }
     };
-  }, [isOpen]);
+    fetchData();
+  }, [dashboardid]);
 
-  React.useEffect(() => {
-    axios.get(`https://sp-taskify-api.vercel.app/2-10/columns?${dashboardId}`)
-  })
-  function deleteColumn() {
-    axios.delete(`https://sp-taskify-api.vercel.app/2-10/columns/${columnId}`).then(()=> {
-      alert('컬럼이 삭제되었습니다.')
-    })
-  }
+  useEffect(() => {
+    const handleColumnChange = async () => {
+      try {
+        if (dashboardid) {
+          const response = await authInstance.get(`columns?dashboardId=${dashboardid}`);
+          const responseData = response.data.data;
+          setColumns(responseData);
+        }
+      } catch (error) {
+        alert('컬럼을 가져오는 중 오류가 발생했습니다: ' + (error as Error).message);
+      }
+    };
+
+    handleColumnChange();
+  }, [dashboardid, columns]);
+
+  const deleteColumn = async () => {
+    try {
+      if (inputValue) {
+        const columnToDelete = columns.find((column) => column.title === inputValue);
+        if (columnToDelete) {
+          await authInstance.delete(`columns/${columnToDelete.id}`);
+          const updatedColumns = columns.filter((column) => column.id !== columnToDelete.id);
+          setColumns(updatedColumns);
+          if (onDeleteSuccess) {
+            onDeleteSuccess();
+          }
+          onClose();
+        } else {
+          alert('삭제할 컬럼을 찾을 수 없습니다.');
+        }
+      }
+    } catch (error) {
+      alert('컬럼을 삭제하는 중 오류가 발생했습니다: ' + (error as Error).message);
+    }
+  };
   
-
   return (
     <>
       {isOpen && (
