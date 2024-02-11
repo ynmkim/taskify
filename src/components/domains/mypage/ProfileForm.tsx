@@ -7,9 +7,13 @@ import { cn } from '@/libs/utils';
 import { useAuth } from '@/contexts/AuthProvider';
 import { instance as axios } from '@/libs/axios';
 import { useForm } from 'react-hook-form';
+// import { parse } from 'cookie';
+
+// const cookies = parse(document.cookie);
+// const accessToken = cookies.accessToken;
 
 const accessToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nzk4LCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA3MzA3Nzg0LCJpc3MiOiJzcC10YXNraWZ5In0.0uRsiFPv86b1PRbjcCv4NEPYqDDx3uFx4gswLIkOMq8';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk0LCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA3NjI1NTAzLCJpc3MiOiJzcC10YXNraWZ5In0.eyvLMckxcvuLjQEAX8jmYH7WofzylqIGy2r70nt4zJk';
 interface FormFields {
   email: string;
   nickname: string;
