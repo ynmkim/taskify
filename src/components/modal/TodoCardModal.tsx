@@ -6,7 +6,7 @@ import { Avatar } from "../ui/avatar";
 import { Button } from "../ui/button";
 import Comment from "./Comment";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { DialogClose } from "@radix-ui/react-dialog";
+import { DialogClose } from "../ui/dialog";
 import { Card } from "@/types/DashboardType";
 
 const colorArray:Array<'orange'|'pink'|'blue'|'green'> = ['orange', 'pink', 'blue', 'green'];

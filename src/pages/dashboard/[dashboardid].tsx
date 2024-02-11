@@ -58,7 +58,7 @@ export default function DashboardIdPage() {
         <div className="flex flex-col lg:flex-row w-full bg-gray-FAFAFA overflow-scroll">
           {columns.map((column) => <Column key={column.id} title={column.title} id={column.id}/>)}
           <div>
-            <AddColumnDialog />
+            <AddColumnDialog dashboardid={router.query.dashboardid}/>
           </div>
         </div>
     </>

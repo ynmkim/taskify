@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 import { Button } from '../ui/button';
 import { Avatar } from '@/components/ui/avatar';
+import { axiosAuthInstance } from '@/libs/axios';
+
+interface MembersProps {
+  className?: string;
+  dashboardid: string | string[] | number | undefined;
+}
 
 interface Member {
   id: number;
@@ -14,14 +20,28 @@ interface Member {
   isOwner: boolean;
 }
 
-interface MembersProps {
-  members: Member[];
-  className?: string;
-}
+const authInstance = axiosAuthInstance();
 
-const Members: React.FC<MembersProps> = ({ members }) => {
+const Members: React.FC<MembersProps> = ({ dashboardid }) => {
+  const [members, setMembers] = useState<Member[]>([]);
   const membersPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    if (dashboardid) {
+      const fetchMembers = async () => {
+        try {
+          const response = await authInstance.get(`members?page=1&size=20&dashboardId=${dashboardid}`);
+          const data = await response.data;
+          setMembers(data.members);
+        } catch (error) {
+          alert(`Error fetching members: ${(error as Error).message}`);
+        }
+      };
+  
+      fetchMembers();
+    }
+  }, [dashboardid]);
 
   const startIndex = (currentPage - 1) * membersPerPage;
   const endIndex = startIndex + membersPerPage;
@@ -35,6 +55,21 @@ const Members: React.FC<MembersProps> = ({ members }) => {
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handleDeleteMember = async (memberId: number, isOwner: boolean) => {
+    try {
+      if (isOwner) {
+        alert('삭제할 수 없는 구성원입니다.');
+        return;
+      }
+
+      await authInstance.delete(`members/${memberId}`);
+      const updatedMembers = members.filter((member) => member.id !== memberId);
+      setMembers(updatedMembers);
+    } catch (error) {
+      alert(`Error deleting member: ${(error as Error).message}`);
+    }
   };
 
   return (
@@ -59,10 +94,10 @@ const Members: React.FC<MembersProps> = ({ members }) => {
           {currentMembers.map((member) => (
             <div key={member.id} className="flex items-center justify-between mb-[32px]">
               <div className='flex flex-row gap-[12px] items-center'>
-                <Avatar nickname={member.nickname} profileImageUrl={member.profileImageUrl} size='lg' />
+              <Avatar user={member} size='lg' />
                 {member.nickname}
               </div>
-              <Button className='w-[52px] lg:w-[84px] md:w-[84px] h-[32px] px-[7px] py-[10px]'>삭제</Button>
+              <Button className='w-[52px] lg:w-[84px] md:w-[84px] h-[32px] px-[7px] py-[10px]' onClick={() => handleDeleteMember(member.id, member.isOwner)}>삭제</Button>
             </div>
           ))}
         </div>
