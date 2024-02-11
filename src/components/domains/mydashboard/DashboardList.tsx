@@ -3,11 +3,10 @@ import { cn } from '@/libs/utils';
 import Image from 'next/image';
 import { getDashboards } from '@/api/fetchDashboard';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { DASHBOARD_COLOR as colors } from '@/constants/constants';
 interface DashboardListProps {
   className?: string;
 }
-
 interface Dashboard {
   id: number;
   title: string;
@@ -16,7 +15,6 @@ interface Dashboard {
 }
 
 export default function DashboardList({ className, ...props }: DashboardListProps) {
-  const [cursor, setCursor] = useState(null);
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);
 
   const handleload = async () => {
@@ -28,9 +26,6 @@ export default function DashboardList({ className, ...props }: DashboardListProp
     handleload();
   }, []);
 
-  const router = useRouter();
-  const { dashboardid } = router.query;
-
   return (
     <div className={cn(className)} {...props}>
       <ul className="grid grid-rows-1 grid-cols-1 gap-2 md:grid-cols-2 md:gap-2.5 lg:grid-cols-3 lg:gap-[13px] ">
@@ -40,7 +35,7 @@ export default function DashboardList({ className, ...props }: DashboardListProp
         {dashboards.map((dashboard) => (
           <li key={dashboard.id}>
             <Link
-              href={`/dashboard/${dashboardid}`}
+              href={`/dashboard/${dashboard.id}`}
               className="flex justify-between h-[58px] sm:h-[68px] md:h-[70px] px-5 rounded-lg border border-gray-D9D9D9 bg-white text-base font-semibold text-black-333236"
             >
               <div className="flex items-center whitespace-nowrap">
@@ -61,13 +56,15 @@ export default function DashboardList({ className, ...props }: DashboardListProp
     </div>
   );
 }
-
 interface BulletProps {
   color: string;
 }
 
 function Bullet({ color }: BulletProps) {
-  return <span className={cn(`block rounded-full w-[8px] h-[8px] mr-4 bg-[${color}]`)}></span>;
+  console.log(color);
+  const bulletColor = colors[color];
+
+  return <span className={cn(`block rounded-full w-[8px] h-[8px] mr-4 ${bulletColor}`)}></span>;
 }
 
 function DashboardAddButton() {
