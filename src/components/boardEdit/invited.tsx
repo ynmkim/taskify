@@ -8,7 +8,7 @@ import { axiosAuthInstance } from '@/libs/axios';
 
 interface InvitedProps {
   className?: string;
-  dashboardid: string | string[] | number | undefined;
+  dashboardid?: string | string[] | number | undefined;
 }
 
 interface InvitationsResponse {
@@ -68,19 +68,6 @@ const Invited: React.FC<InvitedProps> = ({ dashboardid }) => {
     setIsInviteModalOpen(false);
   };
 
-  const handleConfirmFunction = async (inputValue: string) => {
-    try {
-      if(dashboardid) {
-        await authInstance.post(`dashboards/${dashboardid}/invitations`, {
-          email: inputValue
-        });
-      }
-      alert('구성원으로 초대하였습니다: ' + inputValue);
-    } catch (error) {
-      alert('초대하는데 실패하였습니다: ' + (error as Error).message);
-    }
-  };
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -162,7 +149,7 @@ const Invited: React.FC<InvitedProps> = ({ dashboardid }) => {
         placeholder="codeit@codeit.com"
         confirmButtonText="초대"
         modalType="invite"
-        onConfirm={handleConfirmFunction}
+        dashboardid={dashboardid}
       />
     </div>
   );

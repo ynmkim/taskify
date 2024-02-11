@@ -35,15 +35,15 @@ const SlotSection: React.FC<SlotSectionProps> = ({ dashboardid }) => {
   };
 
   const handleConfirmFunction = async (inputValue: string) => {
-    try {
-      if(dashboardid) {
+    if(dashboardid) {
+      try {
         await authInstance.post(`dashboards/${dashboardid}/invitations`, {
           email: inputValue
         });
+        alert('구성원으로 초대하였습니다: ' + inputValue);
+      } catch (error) {
+        alert('초대하는데 실패하였습니다: ' + (error as Error).message);
       }
-      alert('구성원으로 초대하였습니다: ' + inputValue);
-    } catch (error) {
-      alert('초대하는데 실패하였습니다: ' + (error as Error).message);
     }
   };
   
@@ -66,7 +66,7 @@ const SlotSection: React.FC<SlotSectionProps> = ({ dashboardid }) => {
   return(
     <>
       <nav className="flex flex-row items-center gap-4 mr-10">
-        <Link href={`/mypage`}>
+        <Link href={`/dashboard/${dashboardid}/edit`}>
           <Button  className='text-gray-787486 flex align-middle gap-2 w-[50px] lg:w-[88px] md:w-[88px]'>
           <span><MdOutlineSettings className="w-0 lg:w-5 md:w-5 h-5" width={5} /></span><span>관리</span>
           </Button>
@@ -93,7 +93,7 @@ const SlotSection: React.FC<SlotSectionProps> = ({ dashboardid }) => {
 
 const DashboardHeader: React.FC<DashboardHeaderProps> = ({ type, dashboardid }) => {
   const isDashboard = type === 'myDashboard';
-  const [userData, setUserData] = useState<{ nickname: string }>({ nickname: '' });
+  const [userData, setUserData] = useState<{nickname: string; profileImageUrl: string | null}>({nickname:'', profileImageUrl:null});
   const dashboardTitle = useStore(state => state.dashboardTitle);
   const setDashboardTitle = useStore(state => state.setDashboardTitle);
   const [createdByMe, setCreatedByMe] = useState(false);
@@ -143,7 +143,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ type, dashboardid }) 
         }
         <div className='flex flex-row items-center'>
           {!isDashboard && createdByMe && <SlotSection dashboardid={dashboardid} />}
-          <Avatar size='lg' {...userData} />
+          <Avatar size='lg' profileImageUrl={userData.profileImageUrl} nickname={userData.nickname} />
           <span className="invisible lg:visible md:visible ml-3 font-medium text-base">{userData.nickname}</span>
         </div>
       </div>

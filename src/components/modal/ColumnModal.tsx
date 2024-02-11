@@ -10,7 +10,7 @@ interface ColumnModalProps {
   label: string;
   placeholder: string;
   confirmButtonText: string;
-  onConfirm: (inputValue: string) => void;
+  onConfirm?: (inputValue: string) => void;
   modalType: 'delete' | 'invite' | 'column';
   dashboardid?: string | string[] | number | undefined; 
 }
@@ -76,7 +76,6 @@ const ColumnModal: React.FC<ColumnModalProps> = ({ isOpen, onClose, title, label
           setColumns((prevColumns) => [...prevColumns, createdColumn]);
   
           alert('컬럼이 생성되었습니다.');
-          onConfirm(inputValue);
           setInputValue('');
           onClose();
         } catch (error) {
@@ -91,17 +90,21 @@ const ColumnModal: React.FC<ColumnModalProps> = ({ isOpen, onClose, title, label
   const handleInvite = async () => {
     if (modalType === 'invite' && dashboardid) {
       try {
-        await authInstance.post(`dashboards/${dashboardid}/invitations`, {
-          email: inputValue,
-        });
-        alert('초대가 완료되었습니다.');
-        onClose();
+        if (emailValidCheck(inputValue)) {
+          await authInstance.post(`dashboards/${dashboardid}/invitations`, {
+            email: inputValue,
+          });
+          alert('구성원으로 초대하였습니다: ' + inputValue);
+          onClose();
+        } else {
+          alert('이메일 형식이 올바르지 않습니다.');
+        }
       } catch (error) {
-        console.error('Error creating invitation:', error);
         alert('초대를 생성하는 중 오류가 발생했습니다.' + (error as Error).message);
       }
     }
   };
+  
 
   return (
     <>

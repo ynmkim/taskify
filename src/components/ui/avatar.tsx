@@ -1,18 +1,12 @@
-import * as React from "react";
+import React, { useState, useEffect } from 'react';
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import { cn } from "@/libs/utils";
 import { cva } from 'class-variance-authority';
 import { axiosAuthInstance } from "@/libs/axios";
 
 type AvatarProps = {
-  user?: {
-    id: number;
-    email: string;
-    nickname: string;
-    profileImageUrl: string | null;
-    createdAt: string;
-    updatedAt: string;
-  };
+  nickname: string;
+  profileImageUrl: string | null;
   size: 'xs' | 's' | 'm' | 'lg' | undefined;
 } & React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>;
 
@@ -38,34 +32,18 @@ const avatarVariants = cva(
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
   AvatarProps
->(({ className, size, ...props }, ref) => {
-  const [userData, setUserData] = React.useState<any>(null);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await authInstance.get('users/me');
-        const data = await response.data;
-        setUserData(data);
-      } catch (error) {
-        alert('Error fetching user data: ' + (error as Error).message);
-      }
-    };
-  
-    fetchData();
-  }, []);
-
+>(({ className, size, profileImageUrl, nickname, ...props }, ref) => {
   return (
     <AvatarPrimitive.Root
       ref={ref}
       className={cn(avatarVariants({ size, className }))}
       {...props}
     >
-      {userData?.profileImageUrl ? (
-        <AvatarImage src={userData.profileImageUrl} alt={userData.nickname || ""} size="lg" />
-      ) : (
-        <AvatarFallback>{userData ? userData.nickname[0].toUpperCase() : ""}</AvatarFallback>
-      )}
+          {profileImageUrl ? (
+            <AvatarImage src={profileImageUrl} alt={nickname || ""} size={size || "lg"} />
+          ) : (
+            <AvatarFallback>{nickname[0]?.toUpperCase()}</AvatarFallback>
+          )}
     </AvatarPrimitive.Root>
   );
 });

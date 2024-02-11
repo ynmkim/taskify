@@ -14,7 +14,7 @@ interface Member {
   userId: number;
   email: string;
   nickname: string;
-  profileImageUrl: string;
+  profileImageUrl: string | null;
   createdAt: string;
   updatedAt: string;
   isOwner: boolean;
@@ -94,7 +94,7 @@ const Members: React.FC<MembersProps> = ({ dashboardid }) => {
           {currentMembers.map((member) => (
             <div key={member.id} className="flex items-center justify-between mb-[32px]">
               <div className='flex flex-row gap-[12px] items-center'>
-              <Avatar user={member} size='lg' />
+              <Avatar profileImageUrl={member.profileImageUrl} nickname={member.nickname} size='lg' />
                 {member.nickname}
               </div>
               <Button className='w-[52px] lg:w-[84px] md:w-[84px] h-[32px] px-[7px] py-[10px]' onClick={() => handleDeleteMember(member.id, member.isOwner)}>삭제</Button>
