@@ -17,9 +17,12 @@ import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import usePutCard from '@/hooks/usePutCard';
 import { Column, Card } from '@/types/DashboardType';
 import { useRouter } from 'next/router';
-
+interface Memberprops {
+  label: string;
+  value: number;
+}
 export interface EditCardModalForm {
-  manager: string;
+  manager: Memberprops;
   title: string;
   description: string;
   dueDate: string | null;
@@ -39,9 +42,14 @@ export interface ModalProps {
 }
 
 export function EditCardModal({ getCard, column, columns, card, toggleModal }: ModalProps) {
+  const mangerObject = {
+    label: card?.assignee?.nickname,
+    value: card?.assignee?.id,
+  };
+
   const defaultValues = {
     title: card?.title,
-    manager: card?.assignee?.nickname,
+    manager: mangerObject,
     description: card?.description,
     dueDate: card?.dueDate,
     imageUrl: card?.imageUrl,
@@ -126,7 +134,7 @@ export function EditCardModal({ getCard, column, columns, card, toggleModal }: M
                         <FormControl>
                           <InputDropdown
                             label="담당자"
-                            placeholder={defaultValues.manager}
+                            placeholder={card?.assignee?.nickname}
                             dashboardId={card.dashboardId}
                             onChange={onChange}
                             {...rest}

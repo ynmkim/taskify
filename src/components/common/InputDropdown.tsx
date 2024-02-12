@@ -8,9 +8,14 @@ import { axiosAuthInstance } from '@/libs/axiosAuthInstance';
 
 interface InputDropdownProps {
   label: string;
-  onChange: (value: Member | null) => void;
+  onChange: (value: Memberprops | null) => void;
   dashboardId: number | undefined;
   placeholder: string | undefined;
+}
+
+interface Memberprops {
+  label: string;
+  value: number;
 }
 
 const InputDropdown = ({ label, onChange, dashboardId, placeholder = undefined }: InputDropdownProps) => {
@@ -28,7 +33,7 @@ const InputDropdown = ({ label, onChange, dashboardId, placeholder = undefined }
     };
   });
 
-  const handleMemberChange = (select: Member) => {
+  const handleMemberChange = (select: Memberprops) => {
     onChange(select);
   };
 
@@ -40,7 +45,7 @@ const InputDropdown = ({ label, onChange, dashboardId, placeholder = undefined }
           className="text-[14px] md:text-[16px]"
           inputId="contact"
           options={members}
-          onChange={(select) => handleMemberChange(select as Member)}
+          onChange={(select) => handleMemberChange(select as Memberprops)}
           placeholder={placeholder}
           components={{
             // 구분선 숨김

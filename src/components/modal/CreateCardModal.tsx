@@ -12,8 +12,13 @@ import { DialogClose } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import usePostCard from '@/hooks/usePostCard';
 
+interface Memberprops {
+  label: string;
+  value: number;
+}
+
 export interface CreateCardModalForm {
-  manager: string;
+  manager: Memberprops;
   title: string;
   description: string;
   dueDate: string | null;
