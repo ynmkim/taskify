@@ -13,11 +13,12 @@ interface ColumnModalProps {
   onChange:(e:ChangeEvent<HTMLInputElement>) => void;
   onConfirm: () => void;
   toggleModal:() => void;
+  onDelete?:() => void;
   modalType: 'delete' | 'invite' | 'column'; 
 }
 
 
-const ColumnModal = ({ title, label, placeholder, confirmButtonText, value, onChange, onConfirm, modalType, toggleModal }:ColumnModalProps) => {
+const ColumnModal = ({ title, label, placeholder, confirmButtonText, value, onChange, onConfirm, modalType, toggleModal, onDelete }:ColumnModalProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const handleDeleteClick = () => {
@@ -60,7 +61,7 @@ const ColumnModal = ({ title, label, placeholder, confirmButtonText, value, onCh
               </Button>
             </div>
           </div>
-        </div>) :  <DeleteModal isOpen={isDeleteModalOpen} onClose={handleDeleteCancel} />
+        </div>) :  <DeleteModal isOpen={isDeleteModalOpen} onClose={handleDeleteCancel} onDelete={onDelete}/>
       }
     </div>
   );

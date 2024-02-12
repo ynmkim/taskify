@@ -61,7 +61,7 @@ const TodoCardModal = ({card, columnTitle, onClick, toggleModal}:{card:Card, col
           <div className="flex flex-col gap-1.5">
             <p className="font-Pretendard font-semibold text-[10px] md:text-xs">담당자</p>
             <div className="flex items-center gap-2">
-              {/* <Avatar size="m" {...card.assignee} /> */}
+              <Avatar size="m" nickname={card.assignee.nickname} profileImageUrl={card.assignee.profileImageUrl} />
               <p className="font-Pretendard text-xs md:text-sm text-black-333236">{card.assignee.nickname}</p>
             </div>
           </div>

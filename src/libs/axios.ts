@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { accessToken } from './network';
 
 export const instance = axios.create({
   baseURL: 'https://sp-taskify-api.vercel.app/2-10',
@@ -14,7 +15,7 @@ export const axiosAuthInstance = () => {
   });
   instance.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem('accessToken');
+      const token = accessToken;
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }

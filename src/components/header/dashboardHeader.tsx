@@ -90,7 +90,7 @@ const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdB
   const getTitle = () => (isDashboard ? '내 대시보드' : dashboardName);
 
   return (
-    <header className='header-size w-[100%] h-[70px] pl-10 pr-5 lg:pr-20 md:pr-10 bg-white border-b border-gray-D9D9D9'>
+    <header className='header-size h-[70px] pl-10 pr-5 lg:pr-20 md:pr-10 bg-white border-b border-gray-D9D9D9'>
       <div className="flex flex-row items-center justify-between h-[70px]">
       {isDashboard && <div className="flex items-center font-bold text-xl gap-2">{getTitle()}</div>}
         {!isDashboard &&
