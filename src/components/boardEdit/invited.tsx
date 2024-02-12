@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
-import { RiAddBoxLine } from "react-icons/ri";
 import { Button } from '../ui/button';
 import { axiosAuthInstance } from '@/libs/axios';
 import InvitationDialog from '../dialog/InvitationDialog';
@@ -49,7 +48,6 @@ const Invited: React.FC<InvitedProps> = ({ dashboardid }) => {
   const startIndex = (currentPage - 1) * membersPerPage;
   const endIndex = startIndex + membersPerPage;
   const currentInvitations = invitations.slice(startIndex, endIndex);
-  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
@@ -59,25 +57,38 @@ const Invited: React.FC<InvitedProps> = ({ dashboardid }) => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
   
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (dashboardid) {
-          const response = await authInstance.get(`dashboards/${dashboardid}/invitations?page=${currentPage}&size=${membersPerPage}`);
-          const responseData: InvitationsResponse = await response.data;
-          setInvitations(responseData.invitations);
-          setTotalPages(Math.ceil(responseData.totalCount / membersPerPage));
-        }
-      } catch (error) {
-        alert('Error fetching invitations: ' + (error as Error).message);
+  const fetchData = async () => {
+    try {
+      if (dashboardid) {
+        const response = await authInstance.get(`dashboards/${dashboardid}/invitations?page=${currentPage}&size=${membersPerPage}`);
+        const responseData: InvitationsResponse = await response.data;
+        setInvitations(responseData.invitations);
+        setTotalPages(Math.ceil(responseData.totalCount / membersPerPage));
+        localStorage.setItem('invitations', JSON.stringify(responseData.invitations));
       }
-    };
+    } catch (error) {
+      alert('Error fetching invitations: ' + (error as Error).message);
+    }
+  };
+
+  useEffect(() => {
+    const storedInvitations = localStorage.getItem('invitations');
+    if (storedInvitations) {
+      setInvitations(JSON.parse(storedInvitations));
+    }
+  
     fetchData();
-    
-  }, [dashboardid, currentPage, membersPerPage]);
+  }, []);
+
+  const handleInviteSuccess = () => {
+    fetchData();
+  };
 
   const handleCancelInvitation = async (invitationId: number) => {
     try {
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      const currentUserId = userData.id;
+
       const invitation = invitations.find(invitation => invitation.id === invitationId);
       if (invitation) {
         if (invitation.inviter.id === currentUserId) {
@@ -113,13 +124,7 @@ const Invited: React.FC<InvitedProps> = ({ dashboardid }) => {
             </button>
           </div>
           <div>
-            <InvitationDialog dashboardid={dashboardid} />
-            {/*
-            <button className='flex flex-row items-center gap-[8px] rounded-md text-white bg-[#5534DA] px-[12px] lg:px-[16px] md:px-[16px] py-[7px] lg:py-[8px] md:py-[8px] ml-[61px] lg:ml-[16px] md:ml-[16px] w-[86px] h-[28px] lg:w-[105px] lg:h-[32px] md:w-[105px] md:h-[32px] text-[11px] lg:text-[14px] md:text-[14px] font-medium' onClick={openInviteModal}>
-              <RiAddBoxLine className='w-[14px] h-[14px]' />
-              초대하기
-            </button>
-            */}
+            <InvitationDialog dashboardid={dashboardid} onInviteSuccess={handleInviteSuccess} />
           </div>
         </div>
       </div>
