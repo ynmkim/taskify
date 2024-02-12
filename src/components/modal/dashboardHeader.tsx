@@ -78,7 +78,6 @@ const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdB
 
           const data = await response.data;
           setUserData(data);
-          console.log(data);
         }
       } catch (error) {
         alert('Error fetching user data: ' + (error as Error).message);

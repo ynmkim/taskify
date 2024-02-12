@@ -31,7 +31,6 @@ export default function CreateDashboardModal() {
   const onSubmit = async ({ title, color }: FormFields) => {
     const data = { title, color };
 
-    console.log(data);
     const dashboardId = await postDashboard(data);
     router.push(`dashboard/${dashboardId}`);
 

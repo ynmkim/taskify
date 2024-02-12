@@ -17,7 +17,6 @@ export default async function replyInvitation(invitationId: number, inviteAccept
     );
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.log(error);
       const errorMessage = error.message;
       throw new Error(errorMessage);
     }

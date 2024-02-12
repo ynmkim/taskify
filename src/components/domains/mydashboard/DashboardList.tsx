@@ -5,6 +5,7 @@ import { getDashboards } from '@/api/fetchDashboard';
 import { useState, useEffect } from 'react';
 import { DASHBOARD_COLOR } from '@/constants/constants';
 import Pagination from '@/components/domains/mydashboard/Pagination';
+
 interface DashboardListProps {
   className?: string;
 }
@@ -55,7 +56,7 @@ export default function DashboardList({ className, ...props }: DashboardListProp
                 )}
               </div>
 
-              <Image src="/arrow_link.svg" alt="" width={18} height={18} />
+              {/* <Image src="/arrow_link.svg" alt="" width={18} height={18} /> */}
             </Link>
           </li>
         ))}

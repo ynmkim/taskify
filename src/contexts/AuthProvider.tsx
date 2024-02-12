@@ -6,8 +6,6 @@ import { parse } from 'cookie';
 interface AuthContextProps {
   user: User | null;
   isPending: boolean;
-  // login: (credentials: { email: string; password: string }) => Promise<void>;
-  // logout: () => Promise<void>;
   updateMe: (data: { nickname: string; profileImageUrl: string | null }) => void;
   updatePassword: (data: { password: string; newPassword: string }) => void;
 }
@@ -15,8 +13,6 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps>({
   user: null,
   isPending: true,
-  // login: async () => {},
-  // logout: async () => {},
   updateMe: () => {},
   updatePassword: () => {},
 });
@@ -59,22 +55,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-  // async function login({ email, password }: { email: string; password: string }): Promise<void> {
-  //   await axios.post('/auth/login', {
-  //     email,
-  //     password,
-  //   });
-  //   await getMe();
-  // }
-
-  // async function logout(): Promise<void> {
-  //   await axios.delete('/auth/logout');
-  //   setValues((prevValues) => ({
-  //     ...prevValues,
-  //     user: null,
-  //   }));
-  // }
-
   async function updateMe(data: { nickname: string; profileImageUrl: string | null }) {
     const cookies = parse(document.cookie);
     const accessToken = cookies.accessToken;
@@ -110,14 +90,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
       .then((res) => {
         if (res.status === 204) {
           alert('비밀번호가 변경되었습니다.');
-          // 다시 로그인 해야할까?
         }
       })
       .catch((error) => {
         if (error.response.status === 400) {
           alert('현재 비밀번호가 틀립니다');
         } else {
-          console.log('Error', error.message);
+          const errorMessage = error.message;
+          throw new Error(errorMessage);
         }
       });
   }
@@ -131,8 +111,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       value={{
         user: values.user,
         isPending: values.isPending,
-        // login,
-        // logout,
         updateMe,
         updatePassword,
       }}

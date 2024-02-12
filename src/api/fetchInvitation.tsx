@@ -16,7 +16,6 @@ export default async function fetchInvitation(cursorId: number | null): Promise<
     return invitationData;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.log(error);
       const errorMessage = error.response?.data.message;
       throw new Error(errorMessage);
     }

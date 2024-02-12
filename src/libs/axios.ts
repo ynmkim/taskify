@@ -22,7 +22,6 @@ export const axiosAuthInstance = () => {
       return config;
     },
     (error) => {
-      console.log('interceptor>error', error);
       return Promise.reject(error);
     },
   );
@@ -31,11 +30,10 @@ export const axiosAuthInstance = () => {
       return response;
     },
     (error) => {
-      console.log('interceptor>error', error);
       return Promise.reject(error);
     },
   );
 
   instance.defaults.timeout = 2500;
   return instance;
-}; 
+};

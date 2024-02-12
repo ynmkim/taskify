@@ -9,28 +9,21 @@ import DashboardList from '@/components/domains/mydashboard/DashboardList';
 import DashboardHeader from '@/components/header/dashboardHeader';
 import Layout from '@/components/domains/dashboard/layout';
 import { ReactElement } from 'react';
-
 export default function MyDashboardPage({ invitationData }: InferGetServerSidePropsType<GetServerSideProps>) {
-  // console.log('=== Initial Data ===', 'invitations', invitationData.invitations, 'cursor:', invitationData.cursorId);
   return (
     <>
-        <DashboardHeader dashboardName="내 대시보드" type="myDashboard" dashboardid={0}/>
-        <main className="grow p-6 md:p-10">
-          <DashboardList className="flex flex-col w-full max-w-[1022px] mb-6 sm:mb-10 md:mb-11" />
-          <InvitedCard {...invitationData} />
-        </main>
+      <DashboardHeader dashboardName="내 대시보드" type="myDashboard" dashboardid={0} />
+      <main className="grow p-6 md:p-10">
+        <DashboardList className="flex flex-col w-full max-w-[1022px] mb-6 sm:mb-10 md:mb-11" />
+        <InvitedCard {...invitationData} />
+      </main>
     </>
-
   );
 }
 
-MyDashboardPage.getLayout = function getLayout(page:ReactElement) {
-  return (
-    <Layout>
-      {page}
-    </Layout>
-  )
-}
+MyDashboardPage.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
 
 export async function getServerSideProps({ req }: GetServerSidePropsContext) {
   const cookies = parse(req.headers.cookie || '');
@@ -47,7 +40,6 @@ export async function getServerSideProps({ req }: GetServerSidePropsContext) {
     };
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.log(error);
       const errorMessage = error.response?.data.message;
       throw new Error(errorMessage);
     }
