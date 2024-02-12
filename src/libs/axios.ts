@@ -17,7 +17,7 @@ export const axiosAuthInstance = () => {
     (config) => {
       const token = getHeader();
       if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+        config.headers.Authorization = token.Authorization;
       }
       return config;
     },
