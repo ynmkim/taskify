@@ -1,10 +1,18 @@
+import { parse } from "cookie";
 import { instance } from "./axios";
-import LocalStorage from "./localstorage";
 
-const token = LocalStorage.getItem('accessToken');
+const getAccessToken = () => {
+	if(typeof window !== 'object') return;
+	const cookies = parse(document.cookie);
+  const accessToken = cookies.accessToken;
+  return accessToken;
+}
+
+export const accessToken = getAccessToken();
+
 
 const header = {
-    'Authorization': `Bearer ${token}`,
+    'Authorization': `Bearer ${accessToken}`,
     'Content-Type': 'application/json'
 }
 
@@ -76,27 +84,20 @@ export const getColumns = async(id:string) => {
   }
 };
 
-export const postCard = async() => {
+export const putColumn = async(columnId:number, title:string) => {
   const data = {
-    "assigneeUserId": 798,
-    "dashboardId": 2930,
-    "columnId": 9712,
-    "title": "할일 테스트 1",
-    "description": "테스트용 첫번째 생성 할일",
-    "dueDate": "2024-02-29 23:59",
-    "tags": [
-      '백엔드', '상', '프로젝트'
-    ],
-    "imageUrl": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fdiscover%2Ffree-nature-images&psig=AOvVaw3AH_D_gLtr8YjP2dHK1REv&ust=1707143375910000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKjRvpLzkYQDFQAAAAAdAAAAABAD"
-  }
-
+    'title': title
+  };
   try{
-    const response = await instance.post('/cards', data, {headers:header})
+    const response = await instance.put(`/columns/${columnId}`, data, {
+      headers:header
+    })
     return response.data;
-  } catch (error) {
+  } catch(error){
     alert(error)
   }
 };
+
 export const getCard = async(id:number) => {
   try{
     const response = await instance.get('/cards', {
@@ -131,6 +132,17 @@ export const deleteCard = async(cardId:number) => {
     const response = await instance.delete(`/cards/${cardId}`, {
       headers:header
     })
+    return response;
+  } catch(error) {
+    alert(error);
+  }
+}
+
+export const deleteColumn = async(columnId:number) => {
+  try{
+    const response = await instance.delete(`/columns/${columnId}`,{
+      headers:header
+    });
     return response;
   } catch(error) {
     alert(error);

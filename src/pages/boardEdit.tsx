@@ -4,7 +4,7 @@ import DashboardName from '@/components/boardEdit/dashboardName';
 import Members from '@/components/boardEdit/members';
 import Invited from '@/components/boardEdit/invited';
 import { Button } from '@/components/ui/button';
-import DashboardHeader from '@/components/modal/dashboardHeader';
+import DashboardHeader from '@/components/header/dashboardHeader';
 
 import { IoIosArrowBack } from 'react-icons/io';
 import Layout from '@/components/domains/dashboard/layout';

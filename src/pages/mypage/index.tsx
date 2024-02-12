@@ -1,4 +1,4 @@
-import DashboardHeader from '@/components/modal/dashboardHeader';
+import DashboardHeader from '@/components/header/dashboardHeader';
 import Card from '@/components/common/Card';
 import CardTitle from '@/components/common/CardTitle';
 import ProfileForm from '@/components/domains/mypage/ProfileForm';

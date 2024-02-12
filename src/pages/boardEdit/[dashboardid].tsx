@@ -6,7 +6,7 @@ import Members from '@/components/boardEdit/members';
 import Invited from '@/components/boardEdit/invited';
 import { Button } from '@/components/ui/button';
 import SideBar from '@/components/domains/dashboard/sidebar/SideBar';
-import DashboardHeader from '@/components/modal/dashboardHeader';
+import DashboardHeader from '@/components/header/dashboardHeader';
 import { IoIosArrowBack } from 'react-icons/io';
 
 const BoardEdit: React.FC = () => {

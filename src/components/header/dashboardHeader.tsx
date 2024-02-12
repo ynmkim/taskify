@@ -34,6 +34,19 @@ const SlotSection = ({dashboardid, createdByMe}:{dashboardid:number, createdByMe
   // const closeInviteModal = () => {
   //   setIsInviteModalOpen(false);
   // };
+
+  const handleConfirmFunction = async (inputValue: string) => {
+    try {
+      if(dashboardid) {
+        await authInstance.post(`dashboards/${dashboardid}/invitations`, {
+          email: inputValue
+        });
+      }
+      alert('구성원으로 초대하였습니다: ' + inputValue);
+    } catch (error) {
+      alert('초대하는데 실패하였습니다: ' + (error as Error).message);
+    }
+  };
   
   useEffect(() => {
     if (dashboardid) {
@@ -122,7 +135,7 @@ const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdB
   const getTitle = () => (isDashboard ? '내 대시보드' : dashboardName);
 
   return (
-    <header className='w-full h-[70px] pl-10 pr-5 lg:pr-20 md:pr-10 bg-white border-b border-gray-D9D9D9'>
+    <header className='header-size h-[70px] pl-10 pr-5 lg:pr-20 md:pr-10 bg-white border-b border-gray-D9D9D9'>
       <div className="flex flex-row items-center justify-between h-[70px]">
       {isDashboard && <div className="flex items-center font-bold text-xl gap-2">{getTitle()}</div>}
         {!isDashboard &&

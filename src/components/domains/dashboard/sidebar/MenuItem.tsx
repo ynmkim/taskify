@@ -1,9 +1,8 @@
 import { DASHBOARD_COLOR } from "@/constants/constant";
+import { Color } from "@/types/DashboardType";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { FaCrown } from "react-icons/fa";
-
-type Color =  '#7AC555' | '#760DDE' | '#FFA500' | '#76A5EA' | '#E876EA';
 
 const MenuItem = ({children, link, createdByMe, color}: {children:ReactNode, link:number ,createdByMe:boolean, color:Color}) => {
 
