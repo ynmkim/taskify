@@ -1,34 +1,56 @@
-import Select from 'react-select'; //라이브러리
-import React from 'react';
+import Select from 'react-select';
+import React, { useEffect } from 'react';
 import Label from '@/components/common/Label';
+
+import { Member } from '@/types/DashboardType';
+import { useAsync } from '@/hooks/useAsync';
+import { axiosAuthInstance } from '@/libs/axiosAuthInstance';
 
 interface InputDropdownProps {
   label: string;
-  onChange: (value: Member) => void;
+  onChange: (value: Memberprops | null) => void;
+  dashboardId: number | undefined;
+  placeholder: string | undefined;
 }
-interface Member {
-  value: string;
+
+interface Memberprops {
   label: string;
+  value: number;
 }
 
-const InputDropdown = ({ label, onChange }: InputDropdownProps) => {
-  const members: Member[] = [
-    { value: '', label: '김동빈' },
-    { value: '', label: '배유철' },
-  ];
+const InputDropdown = ({ label, onChange, dashboardId, placeholder = undefined }: InputDropdownProps) => {
+  const getMembers = () => axiosAuthInstance().get(`members?dashboardId=${dashboardId}`);
+  const { execute: getMemberAsync, data } = useAsync(getMembers, false);
 
-  const handlememberChange = (select: Member) => {
+  useEffect(() => {
+    getMemberAsync();
+  }, [dashboardId]);
+
+  const members = data?.members?.map((member: Member) => {
+    return {
+      value: member.userId,
+      label: member.nickname,
+    };
+  });
+
+  const handleMemberChange = (select: Memberprops) => {
     onChange(select);
   };
 
   return (
     <div>
       <Label text={label} />
-      <div className=" h-[42px] md:h-12 md:w-[217px] ">
+      <div className=" h-[42px] w-full md:h-12 md:w-[217px] ">
         <Select
+          className="text-[14px] md:text-[16px]"
+          inputId="contact"
           options={members}
-          onChange={(select) => handlememberChange(select as Member)}
-          defaultValue={members[0]}
+          onChange={(select) => handleMemberChange(select as Memberprops)}
+          placeholder={placeholder}
+          components={{
+            // 구분선 숨김
+            IndicatorSeparator: () => null,
+          }}
         />
       </div>
     </div>
