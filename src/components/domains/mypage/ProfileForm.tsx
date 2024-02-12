@@ -8,9 +8,6 @@ import { useAuth } from '@/contexts/AuthProvider';
 import { instance as axios } from '@/libs/axios';
 import { useForm } from 'react-hook-form';
 import { parse } from 'cookie';
-
-const cookies = parse(document.cookie);
-const accessToken = cookies.accessToken;
 interface FormFields {
   email: string;
   nickname: string;
@@ -36,6 +33,9 @@ function ProfileForm({ className, ...props }: ProfileFormProps) {
   });
 
   const onSubmit = async ({ nickname, imageFile }: FormFields) => {
+    const cookies = parse(document.cookie);
+    const accessToken = cookies.accessToken;
+
     let profileImageUrl: string | null = user?.profileImageUrl ?? null;
     const file = imageFile?.[0];
 
