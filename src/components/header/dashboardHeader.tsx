@@ -10,8 +10,8 @@ import { Member } from '@/types/DashboardType';
 import Link from 'next/link';
 import { axiosAuthInstance } from '@/libs/axios';
 import InvitationDialog from '../dialog/InvitationDialog';
-import { parse } from 'cookie';
 import LocalStorage from '@/libs/localstorage';
+import { getHeader } from '@/libs/network';
 const authInstance = axiosAuthInstance();
 
 const SlotSection = ({ dashboardid, createdByMe }: { dashboardid: number; createdByMe?: boolean }) => {
@@ -25,7 +25,7 @@ const SlotSection = ({ dashboardid, createdByMe }: { dashboardid: number; create
           const data = response.data;
           setMembers(data.members);
         } catch (error) {
-          alert('Error fetching members data: ' + (error as Error).message);
+          alert('구성원을 불러오는 데 실패하였습니다.: ' + (error as Error).message);
         }
       };
 
@@ -71,19 +71,11 @@ const DashboardHeader: React.FC<{
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const cookies = parse(document.cookie);
-        const accessToken = cookies.accessToken;
-
-        if (accessToken) {
-          const response = await authInstance.get('users/me', {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
-
-          const data = await response.data;
-          setUserData(data);
-        }
+        const response = await authInstance.get('users/me', {
+          headers:getHeader()
+        });
+        const data = await response.data;
+        setUserData(data);
       } catch (error) {
         alert('Error fetching user data: ' + (error as Error).message);
       }

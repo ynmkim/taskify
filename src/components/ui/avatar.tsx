@@ -40,7 +40,7 @@ const Avatar = React.forwardRef<
           {profileImageUrl ? (
             <AvatarImage src={profileImageUrl} alt={nickname || ""} size={size || "lg"} />
           ) : (
-            <AvatarFallback>{nickname[0]?.toUpperCase()}</AvatarFallback>
+            <AvatarFallback>{nickname?.[0]?.toUpperCase()}</AvatarFallback>
           )}
     </AvatarPrimitive.Root>
   );

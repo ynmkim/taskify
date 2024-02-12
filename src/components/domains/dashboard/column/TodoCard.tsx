@@ -25,7 +25,7 @@ const TodoCard = ({card}:{card:Card}) => {
               <span><GoCalendar  className="w-[14px] h-[14px] md:w-[18px] md:h-[18px]"/></span>
               <p>{card.dueDate}</p>
             </div>
-            <Avatar nickname={card.assignee.nickname} profileImageUrl={card.assignee.profileImageUrl} size="xs"/>
+            <Avatar nickname={card?.assignee?.nickname} profileImageUrl={card?.assignee?.profileImageUrl} size="xs"/>
           </div>
         </div>
       </div>
