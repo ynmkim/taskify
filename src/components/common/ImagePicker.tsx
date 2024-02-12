@@ -9,15 +9,15 @@ interface ImagePickerProps {
   label?: string;
   required?: boolean;
   onSelectImage: (imageUrl: string) => void;
-  columnId: number;
+  columnId: number | undefined;
   selectedImageUrl?: string;
 }
 
 const ImagePicker = React.forwardRef(function ImagePicker(
-  { label, required, onSelectImage, columnId }: ImagePickerProps,
+  { label, required, onSelectImage, columnId, selectedImageUrl }: ImagePickerProps,
   ref,
 ) {
-  const [imgUrl, setImgUrl] = useState<string>('');
+  const [imgUrl, setImgUrl] = useState(selectedImageUrl ? selectedImageUrl : null);
   const inputRef: RefObject<HTMLInputElement> = useRef(null);
 
   useImperativeHandle(ref, () => ({
@@ -30,7 +30,7 @@ const ImagePicker = React.forwardRef(function ImagePicker(
     inputRef.current?.click();
   };
 
-  const handleImageChange = (columnId: number) => async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (columnId: number | undefined) => async (e: ChangeEvent<HTMLInputElement>) => {
     if (inputRef.current?.files && inputRef.current.files[0]) {
       const imageFile = inputRef.current.files[0];
 
@@ -52,7 +52,7 @@ const ImagePicker = React.forwardRef(function ImagePicker(
           onSelectImage(imageURL);
         }
       } catch (error) {
-        console.error(error);
+        alert(error);
       }
     }
   };

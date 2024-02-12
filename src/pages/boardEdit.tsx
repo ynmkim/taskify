@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Link from 'next/link'
 import DashboardName from '@/components/boardEdit/dashboardName';
 import Members from '@/components/boardEdit/members';
 import Invited from '@/components/boardEdit/invited';
 import { Button } from '@/components/ui/button';
-import SideBar from '@/components/domains/dashboard/sidebar/SideBar';
-import DashboardHeader from '@/components/header/dashboardHeader';
+import DashboardHeader from '@/components/modal/dashboardHeader';
 
 import { IoIosArrowBack } from 'react-icons/io';
+import Layout from '@/components/domains/dashboard/layout';
 
 const apiResponse = {
   members: [
@@ -71,27 +71,33 @@ const apiResponse = {
 };
 
 
-const BoardEdit: React.FC = () => {
+const BoardEdit = () => {
+
   return (
-    <div className='flex flex-row'> 
-      <SideBar />
-      <div className='w-[100%]'>
-        <DashboardHeader columnName='비브리지' type='' />
-        <div className='flex flex-col gap-[40px] mx-[20px] w-[284px] md:w-[554px] lg:w-[620px]'>
-          <div className='flex flex-col gap-[25px]'>
-            <Link href='#' className='flex flex-fow items-center text-base font-medium mt-[20px] gap-[6px]'>
-              <IoIosArrowBack size={20} />
-              돌아가기
-            </Link>
-            <DashboardName title='비브리지' />
-            <Members members={apiResponse.members} />
-            <Invited members={apiResponse.members} />
-          </div>
-          <Button className='bg-[#fafafa] text-[#333236] border-[#d9d9d9] w-[284px] lg:w-[320px] md:w-[320px] h-[62px] px-[95px] py-[20px] my-[40px] font-medium text-lg'>대시보드 삭제하기</Button>
+    <>
+      <DashboardHeader dashboardName='비브리지' type='' />
+      <div className='flex flex-col gap-[40px] mx-[20px] w-[284px] md:w-[554px] lg:w-[620px]'>
+        <div className='flex flex-col gap-[25px]'>
+          <Link href='#' className='flex flex-fow items-center text-base font-medium mt-[20px] gap-[6px]'>
+            <IoIosArrowBack size={20} />
+            돌아가기
+          </Link>
+          <DashboardName title='비브리지' />
+          <Members members={apiResponse.members} />
+          <Invited members={apiResponse.members} />
         </div>
+        <Button className='bg-[#fafafa] text-[#333236] border-[#d9d9d9] w-[284px] lg:w-[320px] md:w-[320px] h-[62px] px-[95px] py-[20px] my-[40px] font-medium text-lg'>대시보드 삭제하기</Button>
       </div>
-    </div>  
+    </>
   );
 };
+
+BoardEdit.getLayout = function getLayout(page:ReactElement) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  )
+}
 
 export default BoardEdit;

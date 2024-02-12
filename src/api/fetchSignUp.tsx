@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { instance } from '@/libs/axios';
-import { SignUpFormData } from '../../type';
+import { SignUpFormData } from '@/types/AuthType';
 import { SIGNUP_URL } from '@/constants/apiUrl';
 
-export default function useSignUp() {
+export default function fetchSignUp() {
   const signUp = async (data: SignUpFormData) => {
     const { email, password, nickname } = data;
 

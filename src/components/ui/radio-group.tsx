@@ -21,8 +21,8 @@ const radioGroupItemVariants = cva(`rounded-full w-7 h-7 md:w-[30px] md:h-[30px]
       blue: 'bg-blue-76A5EA',
       pink: 'bg-pink-E876EA',
     },
-  },}
-);
+  },
+});
 
 export interface RadioGroupItemProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -37,7 +37,7 @@ const RadioGroupItem = React.forwardRef<React.ElementRef<typeof RadioGroupPrimit
       <RadioGroupPrimitive.Item ref={ref} className={cn(radioGroupItemVariants({ color }), className)} {...props}>
         <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
           <div className="relative w-[22px] h-[22px] md:w-[24px] md:h-[24px]">
-            <Image src="/check.svg" alt="선택됨" className="w-full h-full" layout="fill" objectFit="cover" />
+            <Image fill src="/check.svg" alt="선택됨" className="object-cover" />
           </div>
         </RadioGroupPrimitive.Indicator>
       </RadioGroupPrimitive.Item>

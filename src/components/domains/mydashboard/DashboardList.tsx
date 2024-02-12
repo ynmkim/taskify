@@ -20,7 +20,7 @@ function DashboardAddButton() {
     <button className="flex justify-center items-center gap-2.5 w-full h-[58px] sm:h-[68px] md:h-[70px] px-5 rounded-lg border border-gray-D9D9D9 bg-white text-base font-semibold text-black-333236">
       새로운 대시보드
       <div className="relative w-5 h-5 md:w-[22px] md:h-[22px]">
-        <Image src="/plus_add.svg" alt="" layout="fill" objectFit="cover" />
+        <Image fill src="/plus_add.svg" alt="" className="object-cover" />
       </div>
     </button>
   );
@@ -44,7 +44,7 @@ export default function DashboardList({ className, ...props }: DashboardListProp
                 {dashboard.title}
                 {dashboard.createdByMe && (
                   <div className="relative w-4 h-3 md:w-[21px] md:h-[17px] ml-2">
-                    <Image src="/crown.svg" alt="" layout="fill" objectFit="cover" />
+                    <Image fill src="/crown.svg" alt="" className="object-cover" />
                   </div>
                 )}
               </div>

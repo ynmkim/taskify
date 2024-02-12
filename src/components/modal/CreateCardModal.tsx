@@ -25,20 +25,18 @@ export interface CreateCardModalForm {
 }
 
 export interface ModalProps {
-  isOpen: boolean;
-  onCancel: () => void;
   dashboardId: number;
   columnId?: number;
-  getCards: () => void;
+  toggleModal: () => void;
+  getCard: () => void;
 }
 
-export function CreateCardModal({ dashboardId = 2930, columnId = 9712 }: ModalProps) {
+export function CreateCardModal({ getCard, toggleModal, dashboardId, columnId }: ModalProps) {
   const form = useForm<CreateCardModalForm>({
     mode: 'onChange',
   });
-  // const assigneeUserId = form.watch('manager') ? Number(form.watch('manager')) : undefined;
+  const assigneeUserId = form.watch('manager') ? form.watch('manager').value : undefined;
 
-  const assigneeUserId = 798;
   const { execute: postCard } = usePostCard({
     assigneeUserId,
     dashboardId,
@@ -49,7 +47,10 @@ export function CreateCardModal({ dashboardId = 2930, columnId = 9712 }: ModalPr
     imageUrl: form.watch('imageUrl'),
     tags: form.watch('tags'),
   });
-
+  const handleCancel = () => {
+    form.reset();
+    toggleModal();
+  };
   const handleImageSelect = (imageUrl: string) => {
     form.setValue('imageUrl', imageUrl);
   };
@@ -60,12 +61,14 @@ export function CreateCardModal({ dashboardId = 2930, columnId = 9712 }: ModalPr
 
   const onSubmit = async () => {
     await postCard();
+    handleCancel();
+    getCard();
   };
 
   return (
     <div>
       <Form {...form}>
-        <div className="scrollbar-hide max-h-[90vh] overflow-y-auto flex flex-col ">
+        <div className="rounded-md px-5 pt-7 pb-5 md:pt-8 md:pb-7 md:px-7  bg-white scrollbar-hide max-h-[90vh] overflow-y-auto flex flex-col ">
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8">
             <ModalTitle>할 일 생성</ModalTitle>
             <div className="flex flex-col gap-8 w-full ">
@@ -75,7 +78,12 @@ export function CreateCardModal({ dashboardId = 2930, columnId = 9712 }: ModalPr
                 render={({ field: { onChange } }) => (
                   <FormItem>
                     <FormControl>
-                      <InputDropdown label="담당자" dashboardId={dashboardId} onChange={onChange} />
+                      <InputDropdown
+                        placeholder="이름을 입력해 주세요"
+                        label="담당자"
+                        dashboardId={dashboardId}
+                        onChange={onChange}
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -139,7 +147,6 @@ export function CreateCardModal({ dashboardId = 2930, columnId = 9712 }: ModalPr
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="imageUrl"

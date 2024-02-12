@@ -9,10 +9,11 @@ import { axiosAuthInstance } from '@/libs/axiosAuthInstance';
 interface InputDropdownProps {
   label: string;
   onChange: (value: Member | null) => void;
-  dashboardId: number;
+  dashboardId: number | undefined;
+  placeholder: string | undefined;
 }
 
-const InputDropdown = ({ label, onChange, dashboardId }: InputDropdownProps) => {
+const InputDropdown = ({ label, onChange, dashboardId, placeholder = undefined }: InputDropdownProps) => {
   const getMembers = () => axiosAuthInstance().get(`members?dashboardId=${dashboardId}`);
   const { execute: getMemberAsync, data } = useAsync(getMembers, false);
 
@@ -40,7 +41,7 @@ const InputDropdown = ({ label, onChange, dashboardId }: InputDropdownProps) => 
           inputId="contact"
           options={members}
           onChange={(select) => handleMemberChange(select as Member)}
-          placeholder="이름을 입력해 주세요"
+          placeholder={placeholder}
           components={{
             // 구분선 숨김
             IndicatorSeparator: () => null,

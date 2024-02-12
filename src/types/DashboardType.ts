@@ -19,6 +19,7 @@ export interface Card {
     nickname: string;
     id: number;
   };
+  dashboardId?: number;
   imageUrl: string;
   teamId: string;
   columnId: string;
@@ -40,6 +41,16 @@ export interface CreateCard {
 export interface Column {
   id: number;
   dashboardId: number;
+  title: string;
+  imageUrl: string | null;
+  teamId: string;
+  columnId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ColumnType {
+  id: number;
   title: string;
   teamId: string;
   createdAt: string;

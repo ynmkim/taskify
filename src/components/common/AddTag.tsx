@@ -39,7 +39,6 @@ const AddTag = ({ onTagListChange, tags }: AddTagProps) => {
     }
     return length;
   }
-  const hasError = Boolean(errors.tagInput);
 
   const updateTagList = (newTags: string[]) => {
     setTagList(newTags);
@@ -47,10 +46,10 @@ const AddTag = ({ onTagListChange, tags }: AddTagProps) => {
   };
 
   const submitTagItem = (data: FormValues) => {
-    if (tagList.length >= 10) {
+    if (tagList.length >= 8) {
       setError('tagInput', {
         type: 'manual',
-        message: '태그는 10개까지 입력 가능합니다',
+        message: '태그는 8개까만 가능',
       });
       return;
     }
@@ -59,14 +58,14 @@ const AddTag = ({ onTagListChange, tags }: AddTagProps) => {
     if (!validTag) {
       setError('tagInput', {
         type: 'manual',
-        message: '태그는 한글, 영문, 숫자만 사용할 수 있습니다',
+        message: '특수기호와 띄어쓰기는 사용할 수 없음',
       });
       return;
     }
     if (tagList.includes(data.tagInput)) {
       setError('tagInput', {
         type: 'manual',
-        message: '중복된 태그입니다',
+        message: '중복된 태그',
       });
       return;
     }
@@ -95,21 +94,26 @@ const AddTag = ({ onTagListChange, tags }: AddTagProps) => {
       }
     }
   };
+  const colorArray: Array<'orange' | 'pink' | 'blue' | 'green'> = ['orange', 'pink', 'blue', 'green'];
 
   return (
     <div>
       <Label text="태그" />
       <div
         className={`flex items-center flex-wrap border w-full  ${
-          hasError ? 'border-red-D6173A' : 'border-gray-D9D9D9'
+          Boolean(errors.tagInput) ? 'border-red-D6173A' : 'border-gray-D9D9D9'
         } rounded-md  px-[16px] h-[42px] md:h-12`}
       >
-        {tagList.slice(0, 10).map((tag, index) => (
-          <div key={index} className="h-[50px] flex items-center mr-[6px]">
-            <Chip size="small" variant="basic" color="orange" onClick={() => deleteTagItem(tag)}>
-              {tag}
-            </Chip>
-          </div>
+        {tagList.slice(0, 8).map((tag, index) => (
+          <Chip
+            key={index}
+            size="small"
+            variant="basic"
+            color={colorArray[index % 4]}
+            onClick={() => deleteTagItem(tag)}
+          >
+            {tag}
+          </Chip>
         ))}
         <FormField
           name="tagInput"
@@ -136,82 +140,3 @@ const AddTag = ({ onTagListChange, tags }: AddTagProps) => {
 };
 
 export default AddTag;
-
-// import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useRef } from "react";
-// import styles from "./TagInput.module.css";
-// import TagList from "./TagList";
-
-// interface TagInputProp {
-//   tagList: string[];
-//   setTagList: Dispatch<SetStateAction<string[]>>;
-//   value: string;
-//   id: string;
-//   setValue: Dispatch<SetStateAction<string>>;
-//   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-// }
-
-// function TagInput({ tagList, setTagList, value, setValue, onChange, id }: TagInputProp) {
-//   const inputRef = useRef<HTMLInputElement>(null);
-
-//   const handleEnter = (event: KeyboardEvent<HTMLInputElement>) => {
-//     const trimmedValue = value.trim(); // 문자열의 앞뒤 공백만 제거
-//     const replacedValue = value.replace(/\s/g, ""); // 문자열 사이사이의 공백 제거
-
-//     // 공백 문자열을 태그로 입력하는 것 방지
-//     if (event.key === "Enter" && replacedValue !== "") {
-//       event.preventDefault();
-//       const isAlreadyInList = tagList.find((tag) => tag === trimmedValue); // 중복된 태그 입력 방지
-
-//       if (!isAlreadyInList) {
-//         setTagList((prevList) => {
-//           return [trimmedValue, ...prevList];
-//         });
-//       }
-
-//       setValue("");
-//     }
-
-//     if (event.key === "Backspace" && value === "") {
-//       setTagList((prevList) => {
-//         const updatedList = [...prevList]; // 이전 배열을 복제합니다.
-//         updatedList.shift(); // 첫 번째 요소를 제거합니다.
-//         return updatedList;
-//       });
-//     }
-//   };
-
-//   const handleClick = (tag: string) => {
-//     setTagList((prevList) => {
-//       const newList = prevList.filter((item) => item !== tag);
-
-//       return [...newList];
-//     });
-//   };
-
-//   const placeholder = tagList.length !== 0 ? "" : "입력 후 Enter";
-
-//   return (
-//     <>
-//       <div className={styles.root}>
-//         {tagList[0] && (
-//           <div className={styles.tagContainer}>
-//             {tagList.map((tag) => (
-//               <TagList tag={tag} onClick={handleClick} key={tag} />
-//             ))}
-//           </div>
-//         )}
-//         <input
-//           id={id}
-//           ref={inputRef}
-//           className={styles.input}
-//           value={value}
-//           onChange={onChange}
-//           onKeyDown={handleEnter}
-//           placeholder={placeholder}
-//         ></input>
-//       </div>
-//     </>
-//   );
-// }
-
-// export default TagInput;

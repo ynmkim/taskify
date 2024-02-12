@@ -1,51 +1,5 @@
-import * as React from 'react';
+import React from "react";
 import { cn } from '@/libs/utils';
-import { Button } from '@/components/ui/button';
-import { invitations } from '@/pages/api/mock/invitations.json';
-
-export default function InvitedTable() {
-  return (
-    <div className="max-h-[712px] md:max-h-[459px] overflow-auto">
-      <Table className="table-fixed">
-        <TableHeader className="sticky top-0 hidden md:table-header-group bg-white">
-          <TableRow className="border-0">
-            <TableHead>이름</TableHead>
-            <TableHead>초대자</TableHead>
-            <TableHead>수락 여부</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {invitations.map((invitation) => (
-            <TableRow key={invitation.id}>
-              <TableCell>
-                <div className="flex gap-4">
-                  <span className="basis-10 md:hidden block text-gray-9FA6B2 text-sm whitespace-nowrap">이름</span>
-                  <span className="grow">{invitation.dashboard.title}</span>
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex gap-4">
-                  <span className="basis-10 md:hidden block text-gray-9FA6B2 text-sm">초대자</span>
-                  <span className="grow">{invitation.inviter.nickname}</span>
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex justify-between md:justify-start gap-2.5">
-                  <Button variant="violet" size="input" text="input" className="w-full h-8 md:w-[84px] md:h-8">
-                    수락
-                  </Button>
-                  <Button size="input" text="input" className="w-full h-8 md:w-[84px] md:h-8">
-                    거절
-                  </Button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
-  );
-}
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
   ({ className, ...props }, ref) => <table ref={ref} className={cn('w-full text-sm', className)} {...props} />,

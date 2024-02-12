@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
@@ -17,7 +17,6 @@ import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import usePutCard from '@/hooks/usePutCard';
 import { Column, Card } from '@/types/DashboardType';
 import { useRouter } from 'next/router';
-import useGetColum from '@/hooks/useGetColums';
 
 export interface EditCardModalForm {
   manager: string;
@@ -32,36 +31,41 @@ export interface EditCardModalForm {
   states: Column[];
 }
 export interface ModalProps {
-  onCancel: () => void;
-  dashboardId: number;
-  columnId: number;
-  getCards: () => void;
   card: Card;
-  state: Column;
-  states: Column[];
+  column: Column;
+  columns: Column[];
+  toggleModal: () => void;
+  getCard: () => void;
 }
 
-export function EditCardModal({ columnId, card }: ModalProps) {
-  columnId = 971;
-  const dashboardId = 2930;
+export function EditCardModal({ getCard, column, columns, card, toggleModal }: ModalProps) {
+  const defaultValues = {
+    title: card?.title,
+    manager: card?.assignee?.nickname,
+    description: card?.description,
+    dueDate: card?.dueDate,
+    imageUrl: card?.imageUrl,
+    tags: card?.tags,
+    assigneeUserId: card?.assignee?.id,
+    dashboardId: card?.dashboardId,
+    columnId: column?.id,
+    cardId: card?.id,
+  };
+
   const form = useForm<EditCardModalForm>({
     mode: 'onChange',
+    defaultValues,
   });
 
-  // const assigneeUserId = form.watch('manager') ? Number(form.watch('manager')) : undefined;
-  const assigneeUserId = 798;
+  const assigneeUserId = form.watch('manager') ? form.watch('manager').value : undefined;
 
-  //대시보드에서 받아와야 Columns 데이터
-  const { execute: getColum, columns: states } = useGetColum(dashboardId);
-  useEffect(() => {
-    getColum();
-  }, [dashboardId]);
+  const [columnId, setcolumnId] = useState<number>(column.id);
 
-  // const state = states?.[0];
-
-  // console.log(states);
-
-  // const [StateId, setStateId] = useState<number>(state.id);
+  // reload
+  const router = useRouter();
+  const handleReload = () => {
+    router.reload();
+  };
 
   const handleImageSelect = (imageUrl: string) => {
     form.setValue('imageUrl', imageUrl);
@@ -70,29 +74,32 @@ export function EditCardModal({ columnId, card }: ModalProps) {
   const onTagListChange = (newTagList: string[]) => {
     form.setValue('tags', newTagList);
   };
-  // const handleStateChange = (newStateId: number) => {
-  //   setStateId(newStateId);
-  // };
+  const handleStateChange = (newStateId: number) => {
+    setcolumnId(newStateId);
+  };
 
-  // const { execute: putCard } = usePutCard({
-  //   assigneeUserId,
-  //   title: form.watch('title'),
-  //   description: form.watch('description'),
-  //   dueDate: form.watch('dueDate')?.toString(),
-  //   imageUrl: form.watch('imageUrl'),
-  //   tags: form.watch('tags'),
-  //   cardId: card?.id,
-  //   columnId: StateId,
-  // });
+  const { execute: putCard } = usePutCard({
+    assigneeUserId,
+    title: form.watch('title'),
+    description: form.watch('description'),
+    dueDate: form.watch('dueDate')?.toString(),
+    imageUrl: form.watch('imageUrl'),
+    tags: form.watch('tags'),
+    cardId: card?.id,
+    columnId: columnId,
+  });
 
   const onSubmit = async () => {
     await putCard();
+    getCard();
+    toggleModal();
+    handleReload();
   };
 
   return (
     <div>
       <Form {...form}>
-        <div className="scrollbar-hide max-h-[90vh] overflow-y-auto flex flex-col gap-[20px]">
+        <div className="rounded-md px-5 pt-7 pb-5 md:pt-8 md:pb-7 md:px-7 bg-white scrollbar-hide max-h-[90vh] overflow-y-auto flex flex-col gap-[20px]">
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8">
             <ModalTitle>할 일 수정</ModalTitle>
             <div className="flex flex-col gap-8 w-full ">
@@ -100,11 +107,11 @@ export function EditCardModal({ columnId, card }: ModalProps) {
                 <div className="w-[287px] md:w-[217px]">
                   <FormField
                     control={form.control}
-                    name="manager"
-                    render={({ field: { onChange } }) => (
+                    name="states"
+                    render={({ field: {} }) => (
                       <FormItem>
                         <FormControl>
-                          {/* <StateDropdown label="상태" onChange={onChange} states={states} stateTitle={state.title} /> */}
+                          <StateDropdown label="상태" onChange={handleStateChange} columns={columns} column={column} />
                         </FormControl>
                       </FormItem>
                     )}
@@ -114,10 +121,16 @@ export function EditCardModal({ columnId, card }: ModalProps) {
                   <FormField
                     control={form.control}
                     name="manager"
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange, ...rest } }) => (
                       <FormItem>
                         <FormControl>
-                          <InputDropdown label="담당자" dashboardId={dashboardId} onChange={onChange} />
+                          <InputDropdown
+                            label="담당자"
+                            placeholder={defaultValues.manager}
+                            dashboardId={card.dashboardId}
+                            onChange={onChange}
+                            {...rest}
+                          />
                         </FormControl>
                       </FormItem>
                     )}
@@ -168,10 +181,10 @@ export function EditCardModal({ columnId, card }: ModalProps) {
               <FormField
                 control={form.control}
                 name="tags"
-                render={() => (
+                render={({ field: {} }) => (
                   <FormItem>
                     <FormControl>
-                      <AddTag onTagListChange={onTagListChange} />
+                      <AddTag onTagListChange={onTagListChange} tags={card.tags} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -188,6 +201,7 @@ export function EditCardModal({ columnId, card }: ModalProps) {
                         label="이미지"
                         onSelectImage={handleImageSelect}
                         columnId={columnId}
+                        selectedImageUrl={card.imageUrl}
                         {...rest}
                       />
                     </FormControl>
@@ -202,7 +216,7 @@ export function EditCardModal({ columnId, card }: ModalProps) {
                 </Button>
               </DialogClose>
               <Button disabled={!form.formState.isValid} text="modal" size="modal" variant="violet">
-                생성
+                수정
               </Button>
             </div>
           </form>
