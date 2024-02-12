@@ -7,6 +7,7 @@ import { DASHBOARD_COLOR } from '@/constants/constants';
 import Pagination from '@/components/domains/mydashboard/Pagination';
 import { IoIosArrowForward } from 'react-icons/io';
 import PlusChip from '@/components/domains/dashboard/column/PlusChip';
+import AddDashboardDialog from '@/components/dialog/AddDashboardDialog';
 interface DashboardListProps {
   className?: string;
 }
@@ -39,7 +40,9 @@ export default function DashboardList({ className, ...props }: DashboardListProp
     <div className={cn(className)} {...props}>
       <ul className="grid grid-rows-1 grid-cols-1 gap-2 md:grid-cols-2 md:gap-2.5 lg:grid-cols-3 lg:gap-[13px] ">
         <li>
-          <DashboardAddButton />
+          <AddDashboardDialog>
+            <DashboardAddButton />
+          </AddDashboardDialog>
         </li>
         {dashboards.map((dashboard) => (
           <li key={dashboard.id}>
@@ -84,12 +87,9 @@ function Bullet({ color }: BulletProps) {
 
 function DashboardAddButton() {
   return (
-    <button className="flex justify-center items-center gap-2.5 w-full h-[58px] sm:h-[68px] md:h-[70px] px-5 rounded-lg border border-gray-D9D9D9 bg-white text-base font-semibold text-black-333236">
+    <div className="flex w-full justify-center items-center gap-2.5 h-[58px] sm:h-[68px] md:h-[70px] px-5 rounded-lg border border-gray-D9D9D9 bg-white text-base font-semibold text-black-333236">
       새로운 대시보드
       <PlusChip />
-      {/* <div className="relative w-5 h-5 md:w-[22px] md:h-[22px]">
-        <Image fill src="/plus_add.svg" alt="" className="object-cover" />
-      </div> */}
-    </button>
+    </div>
   );
 }

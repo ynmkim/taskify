@@ -59,9 +59,10 @@ const config = {
         gray: {
           '787486': '#787486',
           '9FA6B2': '#9FA6B2',
-          'D9D9D9': '#D9D9D9',
-          'EEEEEE': '#EEEEEE',
-          'FAFAFA': '#FAFAFA',
+          D9D9D9: '#D9D9D9',
+          EEEEEE: '#EEEEEE',
+          FAFAFA: '#FAFAFA',
+          F5F5F5: '#F5F5F5',
         },
         violet: {
           '5534DA': '#5534DA',
@@ -69,16 +70,15 @@ const config = {
         },
         green: {
           '7AC555': '#7AC555',
-          'A3C4A2': '#A3C4A2',
+          A3C4A2: '#A3C4A2',
         },
         pink: {
-          'E876EA': '#E876EA',
-          'F4D7DA': '#F4D7DA',
-
+          E876EA: '#E876EA',
+          F4D7DA: '#F4D7DA',
         },
         orange: {
-          'FFA500': '#FFA500',
-          'FFC85A': '#FFC85A'
+          FFA500: '#FFA500',
+          FFC85A: '#FFC85A',
         },
         blue: {
           '76A5EA': '#76A5EA',
@@ -111,7 +111,7 @@ const config = {
         'brown-c4b1a2': '#C4B1A2',
         'green-a3c4a2': '#A3C4A2',
         'gray-fafafa': '#FAFAFA',
-        'modal': 'rgba(0, 0, 0, 0.70)',
+        modal: 'rgba(0, 0, 0, 0.70)',
       },
     },
   },

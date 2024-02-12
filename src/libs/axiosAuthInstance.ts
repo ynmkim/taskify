@@ -1,10 +1,4 @@
 import axios from 'axios';
-import { getHeader } from './network';
-
-export const instance = axios.create({
-  baseURL: 'https://sp-taskify-api.vercel.app/2-10',
-  timeout: 1000,
-});
 
 export const axiosAuthInstance = () => {
   const instance = axios.create({
@@ -15,13 +9,14 @@ export const axiosAuthInstance = () => {
   });
   instance.interceptors.request.use(
     (config) => {
-      const token = getHeader();
+      const token = localStorage.getItem('accessToken');
       if (token) {
-        config.headers.Authorization = token.Authorization;
+        config.headers.Authorization = `Bearer ${token}`;
       }
       return config;
     },
     (error) => {
+      console.log('interceptor>error', error);
       return Promise.reject(error);
     },
   );
@@ -30,10 +25,11 @@ export const axiosAuthInstance = () => {
       return response;
     },
     (error) => {
+      console.log('interceptor>error', error);
       return Promise.reject(error);
     },
   );
-
+  // 이 시간 동안 응답이 오지 않으면 요청은 실패한 것으로 간주
   instance.defaults.timeout = 2500;
   return instance;
 };

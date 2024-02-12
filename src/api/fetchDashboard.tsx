@@ -37,8 +37,7 @@ export async function postDashboard(data: { title: string; color: string }) {
       alert('대시보드가 생성되었습니다.');
     }
 
-    const dashboardId = res.data.id;
-    return dashboardId;
+    return res.data;
   } catch (error) {
     if (error instanceof Error) {
       const errorMessage = error.message;

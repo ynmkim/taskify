@@ -1,7 +1,7 @@
-import { Avatar } from "../ui/avatar";
+import { Avatar } from '../ui/avatar';
 
 const Comment = () => {
-  return(
+  return (
     <div className="flex gap-2.5">
       <Avatar size="m" nickname="정만철" profileImageUrl={null} />
       <div className="flex flex-col gap-1.5 mt-2">
@@ -16,7 +16,7 @@ const Comment = () => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default Comment;

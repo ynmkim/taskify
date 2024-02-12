@@ -5,7 +5,6 @@ import { instance } from '@/libs/axios';
 import { INVITATION_URL } from '@/constants/apiUrl';
 import InvitedCard from '@/components/domains/mydashboard/InvitedCard';
 import DashboardList from '@/components/domains/mydashboard/DashboardList';
-// import CreateDashboardModal from '@/components/domains/mydashboard/CreateDashboardModal';
 import DashboardHeader from '@/components/header/dashboardHeader';
 import Layout from '@/components/domains/dashboard/layout';
 import { ReactElement } from 'react';
