@@ -18,23 +18,21 @@ export default function MyPage() {
 
   return (
     <AuthProvider>
-      <div className="flex w-screen bg-gray-FAFAFA">
-        <DashboardHeader dashboardName="내 대시보드" type="myDashboard"/>
-        <main className="grow p-6 md:p-10">
-          <button type="button" onClick={handleGoBack} className="flex items-center mb-5 md:mb-6">
-            <IoIosArrowBack className="w-[18px] h-[18px] md:w-5 md:h-5" />
-            뒤로 가기
-          </button>
-          <Card className="md:max-w-[620px] mb-3">
-            <CardTitle className="mb-6 md:mb-8">프로필</CardTitle>
-            <ProfileForm />
-          </Card>
-          <Card className="md:max-w-[620px]">
-            <CardTitle className="mb-6 md:mb-8">비밀번호 변경</CardTitle>
-            <PasswordForm />
-          </Card>
-        </main>
-      </div>
+      <DashboardHeader dashboardName="내 대시보드" type="myDashboard"/>
+      <main className="grow p-6 md:p-10">
+        <button type="button" onClick={handleGoBack} className="flex items-center mb-5 md:mb-6">
+          <IoIosArrowBack className="w-[18px] h-[18px] md:w-5 md:h-5" />
+          뒤로 가기
+        </button>
+        <Card className="md:max-w-[620px] mb-3">
+          <CardTitle className="mb-6 md:mb-8">프로필</CardTitle>
+          <ProfileForm />
+        </Card>
+        <Card className="md:max-w-[620px]">
+          <CardTitle className="mb-6 md:mb-8">비밀번호 변경</CardTitle>
+          <PasswordForm />
+        </Card>
+      </main>
     </AuthProvider>
   );
 }

@@ -4,12 +4,14 @@ import { Dashboard } from "@/types/DashboardType";
 import AddDashboardDialog from "@/components/dialog/AddDashboardDialog";
 import { forwardRef } from "react";
 import Link from "next/link";
+import { FiPlusSquare } from 'react-icons/fi';
 
 interface SideBarProps {
   dashboards: Dashboard[];
+  onChange?:(dashboard:Dashboard) => void;
 }
 
-const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({dashboards}, ref) => {
+const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({dashboards, onChange}, ref) => {
   return(
     <div className="w-[67px] md:w-40 lg:w-[300px] min-h-screen flex flex-col gap-14 pt-5 bg-white border-r border-gray-D9D9D9">
       <Link href='/mydashboard'>
@@ -24,7 +26,11 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({dashboards}, ref) => 
         <div className="flex items-center w-full justify-between px-6">
           <p className="text-xs font-bold text-gray-787486 hidden md:block">Dash Boards</p>
           <div>
-            <AddDashboardDialog />
+            <AddDashboardDialog onChange={onChange}>
+              <div className="w-5 h-5 flex items-center justify-center">
+                <FiPlusSquare className=" text-gray-787486" />
+              </div>
+            </AddDashboardDialog>
           </div>
         </div>
         <ul className="px-3 flex flex-col gap-[3px] justify-center">
