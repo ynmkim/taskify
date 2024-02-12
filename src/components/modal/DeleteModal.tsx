@@ -1,23 +1,11 @@
-import * as React from 'react';
 import { Button } from '@/components/ui/button';
-
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onDelete?: () => void;
 }
 
-const DeleteModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
-  React.useEffect(() => {
-    if (isOpen) {
-      document.body.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-    } else {
-      document.body.style.backgroundColor = 'initial';
-    }
-    return () => {
-      document.body.style.backgroundColor = 'initial';
-    };
-  }, [isOpen]);
-
+const DeleteModal = ({ isOpen, onClose, onDelete }:ModalProps) => {
   return (
     <>
       {isOpen && (
@@ -28,7 +16,7 @@ const DeleteModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
               <Button variant="default" size="modal" text="modal" onClick={onClose} className="w-[120px] h-[48px] py-[14px] px-[46px] mr-[12px]">
                 취소
               </Button>
-              <Button variant="violet" size="modal" text="login" className="w-[120px] h-[48px] py-[14px] px-[46px]">
+              <Button variant="violet" size="modal" text="login" onClick={onDelete} className="w-[120px] h-[48px] py-[14px] px-[46px]">
                 삭제
               </Button>
             </div>

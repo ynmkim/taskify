@@ -3,7 +3,6 @@ import { cn } from '@/libs/utils';
 import Image from 'next/image';
 import { Input } from '@/components/ui/base-input';
 import { composeRefs } from '@/libs/composeRefs';
-
 interface AvatarInputProps extends React.ComponentPropsWithoutRef<'input'> {
   initialAvatar?: string;
 }
