@@ -16,14 +16,9 @@ const header = {
     'Content-Type': 'application/json'
 }
 
-export const postDashboard = async () => {
-  const data = {
-    title: 'test1',
-    color: '#7AC555'
-  };
-
+export const postDashboard = async ({title, color}:{title:string, color:string}) => {
   try{
-    const response = await instance.post('/dashboards', data, {headers:header})
+    const response = await instance.post('/dashboards', {title, color}, {headers:header})
     return response.data;
   } catch (error) {
     alert(error)

@@ -54,12 +54,16 @@ const SlotSection = ({dashboardid, createdByMe}:{dashboardid:number, createdByMe
   )
 };
 
+<<<<<<< HEAD
 const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdByMe?:boolean, dashboardid?:number }> = ({
   dashboardName,
   type,
   createdByMe,
   dashboardid
 }) => {
+=======
+const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdByMe?:boolean, dashboardid?:number }> = ({ dashboardName, type, createdByMe, dashboardid }) => {
+>>>>>>> 0ca9ada5b502b85c2b4ab57b2e69a173fa2ca5e5
   const isDashboard = type === 'myDashboard';
   const [userData, setUserData] = useState<{ nickname: string, profileImageUrl: string | null }>({ nickname: '', profileImageUrl: '' });
 
@@ -100,7 +104,11 @@ const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdB
           </div>
         }
         <div className='flex flex-row items-center'>
+<<<<<<< HEAD
           {!isDashboard && <SlotSection dashboardid={Number(dashboardid)} createdByMe={createdByMe}/>}
+=======
+          {dashboardid ? <SlotSection dashboardid={dashboardid} createdByMe={createdByMe}/> : null}
+>>>>>>> 0ca9ada5b502b85c2b4ab57b2e69a173fa2ca5e5
           <DropdownMenu>
             <DropdownMenuTrigger className='flex flex-row items-center'>
               <Avatar size='lg' {...userData} />
