@@ -11,11 +11,11 @@ interface PaginationProps {
 
 export default function Pagination({ className, totalPage, currentPage, setCurrentPage, ...props }: PaginationProps) {
   const handlePrevClick = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    setCurrentPage((currentPage) => currentPage - 1);
   };
 
   const handleNextClick = () => {
-    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPage));
+    setCurrentPage((currentPage) => currentPage + 1);
   };
 
   return (

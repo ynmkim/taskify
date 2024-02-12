@@ -19,19 +19,12 @@ export default function DashboardList({ className, ...props }: DashboardListProp
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
-  // const [displayDashboard, setDisplayDashboard] = useState([]); // 상태를 하나 더 만들지 않고 할 수 있는 방법 없을까
   const pageSize = 5;
 
   useEffect(() => {
     const handleload = async () => {
       const { dashboards, totalCount } = await getDashboards('pagination', pageSize, currentPage);
-
-      const firstIndex = (currentPage - 1) * pageSize;
-      const lastIndex = firstIndex + pageSize;
-      const slicedDashboards = dashboards?.slice(firstIndex, lastIndex);
-
       setDashboards(dashboards);
-      // setDisplayDashboard(slicedDashboards);
 
       const calculatedTotalPage = Math.ceil(totalCount / pageSize);
       setTotalPage(calculatedTotalPage);
