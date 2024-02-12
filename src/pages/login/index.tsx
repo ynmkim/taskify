@@ -7,11 +7,14 @@ import LocalStorage from '@/libs/localstorage';
 import { AuthInputType, LoginFormData } from '@/types/AuthType';
 import AuthInput from '@/components/auth/input/AuthInput';
 import { Button } from '@/components/ui/button';
+import useCheckLogIn from '@/hooks/useCheckLogIn';
 
-export default function SignUp() {
+export default function LogIn() {
+  useCheckLogIn();
+
   const {
     register,
-    formState: { errors },
+    formState: { isValid, errors },
     handleSubmit,
   } = useForm<LoginFormData>({ mode: 'onBlur' });
 
@@ -86,7 +89,9 @@ export default function SignUp() {
             )}
           </div>
 
-          <Button className="mt-5 w-full bg-gray-9FA6B2 text-lg text-white font-medium py-3 hover:bg-violet-5534DA">
+          <Button
+            className={`mt-5 w-full text-lg text-white font-medium py-3 hover:bg-violet-5534DA ${isValid ? 'bg-violet-5534DA' : 'bg-gray-9FA6B2'}`}
+          >
             로그인
           </Button>
         </form>

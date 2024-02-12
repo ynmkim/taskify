@@ -8,8 +8,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { useForm, useWatch } from 'react-hook-form';
 import fetchSignUp from '@/api/fetchSignUp';
+import useCheckLogIn from '@/hooks/useCheckLogIn';
 
 export default function SignUp() {
+  useCheckLogIn();
+
   const [isChecked, setIsChecked] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
