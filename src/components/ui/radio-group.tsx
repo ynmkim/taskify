@@ -6,9 +6,9 @@ import Image from 'next/image';
 
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
->(({ className, ...props }, ref) => {
-  return <RadioGroupPrimitive.Root className={cn('grid gap-2.5', className)} {...props} ref={ref} />;
+  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root> & { type?: string }
+>(({ className, type, ...props }, ref) => {
+  return <RadioGroupPrimitive.Root className={cn(type === 'boardEdit' ? 'grid gap-0 lg:gap-2.5 md:gap-2.5' : 'grid gap-2.5', className)} {...props} ref={ref} />;
 });
 RadioGroup.displayName = RadioGroupPrimitive.Root.displayName;
 

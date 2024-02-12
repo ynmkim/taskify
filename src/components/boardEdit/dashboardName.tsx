@@ -59,8 +59,8 @@ const DashboardName: React.FC<DashboardNameProps> = ({ dashboardid, title, onCha
   return (
     <div className={'bg-white pt-[24px] lg:pt-[32px] md:pt-[32px] px-[20px] lg:px-[28px] md:px-[20px] pb-[19px] lg:pb-[28px] md:pb-[28px] rounded-md shadow-md w-[100%] h-[256px] mb-[12px] text-[11px] lg:text-[14px] md:text-[14px]'}>
       <div className='h-[24px] flex flex-row justify-between'>
-        <h2 className="w-fit text-xl font-bold mb-[37px]">{title}</h2>
-        <RadioGroup className='flex flex-row h-[25px]'>
+        <h2 className="min-w-fit text-xl font-bold mb-[37px]">{title}</h2>
+        <RadioGroup type='boardEdit' className='flex flex-row justify-between h-[25px]'>
           <RadioGroupItem color='green' value='#7AC555' onClick={() => handleColorChange('#7AC555')} />
           <RadioGroupItem color='purple' value='#760DDE' onClick={() => handleColorChange('#760DDE')} />
           <RadioGroupItem color='orange' value='#FFA500' onClick={() => handleColorChange('#FFA500')} />
