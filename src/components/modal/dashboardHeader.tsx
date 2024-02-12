@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import {DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,} from '@/components/ui/dropdown';
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
 import GroupAvatar from '@/components/ui/avatarGroup';
@@ -8,6 +12,8 @@ import { Member } from '@/types/DashboardType';
 import Link from 'next/link';
 import { axiosAuthInstance } from '@/libs/axios';
 import InvitationDialog from '../dialog/InvitationDialog';
+import { parse } from 'cookie';
+
 const authInstance = axiosAuthInstance();
 
 const SlotSection = ({dashboardid, createdByMe}:{dashboardid:number, createdByMe?:boolean}) =>{
@@ -21,7 +27,7 @@ const SlotSection = ({dashboardid, createdByMe}:{dashboardid:number, createdByMe
           const data = response.data;
           setMembers(data.members);
         } catch (error) {
-          alert('구성원을 불러오는 데 실패하였습니다.: ' + (error as Error).message);
+          alert('Error fetching members data: ' + (error as Error).message);
         }
       };
   
@@ -48,21 +54,37 @@ const SlotSection = ({dashboardid, createdByMe}:{dashboardid:number, createdByMe
   )
 };
 
-const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdByMe?:boolean, dashboardid:number }> = ({ dashboardName, type, createdByMe, dashboardid }) => {
+const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdByMe?:boolean, dashboardid:number }> = ({
+  dashboardName,
+  type,
+  createdByMe,
+  dashboardid
+}) => {
   const isDashboard = type === 'myDashboard';
-  const [userData, setUserData] = useState<{ nickname: string, profileImageUrl: string }>({ nickname: '', profileImageUrl: '' });
+  const [userData, setUserData] = useState<{ nickname: string, profileImageUrl: string | null }>({ nickname: '', profileImageUrl: '' });
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await authInstance.get('users/me');
-        const data = await response.data;
-        setUserData(data);
+        const cookies = parse(document.cookie);
+        const accessToken = cookies.accessToken;
+
+        if (accessToken) {
+          const response = await authInstance.get('users/me', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+
+          const data = await response.data;
+          setUserData(data);
+          console.log(data);
+        }
       } catch (error) {
         alert('Error fetching user data: ' + (error as Error).message);
       }
     };
-  
+
     fetchUserData();
   }, []);
 
@@ -73,15 +95,36 @@ const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdB
       <div className="flex flex-row items-center justify-between h-[70px]">
       {isDashboard && <div className="flex items-center font-bold text-xl gap-2">{getTitle()}</div>}
         {!isDashboard &&
-          <div className="hidden lg:flex items-center font-bold text-xl gap-2 lg:w-[98px]">
+          <div className="hidden lg:flex items-center font-bold text-xl gap-2 lg:w-fit">
             {getTitle()}
             {createdByMe && <FaCrown className="w-5 h-4" fill="#FDD446"/>}
           </div>
         }
         <div className='flex flex-row items-center'>
           {!isDashboard && <SlotSection dashboardid={dashboardid} createdByMe={createdByMe}/>}
-          <Avatar size='lg' {...userData} />
-          <span className="invisible lg:visible md:visible ml-3 font-medium text-base">{userData.nickname}</span>
+          <DropdownMenu>
+            <DropdownMenuTrigger className='flex flex-row items-center'>
+              <Avatar size='lg' {...userData} />
+              <span className="invisible lg:visible md:visible ml-3 font-medium text-base">{userData.nickname}</span>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+            <Link href={`/`}>
+              <DropdownMenuItem>
+                로그아웃
+              </DropdownMenuItem>
+            </Link>
+            <Link href={`/mypage`}>
+              <DropdownMenuItem>
+                내 정보
+              </DropdownMenuItem>
+            </Link>
+            <Link href={`/mydashboard`}>
+              <DropdownMenuItem>
+                내 대시보드
+              </DropdownMenuItem>
+            </Link>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>

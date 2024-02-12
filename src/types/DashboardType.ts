@@ -19,14 +19,14 @@ export interface Card {
     nickname:string;
     id:number;
   };
-  imageUrl:string;
+  imageUrl:string | null;
   teamId:string;
   columnId:string;
   createdAt:string;
   updatedAt:string;
 }
 
-export interface Column {
+export interface ColumnType {
   id:number;
   title:string;
   teamId:string;

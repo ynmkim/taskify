@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 import { RiAddBoxLine } from "react-icons/ri";
 import { Button } from '../ui/button';
-import ColumnModal from '../modal/ColumnModal';
 import { axiosAuthInstance } from '@/libs/axios';
+import InvitationDialog from '../dialog/InvitationDialog';
 
 
 interface InvitedProps {
   className?: string;
-  dashboardid?: string | string[] | number | undefined;
+  dashboardid: number;
 }
 
 interface InvitationsResponse {
@@ -49,7 +49,6 @@ const Invited: React.FC<InvitedProps> = ({ dashboardid }) => {
   const startIndex = (currentPage - 1) * membersPerPage;
   const endIndex = startIndex + membersPerPage;
   const currentInvitations = invitations.slice(startIndex, endIndex);
-  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
 
   const handleNextPage = () => {
@@ -59,15 +58,7 @@ const Invited: React.FC<InvitedProps> = ({ dashboardid }) => {
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
-
-  const openInviteModal = () => {
-    setIsInviteModalOpen(true);
-  };
-
-  const closeInviteModal = () => {
-    setIsInviteModalOpen(false);
-  };
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -82,18 +73,23 @@ const Invited: React.FC<InvitedProps> = ({ dashboardid }) => {
       }
     };
     fetchData();
+    
   }, [dashboardid, currentPage, membersPerPage]);
 
   const handleCancelInvitation = async (invitationId: number) => {
     try {
-      const inviterId = invitations.find(invitation => invitation.id === invitationId)?.inviter.id;
-      if (inviterId === currentUserId) {
-        await authInstance.delete(`dashboards/${dashboardid}/invitations/${invitationId}`);
-        const updatedInvitations = invitations.filter(invitation => invitation.id !== invitationId);
-        setInvitations(updatedInvitations);
-        alert('초대를 취소했습니다.');
+      const invitation = invitations.find(invitation => invitation.id === invitationId);
+      if (invitation) {
+        if (invitation.inviter.id === currentUserId) {
+          await authInstance.delete(`dashboards/${dashboardid}/invitations/${invitationId}`);
+          const updatedInvitations = invitations.filter(invitation => invitation.id !== invitationId);
+          setInvitations(updatedInvitations);
+          alert('초대를 취소했습니다.');
+        } else {
+          alert('취소 권한이 없습니다.');
+        }
       } else {
-        alert('취소 권한이 없습니다.');
+        alert('초대를 찾을 수 없습니다.');
       }
     } catch (error) {
       alert('초대를 취소하는 데 오류가 발생했습니다: ' + (error as Error).message);
@@ -117,10 +113,13 @@ const Invited: React.FC<InvitedProps> = ({ dashboardid }) => {
             </button>
           </div>
           <div>
+            <InvitationDialog dashboardid={dashboardid} />
+            {/*
             <button className='flex flex-row items-center gap-[8px] rounded-md text-white bg-[#5534DA] px-[12px] lg:px-[16px] md:px-[16px] py-[7px] lg:py-[8px] md:py-[8px] ml-[61px] lg:ml-[16px] md:ml-[16px] w-[86px] h-[28px] lg:w-[105px] lg:h-[32px] md:w-[105px] md:h-[32px] text-[11px] lg:text-[14px] md:text-[14px] font-medium' onClick={openInviteModal}>
               <RiAddBoxLine className='w-[14px] h-[14px]' />
               초대하기
             </button>
+            */}
           </div>
         </div>
       </div>
@@ -141,16 +140,6 @@ const Invited: React.FC<InvitedProps> = ({ dashboardid }) => {
           ))}
         </div>
       </div>
-      <ColumnModal
-        isOpen={isInviteModalOpen}
-        onClose={closeInviteModal}
-        title="초대하기"
-        label="이메일"
-        placeholder="codeit@codeit.com"
-        confirmButtonText="초대"
-        modalType="invite"
-        dashboardid={dashboardid}
-      />
     </div>
   );
 };

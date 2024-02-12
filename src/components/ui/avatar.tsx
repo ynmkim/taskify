@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import { cn } from "@/libs/utils";
 import { cva } from 'class-variance-authority';
-import { axiosAuthInstance } from "@/libs/axios";
 
 type AvatarProps = {
   nickname: string;
@@ -10,7 +9,6 @@ type AvatarProps = {
   size: 'xs' | 's' | 'm' | 'lg' | undefined;
 } & React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>;
 
-const authInstance = axiosAuthInstance();
 
 const avatarVariants = cva(
   "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
