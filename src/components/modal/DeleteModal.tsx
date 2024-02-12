@@ -1,15 +1,11 @@
 import { Button } from '@/components/ui/button';
-import { axiosAuthInstance } from '@/libs/axios';
-
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onDelete?: () => void;
 }
 
-const authInstance = axiosAuthInstance();
-
-const DeleteModal: React.FC<ModalProps> = ({ isOpen, onClose, onDelete }) => {
+const DeleteModal = ({ isOpen, onClose, onDelete }:ModalProps) => {
   return (
     <>
       {isOpen && (
