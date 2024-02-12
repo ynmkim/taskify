@@ -5,7 +5,8 @@ import { getDashboards } from '@/api/fetchDashboard';
 import { useState, useEffect } from 'react';
 import { DASHBOARD_COLOR } from '@/constants/constants';
 import Pagination from '@/components/domains/mydashboard/Pagination';
-
+import { IoIosArrowForward } from 'react-icons/io';
+import PlusChip from '@/components/domains/dashboard/column/PlusChip';
 interface DashboardListProps {
   className?: string;
 }
@@ -44,7 +45,7 @@ export default function DashboardList({ className, ...props }: DashboardListProp
           <li key={dashboard.id}>
             <Link
               href={`/dashboard/${dashboard.id}`}
-              className="flex justify-between h-[58px] sm:h-[68px] md:h-[70px] px-5 rounded-lg border border-gray-D9D9D9 bg-white text-base font-semibold text-black-333236"
+              className="flex justify-between items-center h-[58px] sm:h-[68px] md:h-[70px] px-5 rounded-lg border border-gray-D9D9D9 bg-white text-base font-semibold text-black-333236"
             >
               <div className="flex items-center whitespace-nowrap">
                 <Bullet color={dashboard.color} />
@@ -56,7 +57,7 @@ export default function DashboardList({ className, ...props }: DashboardListProp
                 )}
               </div>
 
-              {/* <Image src="/arrow_link.svg" alt="" width={18} height={18} /> */}
+              <IoIosArrowForward className="w-[18px] h-[18px]" />
             </Link>
           </li>
         ))}
@@ -85,9 +86,10 @@ function DashboardAddButton() {
   return (
     <button className="flex justify-center items-center gap-2.5 w-full h-[58px] sm:h-[68px] md:h-[70px] px-5 rounded-lg border border-gray-D9D9D9 bg-white text-base font-semibold text-black-333236">
       새로운 대시보드
-      <div className="relative w-5 h-5 md:w-[22px] md:h-[22px]">
+      <PlusChip />
+      {/* <div className="relative w-5 h-5 md:w-[22px] md:h-[22px]">
         <Image fill src="/plus_add.svg" alt="" className="object-cover" />
-      </div>
+      </div> */}
     </button>
   );
 }
