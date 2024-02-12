@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState} from 'react';
+import React, {ReactElement, useContext, useEffect, useState} from 'react';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import DashboardName from '@/components/boardEdit/dashboardName';
@@ -9,11 +9,13 @@ import DashboardHeader from '@/components/header/dashboardHeader';
 import { IoIosArrowBack } from 'react-icons/io';
 import { axiosAuthInstance } from '@/libs/axios';
 import Layout from '@/components/domains/dashboard/layout';
+import { DashboardContext } from '@/contexts/DashboardProvider';
 
 const authInstance = axiosAuthInstance();
 
 export default function BoardEditPage() {
   const router = useRouter();
+  const {setDashboards} = useContext(DashboardContext);
   const { dashboardid } = router.query;
   const [dashboardTitle, setDashboardTitle] = useState('');
   const [createdByMe, setCreatedByMe] = useState<boolean>(false);
@@ -21,7 +23,8 @@ export default function BoardEditPage() {
   const handleDeleteDashboard = async () => {
     try {
       await authInstance.delete(`dashboards/${dashboardid}`);
-      router.push('/mypage');
+      setDashboards((prevs) => prevs.filter(prev => prev.id !== Number(dashboardid)))
+      router.push('/mydashboard');
     } catch (error) {
       alert(`대시보드를 삭제하는 데 실패하였습니다. : ${(error as Error).message}`);
     }

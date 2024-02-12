@@ -14,7 +14,7 @@ interface FormFields {
   color: string;
 }
 
-export default function CreateDashboardModal({onChange}:{onChange?:(dashboard:Dashboard) => void}) {
+export default function CreateDashboardModal({onChange, onToggle}:{onChange?:(dashboard:Dashboard) => void, onToggle:() => void}) {
   const {
     register,
     reset,
@@ -37,7 +37,8 @@ export default function CreateDashboardModal({onChange}:{onChange?:(dashboard:Da
       try{
         const dashboard = await postDashboard(data);
         onChange(dashboard)
-        router.push(`dashboard/${dashboard.id}`);
+        onToggle();
+        router.push(`/dashboard/${dashboard.id}`);
       } catch(error){
         alert(error)
       } finally {
@@ -72,7 +73,7 @@ export default function CreateDashboardModal({onChange}:{onChange?:(dashboard:Da
         />
 
         <div className="flex justify-between md:justify-end gap-[11px] md:gap-3">
-          <DialogClose>
+          <DialogClose onClick={onToggle}>
             <div className='inline-flex items-center justify-center px-14 py-[12px] lg:px-[46px] lg:py-[14px] text-gray-787486 text-[14px] lg:text-[16px] whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50'
             >
                 취소

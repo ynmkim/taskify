@@ -1,10 +1,11 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useContext, useEffect, useRef, useState } from "react";
 import SideBar from "./sidebar/SideBar";
 import { Dashboard } from "@/types/DashboardType";
 import { getDashboard } from "@/libs/network";
+import { DashboardContext } from "@/contexts/DashboardProvider";
 
 const Layout = ({ children }: {children:ReactNode}) => {
-  const [dashboards, setDashboards] = useState<Dashboard[]>([]);
+  const {dashboards, setDashboards} = useContext(DashboardContext);
   const observerRef = useRef<HTMLDivElement | null>(null);
   const [page, setPage] = useState(1);
   const totalCount = useRef(0);
@@ -53,12 +54,12 @@ const Layout = ({ children }: {children:ReactNode}) => {
   };
 
   return(
-    <div className="flex">
-      <SideBar dashboards={dashboards} ref={observerRef} onChange={handleChangeDashboard}/>
-      <main className="flex flex-col max-w-[100vw]">
-        {children}
-      </main>
-    </div>
+      <div className="flex">
+        <SideBar dashboards={dashboards} ref={observerRef} onChange={handleChangeDashboard}/>
+        <main className="flex flex-col max-w-[100vw]">
+          {children}
+        </main>
+      </div>
   )
 };
 
