@@ -38,7 +38,7 @@ export default function MyPage() {
     </AuthProvider>
   );
 }
-// 확인용 주석
+
 MyPage.getLayout = function getLayout(page:ReactElement) {
   return (
     <Layout>

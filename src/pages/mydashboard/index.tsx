@@ -14,7 +14,7 @@ export default function MyDashboardPage({ invitationData }: InferGetServerSidePr
   // console.log('=== Initial Data ===', 'invitations', invitationData.invitations, 'cursor:', invitationData.cursorId);
   return (
     <>
-        <DashboardHeader dashboardName="내 대시보드" type="myDashboard" />
+        <DashboardHeader dashboardName="내 대시보드" type="myDashboard" dashboardid={0}/>
         <main className="grow p-6 md:p-10">
           <div className="flex flex-col items-end max-w-[1022px] mb-6 sm:mb-10 md:mb-11 ">
             <DashboardList className="w-full max-w-[1022px] mb-2 sm:mb-2" />
