@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import {DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,} from '@/components/ui/dropdown';
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
 import GroupAvatar from '@/components/ui/avatarGroup';
@@ -48,7 +52,7 @@ const SlotSection = ({dashboardid, createdByMe}:{dashboardid:number, createdByMe
   )
 };
 
-const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdByMe?:boolean, dashboardid:number }> = ({ dashboardName, type, createdByMe, dashboardid }) => {
+const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdByMe?:boolean, dashboardid?:number }> = ({ dashboardName, type, createdByMe, dashboardid }) => {
   const isDashboard = type === 'myDashboard';
   const [userData, setUserData] = useState<{ nickname: string, profileImageUrl: string }>({ nickname: '', profileImageUrl: '' });
 
@@ -79,9 +83,30 @@ const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdB
           </div>
         }
         <div className='flex flex-row items-center'>
-          {!isDashboard && <SlotSection dashboardid={dashboardid} createdByMe={createdByMe}/>}
-          <Avatar size='lg' {...userData} />
-          <span className="invisible lg:visible md:visible ml-3 font-medium text-base">{userData.nickname}</span>
+          {dashboardid ? <SlotSection dashboardid={dashboardid} createdByMe={createdByMe}/> : null}
+          <DropdownMenu>
+            <DropdownMenuTrigger className='flex flex-row items-center'>
+              <Avatar size='lg' {...userData} />
+              <span className="invisible lg:visible md:visible ml-3 font-medium text-base">{userData.nickname}</span>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+            <Link href={`/`}>
+              <DropdownMenuItem>
+                로그아웃
+              </DropdownMenuItem>
+            </Link>
+            <Link href={`/mypage`}>
+              <DropdownMenuItem>
+                내 정보
+              </DropdownMenuItem>
+            </Link>
+            <Link href={`/mydashboard`}>
+              <DropdownMenuItem>
+                내 대시보드
+              </DropdownMenuItem>
+            </Link>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>
