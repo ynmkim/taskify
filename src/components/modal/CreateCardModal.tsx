@@ -11,6 +11,7 @@ import AddTag from '@/components/common/AddTag';
 import InputDropdown from '@/components/common/InputDropdown';
 
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
+import { DialogClose } from '@radix-ui/react-dialog';
 
 export function CreateCardModal() {
   const form = useForm({
@@ -19,15 +20,15 @@ export function CreateCardModal() {
 
   function handleSubmit() {}
   return (
-    <div>
+    <div className='bg-white scrollbar-hide w-[506px] h-[907px] px-7 py-8 rounded-lg'>
       <Form {...form}>
-        <div className="scrollbar-hide max-h-[90vh] overflow-y-auto flex flex-col gap-[20px]">
+        <div className="flex flex-col gap-6">
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="flex flex-col gap-8"
+            className="flex flex-col gap-6"
           >
             <ModalTitle>할 일 생성</ModalTitle>
-            <div className="flex flex-col gap-8 w-full ">
+            <div className="flex flex-col gap-6 w-full ">
               <FormField
                 control={form.control}
                 name="manager"
@@ -106,9 +107,11 @@ export function CreateCardModal() {
               />
             </div>
             <div className="flex justify-end w-full gap-[12px]">
-              <Button text="modal" size="modal">
-                취소
-              </Button>
+              <DialogClose>
+                <Button text="modal" size="modal">
+                  취소
+                </Button>
+              </DialogClose>
               <Button text="modal" size="modal" variant="violet">
                 생성
               </Button>

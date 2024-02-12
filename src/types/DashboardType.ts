@@ -1,7 +1,8 @@
+export type Color =  '#7AC555' | '#760DDE' | '#FFA500' | '#76A5EA' | '#E876EA';
 export interface Dashboard {
   id:number;
   title:string;
-  color:string;
+  color:Color;
   createdAt:string;
   updatedAt:string;
   createdByMe:boolean;
@@ -19,14 +20,14 @@ export interface Card {
     nickname:string;
     id:number;
   };
-  imageUrl:string;
+  imageUrl:string | null;
   teamId:string;
   columnId:string;
   createdAt:string;
   updatedAt:string;
 }
 
-export interface Column {
+export interface ColumnType {
   id:number;
   title:string;
   teamId:string;
