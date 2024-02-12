@@ -44,14 +44,14 @@ const GroupAvatar: React.FC<GroupAvatarProps> = ({ dashboardid }) => {
 
   return (
     <>
-      <div className="hidden lg:flex space-x-[-0.6rem]">
+      <div className="hidden lg:flex flex-shrink-0 space-x-[-0.6rem]">
         {members.slice(0, 4).map((member, index) => (
         <div key={member.id} className="relative">
           {member.profileImageUrl ? (
             <Image
               src={member.profileImageUrl}
               alt={`Avatar ${member.id}`}
-              className="rounded-full w-10 h-10 border-2 border-white"
+              className="rounded-full w-10 h-10 border-2 border-white object-cover"
               width={10}
               height={10}
             />
@@ -70,14 +70,14 @@ const GroupAvatar: React.FC<GroupAvatarProps> = ({ dashboardid }) => {
         </div>
       )}
     </div>
-    <div className="flex lg:hidden space-x-[-0.6rem]">
+    <div className="flex lg:hidden flex-shrink-0 space-x-[-0.6rem]">
       {members.slice(0, 2).map((member, index) => (
         <div key={member.id} className="relative">
           {member.profileImageUrl ? (
             <Image
               src={member.profileImageUrl}
               alt={`Avatar ${member.id}`}
-              className="rounded-full w-10 h-10 border-2 border-white"
+              className="rounded-full w-10 h-10 border-2 border-white object-cover"
               width={10}
               height={10}
             />

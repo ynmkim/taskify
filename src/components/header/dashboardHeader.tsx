@@ -96,9 +96,9 @@ const DashboardHeader: React.FC<{
   return (
     <header className="header-size h-[70px] pl-10 pr-5 lg:pr-20 md:pr-10 bg-white border-b border-gray-D9D9D9">
       <div className="flex flex-row items-center justify-between h-[70px]">
-        {isDashboard && <div className="flex items-center font-bold text-xl gap-2">{getTitle()}</div>}
+        {isDashboard && <div className="flex min-w-fit items-center font-bold text-xl gap-2">{getTitle()}</div>}
         {!isDashboard && (
-          <div className="hidden lg:flex items-center font-bold text-xl gap-2 lg:w-[98px]">
+          <div className="hidden min-w-fit lg:flex items-center font-bold text-xl gap-2 lg:w-[98px]">
             {getTitle()}
             {createdByMe && <FaCrown className="w-5 h-4" fill="#FDD446" />}
           </div>
@@ -106,9 +106,9 @@ const DashboardHeader: React.FC<{
         <div className="flex flex-row items-center">
           {dashboardid ? <SlotSection dashboardid={dashboardid} createdByMe={createdByMe} /> : null}
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex flex-row items-center">
+            <DropdownMenuTrigger className="flex flex-row items-center min-w-fit">
               <Avatar size="lg" {...userData} />
-              <span className="invisible lg:visible md:visible ml-3 font-medium text-base">{userData.nickname}</span>
+              <span className="invisible lg:visible min-w-fit md:visible ml-3 font-medium text-base">{userData.nickname}</span>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <div onClick={handleLogOut}>
