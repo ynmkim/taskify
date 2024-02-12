@@ -1,6 +1,5 @@
 import { Dashboard } from "@/types/DashboardType";
-import { ReactNode, createContext, useState, Dispatch, SetStateAction, useEffect } from "react";
-import { getDashboard } from "@/libs/network";
+import { ReactNode, createContext, useState, Dispatch, SetStateAction } from "react";
 
 type DashboardContextType = {
   dashboards: Dashboard[];
