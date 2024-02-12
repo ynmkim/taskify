@@ -3,7 +3,7 @@ import { Avatar } from '../ui/avatar';
 const Comment = () => {
   return (
     <div className="flex gap-2.5">
-      <Avatar size="m" nickname="C" color="yellow" />
+      <Avatar size="m" nickname="정만철" profileImageUrl={null} />
       <div className="flex flex-col gap-1.5 mt-2">
         <div className="flex items-center gap-2">
           <p className="font-Pretendard text-sm font-semibold text-black-333236">정만철</p>

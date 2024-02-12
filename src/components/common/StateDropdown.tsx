@@ -2,13 +2,13 @@ import Select from 'react-select';
 import React, { useState } from 'react';
 import Label from '@/components/common/Label';
 
-import { Column } from '@/types/DashboardType';
+import { ColumnType } from '@/types/DashboardType';
 
 interface StateDropdownProps {
   label: string;
   onChange: (value: number) => void;
-  columns: Column[];
-  column: Column;
+  columns: ColumnType[];
+  column: ColumnType;
 }
 type SingleValue<T> = T | null | undefined;
 

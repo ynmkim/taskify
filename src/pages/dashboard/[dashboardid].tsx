@@ -1,9 +1,9 @@
 import AddColumnDialog from '@/components/dialog/AddColumnDialog';
 import Layout from '@/components/domains/dashboard/layout';
-import DashboardHeader from '@/components/modal/dashboardHeader';
+import DashboardHeader from '@/components/header/dashboardHeader';
 import Column from '@/containers/Column';
 import { getColumns, getDetailedDashboardData } from '@/libs/network';
-import { Dashboard } from '@/types/DashboardType';
+import { ColumnType, Dashboard } from '@/types/DashboardType';
 import { useRouter } from 'next/router';
 import { ReactElement, useEffect, useState } from 'react';
 
@@ -12,14 +12,14 @@ export default function DashboardIdPage() {
   const [dashboard, setDashbaord] = useState<Dashboard>({
     id: 0,
     title: '',
-    color: '',
+    color: '#7AC555',
     createdAt: '',
     updatedAt: '',
     createdByMe: false,
     userId: 0,
   });
 
-  const [columns, setColumns] = useState<Column[]>([]);
+  const [columns, setColumns] = useState<ColumnType[]>([]);
 
   useEffect(() => {
     const getDashbaordData = async () => {
@@ -52,15 +52,27 @@ export default function DashboardIdPage() {
     getColumnData();
   }, [router.query.dashboardid]);
 
+  const handleChangeColumn = (id: number) => {
+    setColumns((prevs) => prevs.filter((prev) => prev.id !== id));
+  };
+
   return (
     <>
       <DashboardHeader dashboardName={dashboard.title} createdByMe={dashboard.createdByMe} dashboardid={dashboard.id} />
-      <div className="flex flex-col lg:flex-row w-full bg-gray-FAFAFA overflow-scroll">
+      <div className="header-size flex flex-col lg:flex-row w-full bg-gray-FAFAFA overflow-scroll">
         {columns.map((column) => (
-          <Column key={column.id} title={column.title} id={column.id} column={column} columns={columns} />
+          <Column
+            dashboardid={Number(router.query.dashboardid)}
+            key={column.id}
+            title={column.title}
+            column={column}
+            columns={columns}
+            id={column.id}
+            onChange={handleChangeColumn}
+          />
         ))}
         <div>
-          <AddColumnDialog dashboardid={Number(router.query.dashboardid)} />
+          <AddColumnDialog dashboardid={Number(router.query.dashboardid)} columns={columns} setColumns={setColumns} />
         </div>
       </div>
     </>

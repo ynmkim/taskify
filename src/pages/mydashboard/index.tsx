@@ -5,8 +5,8 @@ import { instance } from '@/libs/axios';
 import { INVITATION_URL } from '@/constants/apiUrl';
 import InvitedCard from '@/components/domains/mydashboard/InvitedCard';
 import DashboardList from '@/components/domains/mydashboard/DashboardList';
-import Pagination from '@/components/domains/mydashboard/Pagination';
-import DashboardHeader from '@/components/modal/dashboardHeader';
+// import CreateDashboardModal from '@/components/domains/mydashboard/CreateDashboardModal';
+import DashboardHeader from '@/components/header/dashboardHeader';
 import Layout from '@/components/domains/dashboard/layout';
 import { ReactElement } from 'react';
 
@@ -14,12 +14,9 @@ export default function MyDashboardPage({ invitationData }: InferGetServerSidePr
   // console.log('=== Initial Data ===', 'invitations', invitationData.invitations, 'cursor:', invitationData.cursorId);
   return (
     <>
-        <DashboardHeader dashboardName="내 대시보드" type="myDashboard" />
+        <DashboardHeader dashboardName="내 대시보드" type="myDashboard"/>
         <main className="grow p-6 md:p-10">
-          <div className="flex flex-col items-end max-w-[1022px] mb-6 sm:mb-10 md:mb-11 ">
-            <DashboardList className="w-full max-w-[1022px] mb-2 sm:mb-2" />
-            <Pagination />
-          </div>
+          <DashboardList className="flex flex-col w-full max-w-[1022px] mb-6 sm:mb-10 md:mb-11" />
           <InvitedCard {...invitationData} />
         </main>
     </>

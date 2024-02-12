@@ -3,13 +3,16 @@ import { IoEllipsisVerticalSharp } from 'react-icons/io5';
 import { IoClose } from 'react-icons/io5';
 import { Chip } from '../ui/tag';
 import { Avatar } from '../ui/avatar';
-import { Button } from '../ui/button';
-import Comment from './Comment';
+import { Comment } from '@/types/DashboardType';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { DialogClose } from '../ui/dialog';
-import { Card, Column } from '@/types/DashboardType';
+import { Card, ColumnType } from '@/types/DashboardType';
 import EditTodoDialog from '../dialog/EditTodoDialog';
-
+import CommentInput from '@/components/modal/CommentInput';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import useGetComment from '@/hooks/useGetComment';
+import CommentList from '@/components/modal/CommentList';
 const colorArray: Array<'orange' | 'pink' | 'blue' | 'green'> = ['orange', 'pink', 'blue', 'green'];
 
 const TodoCardModal = ({
@@ -17,18 +20,29 @@ const TodoCardModal = ({
   column,
   columns,
   columnTitle,
-  getCard,
   onClick,
   toggleModal,
 }: {
   card: Card;
-  column: Column;
-  columns: Column[];
+  column: ColumnType;
+  columns: ColumnType[];
   columnTitle: string;
-  getCard: () => void;
   onClick: () => void;
   toggleModal: () => void;
 }) => {
+  const { id: cardId, columnId } = card;
+  const [comments, setComments] = useState<Comment[]>([]);
+  const router = useRouter();
+  const dashboardId = Number(router.query.dashboardid);
+
+  const { execute: getComments, data } = useGetComment({ cardId });
+
+  useEffect(() => {
+    getComments();
+    if (!data) return;
+    setComments(data?.comments);
+  }, []);
+
   return (
     <div className="px-5 py-7 md:px-7 md:py-8 bg-white flex flex-col gap-6 w-[327px] md:w-[680px] lg:w-[730px] rounded-lg">
       <div className="flex md:items-center md:justify-between flex-col md:flex-row gap-1 md:gap-0">
@@ -44,7 +58,7 @@ const TodoCardModal = ({
             </PopoverTrigger>
             <PopoverContent className="flex flex-col w-[86px] md:w[93px] lg:w-[110px] border rounded-md border-gray-D9D9D9 bg-white shadow px-1.5 py-1.5">
               <div className="rounded font-Pretendard py-1 px-4 text-violet-5534DA bg-violet-8%">
-                <EditTodoDialog getCard={getCard} column={column} columns={columns} card={card} />
+                <EditTodoDialog column={column} columns={columns} card={card} />
               </div>
               <button className="rounded font-Pretendard py-1 px-4" onClick={onClick}>
                 삭제하기
@@ -79,17 +93,17 @@ const TodoCardModal = ({
               <Image src={card.imageUrl} alt="임시" fill />
             </div>
           )}
-          <form action="" className="w-[287px] md:w-[420px] lg:w-[450px] flex flex-col gap-2.5 relative">
-            <label className="font-Pretendard text-base font-medium text-black-333236">댓글</label>
-            <textarea className="border rounded-md px-4 py-4 h-[110px]" placeholder="댓글 입력하기" />
-            <Button text="input" size="input" className="absolute right-3 bottom-3">
-              입력
-            </Button>
-          </form>
+
+          <CommentInput
+            cardId={cardId}
+            columnId={columnId}
+            dashboardId={dashboardId}
+            comments={comments}
+            setComments={setComments}
+          />
           <div>
-            <Comment />
+            <CommentList cardId={cardId} comments={comments} setComments={setComments} />
           </div>
-          <div></div>
         </div>
         <div className=" order-1 md:order-2 border py-4 px-4 md:w-[180px] lg:w-[200px] md:h-[155px] rounded-lg border-gray-D9D9D9 shrink-0 flex md:flex-col grow  gap-[62px] md:gap-5">
           <div className="flex flex-col gap-1.5">

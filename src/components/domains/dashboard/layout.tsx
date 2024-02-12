@@ -48,9 +48,13 @@ const Layout = ({ children }: {children:ReactNode}) => {
     };
   }, [totalCount, dashboards.length]);
 
+  const handleChangeDashboard = (dashboard:Dashboard) => {
+    setDashboards(prev => [dashboard, ...prev]);
+  };
+
   return(
     <div className="flex">
-      <SideBar dashboards={dashboards} ref={observerRef}/>
+      <SideBar dashboards={dashboards} ref={observerRef} onChange={handleChangeDashboard}/>
       <main className="flex flex-col max-w-[100vw]">
         {children}
       </main>

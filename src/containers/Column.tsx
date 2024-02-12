@@ -3,38 +3,53 @@ import ModifyColumnDialog from '@/components/dialog/ModifyColumnDialog';
 import TodoCardDialog from '@/components/dialog/TodoCardDialog';
 import { Badge } from '@/components/ui/badge';
 import { deleteCard, getCard, getMoreCard } from '@/libs/network';
-import { Card, Column } from '@/types/DashboardType';
+import { Card, ColumnType } from '@/types/DashboardType';
 import { useEffect, useState, useRef } from 'react';
 
-const Column = ({ title, id, column, columns }: { title: string; id: number; column: Column; columns: Column[] }) => {
+const Column = ({
+  title,
+  id,
+  onChange,
+  dashboardid,
+  column,
+  columns,
+}: {
+  title: string;
+  id: number;
+  onChange: (columnId: number) => void;
+  dashboardid: number;
+  column: ColumnType;
+  columns: ColumnType[];
+}) => {
   const [cards, setCards] = useState<Card[]>([]);
   const observerRef = useRef<HTMLDivElement | null>(null);
   const [cursorId, setCursorId] = useState(0);
   const [page, setPage] = useState(1);
   const totalCount = useRef(0);
+  const [columnTitle, setColumnTitle] = useState(title);
 
-  const getCardData = async () => {
-    try {
-      if (page === 1) {
-        const cardData = await getCard(id);
-        if (cardData) {
-          setCards(cardData.data.cards);
-          setCursorId(cardData.data.cursorId);
-          totalCount.current = cardData.data.totalCount;
-        }
-      } else {
-        const cardData = await getMoreCard(id, cursorId);
-        if (cardData) {
-          setCards((prev) => [...prev, ...cardData.data.cards]);
-          setCursorId(cardData.data.cursorId);
-          totalCount.current = cardData.data.totalCount;
-        }
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
   useEffect(() => {
+    const getCardData = async () => {
+      try {
+        if (page === 1) {
+          const cardData = await getCard(id);
+          if (cardData) {
+            setCards(cardData.data.cards);
+            setCursorId(cardData.data.cursorId);
+            totalCount.current = cardData.data.totalCount;
+          }
+        } else {
+          const cardData = await getMoreCard(id, cursorId);
+          if (cardData) {
+            setCards((prev) => [...prev, ...cardData.data.cards]);
+            setCursorId(cardData.data.cursorId);
+            totalCount.current = cardData.data.totalCount;
+          }
+        }
+      } catch (error) {
+        alert(error);
+      }
+    };
     getCardData();
   }, [id, page]);
 
@@ -67,31 +82,43 @@ const Column = ({ title, id, column, columns }: { title: string; id: number; col
     setCards((prevs) => prevs.filter((prev) => prev.id !== cardId));
   };
 
+  const handleChangeColumnTitle = (value: string) => {
+    setColumnTitle(value);
+  };
+
+  const handleChangeCard = (card: Card) => {
+    setCards((prev) => [card, ...prev]);
+  };
+
   return (
     <div className="flex flex-col bg-gray-FAFAFA gap-[25px] px-3 pt-[17px] pb-3 md:px-5 md:pb-5 md:pt-[22px] border-b lg:border-r lg:border-b-0 lg:min-h-screen border-gray-EEEEEE">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-violet-5534DA"></div>
           <div className="flex items-center gap-3">
-            <p>{title}</p>
+            <p>{columnTitle}</p>
             <Badge>{totalCount.current}</Badge>
           </div>
         </div>
         <div>
-          <ModifyColumnDialog />
+          <ModifyColumnDialog
+            columnId={id}
+            title={columnTitle}
+            onChange={handleChangeColumnTitle}
+            onChangeColumn={onChange}
+          />
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <AddTodoDialog getCard={getCardData} dashboardId={column?.dashboardId} columnId={column?.id} />
+        <AddTodoDialog onChange={handleChangeCard} dashboardId={dashboardid} columnId={column?.id} />
         {cards?.map((card) => (
           <TodoCardDialog
             key={card.id}
             column={column}
             columns={columns}
             card={card}
-            columnTitle={title}
+            columnTitle={columnTitle}
             onClick={handleDeleteTodoCard}
-            getCard={getCardData}
           />
         ))}
         <div ref={observerRef}></div>

@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from '../ui/dialog';
 import TodoCard from '../domains/dashboard/column/TodoCard';
 import TodoCardModal from '../modal/TodoCardModal';
-import { Card, Column } from '@/types/DashboardType';
+import { Card, ColumnType } from '@/types/DashboardType';
 import { useState } from 'react';
 
 const TodoCardDialog = ({
@@ -9,14 +9,12 @@ const TodoCardDialog = ({
   column,
   columns,
   columnTitle,
-  getCard,
   onClick,
 }: {
   card: Card;
-  column: Column;
-  columns: Column[];
+  column: ColumnType;
+  columns: ColumnType[];
   columnTitle: string;
-  getCard: () => void;
   onClick: (cardId: number) => void;
 }) => {
   const [open, setOpen] = useState(false);
@@ -39,7 +37,6 @@ const TodoCardDialog = ({
       />
       <DialogContent className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-10">
         <TodoCardModal
-          getCard={getCard}
           card={card}
           column={column}
           columns={columns}

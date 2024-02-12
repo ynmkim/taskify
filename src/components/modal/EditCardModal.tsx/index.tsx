@@ -15,7 +15,7 @@ import StateDropdown from '@/components/common/StateDropdown';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 
 import usePutCard from '@/hooks/usePutCard';
-import { Column, Card } from '@/types/DashboardType';
+import { Card, ColumnType } from '@/types/DashboardType';
 import { useRouter } from 'next/router';
 interface Memberprops {
   label: string;
@@ -31,17 +31,16 @@ export interface EditCardModalForm {
   assigneeUserId: number;
   dashboardId: number;
   columnId: number;
-  states: Column[];
+  states: ColumnType[];
 }
 export interface ModalProps {
   card: Card;
-  column: Column;
-  columns: Column[];
+  column: ColumnType;
+  columns: ColumnType[];
   toggleModal: () => void;
-  getCard: () => void;
 }
 
-export function EditCardModal({ getCard, column, columns, card, toggleModal }: ModalProps) {
+export function EditCardModal({ column, columns, card, toggleModal }: ModalProps) {
   const mangerObject = {
     label: card?.assignee?.nickname,
     value: card?.assignee?.id,
@@ -99,7 +98,6 @@ export function EditCardModal({ getCard, column, columns, card, toggleModal }: M
 
   const onSubmit = async () => {
     await putCard();
-    getCard();
     toggleModal();
     handleReload();
   };

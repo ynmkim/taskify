@@ -33,7 +33,7 @@ const InvitationDialog = ({dashboardid}:{dashboardid:number}) => {
 const handleInvite = async () => {
   if(isEmailValid){
     try {
-      const response = await authInstance.post(`dashboards/${dashboardid}/invitations`, {
+      await authInstance.post(`dashboards/${dashboardid}/invitations`, {
         email: inputValue,
       });
       alert('초대가 완료되었습니다.');

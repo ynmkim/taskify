@@ -1,14 +1,22 @@
 import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from '../ui/dialog';
 import AddColumnButton from '../domains/dashboard/column/AddColumnButton';
 import ColumnModal from '../modal/ColumnModal';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { ColumnType } from '@/types/DashboardType';
 import { axiosAuthInstance } from '@/libs/axios';
+import { Dispatch, SetStateAction } from 'react';
 
 const authInstance = axiosAuthInstance();
 
-const AddColumnDialog = ({ dashboardid }: { dashboardid: number }) => {
-  const [columns, setColumns] = useState<ColumnType[]>([]);
+const AddColumnDialog = ({
+  dashboardid,
+  columns,
+  setColumns,
+}: {
+  dashboardid: number;
+  columns: ColumnType[];
+  setColumns: Dispatch<SetStateAction<ColumnType[]>>;
+}) => {
   const [inputValue, setInputValue] = useState('');
   const [open, setOpen] = useState(false);
 
@@ -50,20 +58,6 @@ const AddColumnDialog = ({ dashboardid }: { dashboardid: number }) => {
     const inputValue = e.target.value;
     setInputValue(inputValue);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await authInstance.get(`columns?dashboardId=${dashboardid}`);
-        const responseData = response.data.data;
-        setColumns(responseData);
-      } catch (error) {
-        alert('컬럼을 가져오는 중 오류가 발생했습니다: ' + (error as Error).message);
-      }
-    };
-
-    fetchData();
-  }, [dashboardid]);
 
   return (
     <Dialog open={open}>

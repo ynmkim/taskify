@@ -11,6 +11,9 @@ import InputDropdown from '@/components/common/InputDropdown';
 import { DialogClose } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import usePostCard from '@/hooks/usePostCard';
+import { Card } from '@/types/DashboardType';
+import { useReducer } from 'react';
+import { useRouter } from 'next/router';
 
 interface Memberprops {
   label: string;
@@ -33,16 +36,16 @@ export interface ModalProps {
   dashboardId: number;
   columnId?: number;
   toggleModal: () => void;
-  getCard: () => void;
+  onChange: (card: Card) => void;
 }
 
-export function CreateCardModal({ getCard, toggleModal, dashboardId, columnId }: ModalProps) {
+export function CreateCardModal({ onChange, toggleModal, dashboardId, columnId }: ModalProps) {
   const form = useForm<CreateCardModalForm>({
     mode: 'onChange',
   });
   const assigneeUserId = form.watch('manager') ? form.watch('manager').value : undefined;
 
-  const { execute: postCard } = usePostCard({
+  const { execute: postCard, data } = usePostCard({
     assigneeUserId,
     dashboardId,
     columnId,
@@ -52,6 +55,12 @@ export function CreateCardModal({ getCard, toggleModal, dashboardId, columnId }:
     imageUrl: form.watch('imageUrl'),
     tags: form.watch('tags'),
   });
+
+  const router = useRouter();
+  const handleReload = () => {
+    router.reload();
+  };
+
   const handleCancel = () => {
     form.reset();
     toggleModal();
@@ -67,7 +76,8 @@ export function CreateCardModal({ getCard, toggleModal, dashboardId, columnId }:
   const onSubmit = async () => {
     await postCard();
     handleCancel();
-    getCard();
+    // onChange(data);
+    handleReload();
   };
 
   return (
