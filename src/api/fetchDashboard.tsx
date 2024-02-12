@@ -1,15 +1,19 @@
 import { instance as axios } from '@/libs/axios';
 import { parse } from 'cookie';
 
-export async function getDashboards() {
+export async function getDashboards(navigationMethod: string, size?: number, page?:number) {
   const cookies = parse(document.cookie);
   const accessToken = cookies.accessToken;
-  const query = `navigationMethod=pagination`;
 
-  const res = await axios.get(`/dashboards?${query}`, {
+  const res = await axios.get('/dashboards', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
+    },
+    params: {
+      navigationMethod: navigationMethod,
+      size: size,
+      page: page,
     },
   });
 

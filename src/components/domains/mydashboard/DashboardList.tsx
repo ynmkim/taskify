@@ -3,7 +3,8 @@ import { cn } from '@/libs/utils';
 import Image from 'next/image';
 import { getDashboards } from '@/api/fetchDashboard';
 import { useState, useEffect } from 'react';
-import { DASHBOARD_COLOR as colors } from '@/constants/constants';
+import { DASHBOARD_COLOR } from '@/constants/constants';
+import Pagination from '@/components/domains/mydashboard/Pagination';
 interface DashboardListProps {
   className?: string;
 }
@@ -16,15 +17,28 @@ interface Dashboard {
 
 export default function DashboardList({ className, ...props }: DashboardListProps) {
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);
-
-  const handleload = async () => {
-    const { dashboards } = await getDashboards();
-    setDashboards(dashboards);
-  };
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  // const [displayDashboard, setDisplayDashboard] = useState([]); // 상태를 하나 더 만들지 않고 할 수 있는 방법 없을까
+  const pageSize = 5;
 
   useEffect(() => {
+    const handleload = async () => {
+      const { dashboards, totalCount } = await getDashboards('pagination', pageSize, currentPage);
+
+      const firstIndex = (currentPage - 1) * pageSize;
+      const lastIndex = firstIndex + pageSize;
+      const slicedDashboards = dashboards?.slice(firstIndex, lastIndex);
+
+      setDashboards(dashboards);
+      // setDisplayDashboard(slicedDashboards);
+
+      const calculatedTotalPage = Math.ceil(totalCount / pageSize);
+      setTotalPage(calculatedTotalPage);
+    };
+
     handleload();
-  }, []);
+  }, [currentPage]);
 
   return (
     <div className={cn(className)} {...props}>
@@ -53,6 +67,13 @@ export default function DashboardList({ className, ...props }: DashboardListProp
           </li>
         ))}
       </ul>
+
+      <Pagination
+        className="self-end mt-2 sm:mt-2"
+        totalPage={totalPage}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 }
@@ -61,8 +82,7 @@ interface BulletProps {
 }
 
 function Bullet({ color }: BulletProps) {
-  console.log(color);
-  const bulletColor = colors[color];
+  const bulletColor = DASHBOARD_COLOR[color];
 
   return <span className={cn(`block rounded-full w-[8px] h-[8px] mr-4 ${bulletColor}`)}></span>;
 }
