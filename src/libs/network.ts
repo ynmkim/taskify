@@ -8,17 +8,16 @@ const getAccessToken = () => {
   return accessToken;
 }
 
-export const accessToken = getAccessToken();
-
-
-const header = {
-    'Authorization': `Bearer ${accessToken}`,
+export const getHeader = () => {
+  return {
+    'Authorization': `Bearer ${getAccessToken()}`,
     'Content-Type': 'application/json'
+  }
 }
 
 export const postDashboard = async ({title, color}:{title:string, color:string}) => {
   try{
-    const response = await instance.post('/dashboards', {title, color}, {headers:header})
+    const response = await instance.post('/dashboards', {title, color}, {headers:getHeader()})
     return response.data;
   } catch (error) {
     alert(error)
@@ -32,7 +31,7 @@ export const getDashboard = async(pageNumber:number) => {
         navigationMethod: 'pagination',
         page: pageNumber
       }, 
-      headers: header
+      headers:getHeader()
     });
     return response.data;
   } catch (error) {
@@ -43,25 +42,11 @@ export const getDashboard = async(pageNumber:number) => {
 export const getDetailedDashboardData = async(id:string) => {
   try {
     const response = await instance.get(`/dashboards/${Number(id)}`, {
-      headers: header
+      headers:getHeader()
     });
     return response;
   } catch (error) {
     alert(error);
-  }
-};
-
-export const postColumn = async() => {
-  const data = {
-    title: 'To Do',
-    dashboardId: 2930
-  };
-
-  try{
-    const response = await instance.post('/columns', data, {headers:header})
-    return response.data;
-  } catch (error) {
-    alert(error)
   }
 };
 
@@ -71,7 +56,7 @@ export const getColumns = async(id:string) => {
       params: {
         dashboardId: Number(id)
       }, 
-      headers: header
+      headers:getHeader()
     });
     return response.data;
   } catch (error) {
@@ -85,7 +70,7 @@ export const putColumn = async(columnId:number, title:string) => {
   };
   try{
     const response = await instance.put(`/columns/${columnId}`, data, {
-      headers:header
+      headers:getHeader()
     })
     return response.data;
   } catch(error){
@@ -99,7 +84,7 @@ export const getCard = async(id:number) => {
       params: {
         columnId:id
       },
-      headers:header
+      headers:getHeader()
     })
     return response;
   } catch (error) {
@@ -114,7 +99,7 @@ export const getMoreCard = async(id:number, cursor:number) => {
         columnId:id,
         cursorId:cursor
       },
-      headers:header
+      headers:getHeader()
     })
     return response;
   } catch (error) {
@@ -125,7 +110,7 @@ export const getMoreCard = async(id:number, cursor:number) => {
 export const deleteCard = async(cardId:number) => {
   try{
     const response = await instance.delete(`/cards/${cardId}`, {
-      headers:header
+      headers:getHeader()
     })
     return response;
   } catch(error) {
@@ -136,7 +121,7 @@ export const deleteCard = async(cardId:number) => {
 export const deleteColumn = async(columnId:number) => {
   try{
     const response = await instance.delete(`/columns/${columnId}`,{
-      headers:header
+      headers:getHeader()
     });
     return response;
   } catch(error) {

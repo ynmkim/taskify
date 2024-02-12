@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { axiosAuthInstance } from '@/libs/axios';
 import InvitationDialog from '../dialog/InvitationDialog';
 import LocalStorage from '@/libs/localstorage';
+import { getHeader } from '@/libs/network';
 const authInstance = axiosAuthInstance();
 
 const SlotSection = ({ dashboardid, createdByMe }: { dashboardid: number; createdByMe?: boolean }) => {
@@ -70,7 +71,9 @@ const DashboardHeader: React.FC<{
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await authInstance.get('users/me');
+        const response = await authInstance.get('users/me', {
+          headers:getHeader()
+        });
         const data = await response.data;
         setUserData(data);
       } catch (error) {
