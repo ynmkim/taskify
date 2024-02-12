@@ -48,7 +48,7 @@ const SlotSection = ({dashboardid, createdByMe}:{dashboardid:number, createdByMe
   )
 };
 
-const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdByMe?:boolean, dashboardid:number }> = ({ dashboardName, type, createdByMe, dashboardid }) => {
+const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdByMe?:boolean, dashboardid?:number }> = ({ dashboardName, type, createdByMe, dashboardid }) => {
   const isDashboard = type === 'myDashboard';
   const [userData, setUserData] = useState<{ nickname: string, profileImageUrl: string }>({ nickname: '', profileImageUrl: '' });
 
@@ -79,7 +79,7 @@ const DashboardHeader: React.FC<{ dashboardName: string, type?: string, createdB
           </div>
         }
         <div className='flex flex-row items-center'>
-          {!isDashboard && <SlotSection dashboardid={dashboardid} createdByMe={createdByMe}/>}
+          {dashboardid ? <SlotSection dashboardid={dashboardid} createdByMe={createdByMe}/> : null}
           <Avatar size='lg' {...userData} />
           <span className="invisible lg:visible md:visible ml-3 font-medium text-base">{userData.nickname}</span>
         </div>

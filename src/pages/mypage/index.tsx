@@ -19,7 +19,7 @@ export default function MyPage() {
   return (
     <AuthProvider>
       <div className="flex w-screen bg-gray-FAFAFA">
-        <DashboardHeader dashboardName="내 대시보드" type="myDashboard" dashboardid={0}/>
+        <DashboardHeader dashboardName="내 대시보드" type="myDashboard"/>
         <main className="grow p-6 md:p-10">
           <button type="button" onClick={handleGoBack} className="flex items-center mb-5 md:mb-6">
             <IoIosArrowBack className="w-[18px] h-[18px] md:w-5 md:h-5" />
