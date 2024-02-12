@@ -2,29 +2,28 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { useRouter } from 'next/router';
 import { instance as axios } from '@/libs/axios';
 import { User } from '@/types/AuthType';
-
+import { parse } from 'cookie';
 interface AuthContextProps {
   user: User | null;
   isPending: boolean;
-  login: (credentials: { email: string; password: string }) => Promise<void>;
-  logout: () => Promise<void>;
+  // login: (credentials: { email: string; password: string }) => Promise<void>;
+  // logout: () => Promise<void>;
   updateMe: (data: { nickname: string; profileImageUrl: string | null }) => void;
+  updatePassword: (data: { password: string; newPassword: string }) => void;
 }
 
 const AuthContext = createContext<AuthContextProps>({
   user: null,
   isPending: true,
-  login: async () => {},
-  logout: async () => {},
+  // login: async () => {},
+  // logout: async () => {},
   updateMe: () => {},
+  updatePassword: () => {},
 });
 
 interface AuthProviderProps {
   children: ReactNode;
 }
-
-const accessToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nzk4LCJ0ZWFtSWQiOiIyLTEwIiwiaWF0IjoxNzA3MzA3Nzg0LCJpc3MiOiJzcC10YXNraWZ5In0.0uRsiFPv86b1PRbjcCv4NEPYqDDx3uFx4gswLIkOMq8';
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [values, setValues] = useState<{ user: User | null; isPending: boolean }>({
@@ -33,6 +32,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
   });
 
   async function getMe() {
+    const cookies = parse(document.cookie);
+    const accessToken = cookies.accessToken;
+
     setValues((prevValues) => ({
       ...prevValues,
       isPending: true,
@@ -57,34 +59,67 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-  async function login({ email, password }: { email: string; password: string }): Promise<void> {
-    await axios.post('/auth/login', {
-      email,
-      password,
-    });
-    await getMe();
-  }
+  // async function login({ email, password }: { email: string; password: string }): Promise<void> {
+  //   await axios.post('/auth/login', {
+  //     email,
+  //     password,
+  //   });
+  //   await getMe();
+  // }
 
-  async function logout(): Promise<void> {
-    await axios.delete('/auth/logout');
-    setValues((prevValues) => ({
-      ...prevValues,
-      user: null,
-    }));
-  }
+  // async function logout(): Promise<void> {
+  //   await axios.delete('/auth/logout');
+  //   setValues((prevValues) => ({
+  //     ...prevValues,
+  //     user: null,
+  //   }));
+  // }
 
   async function updateMe(data: { nickname: string; profileImageUrl: string | null }) {
+    const cookies = parse(document.cookie);
+    const accessToken = cookies.accessToken;
+
     const res = await axios.put('/users/me', data, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
       },
     });
+
+    if (res.status === 200) {
+      alert('프로필이 수정되었습니다.');
+    }
     const nextUser = res.data;
     setValues((prevValues) => ({
       ...prevValues,
       user: nextUser,
     }));
+  }
+
+  async function updatePassword(data: { password: string; newPassword: string }) {
+    const cookies = parse(document.cookie);
+    const accessToken = cookies.accessToken;
+
+    await axios
+      .put('/auth/password', data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((res) => {
+        if (res.status === 204) {
+          alert('비밀번호가 변경되었습니다.');
+          // 다시 로그인 해야할까?
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          alert('현재 비밀번호가 틀립니다');
+        } else {
+          console.log('Error', error.message);
+        }
+      });
   }
 
   useEffect(() => {
@@ -96,9 +131,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       value={{
         user: values.user,
         isPending: values.isPending,
-        login,
-        logout,
+        // login,
+        // logout,
         updateMe,
+        updatePassword,
       }}
     >
       {children}
