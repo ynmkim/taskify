@@ -3,6 +3,7 @@ import { cn } from '@/libs/utils';
 import Image from 'next/image';
 import { Input } from '@/components/ui/base-input';
 import { composeRefs } from '@/libs/composeRefs';
+import { LuPlus } from 'react-icons/lu';
 interface AvatarInputProps extends React.ComponentPropsWithoutRef<'input'> {
   initialAvatar?: string;
 }
@@ -58,7 +59,7 @@ const AvatarInput = React.forwardRef<HTMLInputElement, AvatarInputProps>(
           onClick={handleUploadClick}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 md:w-[30px] md:h-[30px] cursor-pointer"
         >
-          <Image fill src="/plus_upload.svg" alt="이미지 업로드" className="object-cover" />
+          <LuPlus className="w-5 h-5 md:w-[30px] md:h-[30px] text-violet-5534DA" />
         </button>
         <Input
           ref={composeRefs(inputRef, forwardedRef)}
