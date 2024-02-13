@@ -21,7 +21,7 @@ export default function BoardEditPage() {
   const handleDeleteDashboard = async () => {
     try {
       await authInstance.delete(`dashboards/${dashboardid}`);
-      router.push('/mypage');
+      router.push('/mydashboard');
     } catch (error) {
       alert(`대시보드를 삭제하는 데 실패하였습니다. : ${(error as Error).message}`);
     }
