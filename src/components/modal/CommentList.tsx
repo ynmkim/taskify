@@ -85,7 +85,7 @@ function CommentList({ cardId, comments, setComments }: CommentListProps) {
                     <input
                       type="text"
                       {...rest}
-                      placeholder="댓글수정"
+                      placeholder={comment.content}
                       className="border border-gray30 rounded-md indent-[8px] placeholder:text-[12px] focus:outline-none"
                     />
                     <button type="button" onClick={() => handleUpdateComment(comment?.id)} className="text-[12px]">
