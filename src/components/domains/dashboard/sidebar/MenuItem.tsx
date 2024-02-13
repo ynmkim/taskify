@@ -9,9 +9,9 @@ const MenuItem = ({children, link, createdByMe, color}: {children:ReactNode, lin
   return(
     <li className="rounded px-3 md:pl-3 md:pr-0 py-3">
       <Link href={`/dashboard/${link}`} className="flex items-center gap-4 justify-center md:justify-normal">
-        <div className={`w-2 h-2 rounded-full ${DASHBOARD_COLOR[color]}`} />
+        <div className={`shrink-0 w-2 h-2 rounded-full ${DASHBOARD_COLOR[color]}`} />
         <div className="hidden md:flex items-center gap-1 lg:gap-1.5">
-          <p className="font-Pretendard text-base lg:text-lg font-medium text-gray-787486 leading-none">
+          <p className="font-Pretendard text-base lg:text-lg font-medium text-gray-787486 leading-none whitespace-nowrap text-ellipsis">
             {children}
           </p>
           {

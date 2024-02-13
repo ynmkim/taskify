@@ -1,5 +1,6 @@
 import { parse } from "cookie";
 import { instance } from "./axios";
+import { CreateCard } from "@/types/DashboardType";
 
 const getAccessToken = () => {
 	if(typeof window !== 'object') return;
@@ -77,6 +78,17 @@ export const putColumn = async(columnId:number, title:string) => {
     alert(error)
   }
 };
+
+export const postCard = async(data:CreateCard) => {
+  try{
+    const response = await instance.post('/cards', data, {
+      headers:getHeader()
+    });
+    return response;
+  } catch(error) {
+    alert(error)
+  }
+}
 
 export const getCard = async(id:number) => {
   try{

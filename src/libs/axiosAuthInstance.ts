@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getHeader } from './network';
 
 export const axiosAuthInstance = () => {
   const instance = axios.create({
@@ -9,9 +10,9 @@ export const axiosAuthInstance = () => {
   });
   instance.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem('accessToken');
+      const token = getHeader();
       if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+        config.headers.Authorization = token.Authorization;
       }
       return config;
     },
