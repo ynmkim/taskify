@@ -7,7 +7,7 @@ import { DialogOverlay } from "@radix-ui/react-dialog";
 
 const authInstance = axiosAuthInstance();
 
-const InvitationDialog = ({dashboardid}:{dashboardid:number}) => {
+const InvitationDialog = ({dashboardid, onInviteSuccess = () => {}}:{dashboardid:number; onInviteSuccess?: () => void}) => {
   const [inputValue, setInputValue] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
@@ -31,13 +31,14 @@ const InvitationDialog = ({dashboardid}:{dashboardid:number}) => {
 }
 
 const handleInvite = async () => {
-  if(isEmailValid){
+  if (isEmailValid) {
     try {
       await authInstance.post(`dashboards/${dashboardid}/invitations`, {
         email: inputValue,
       });
       alert('초대가 완료되었습니다.');
       toggleDialog();
+      onInviteSuccess();
     } catch (e) {
       console.error('Error creating invitation:', e);
       alert('이미 초대된 멤버입니다');

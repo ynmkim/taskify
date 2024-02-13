@@ -1,10 +1,11 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useContext, useEffect, useRef, useState } from "react";
 import SideBar from "./sidebar/SideBar";
 import { Dashboard } from "@/types/DashboardType";
 import { getDashboard } from "@/libs/network";
+import { DashboardContext } from "@/contexts/DashboardProvider";
 
 const Layout = ({ children }: {children:ReactNode}) => {
-  const [dashboards, setDashboards] = useState<Dashboard[]>([]);
+  const {dashboards, setDashboards} = useContext(DashboardContext);
   const observerRef = useRef<HTMLDivElement | null>(null);
   const [page, setPage] = useState(1);
   const totalCount = useRef(0);
@@ -16,9 +17,9 @@ const Layout = ({ children }: {children:ReactNode}) => {
   useEffect(() => {
     const getDashboardData = async() => {
       const dashboardData = await getDashboard(page);
-      if(page === 1) setDashboards(dashboardData.dashboards);
+      if(page === 1) setDashboards(dashboardData?.dashboards);
       else setDashboards((prev) => [...prev, ...dashboardData.dashboards]);
-      totalCount.current = dashboardData.totalCount;
+      totalCount.current = dashboardData?.totalCount;
     };
     getDashboardData();
   },[page]);
@@ -33,7 +34,7 @@ const Layout = ({ children }: {children:ReactNode}) => {
 
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting && dashboards.length < totalCount.current) {
+        if (entry.isIntersecting && dashboards?.length < totalCount.current) {
           loadMoreData();
         }
       });
@@ -46,19 +47,19 @@ const Layout = ({ children }: {children:ReactNode}) => {
     return () => {
       if (observer) observer.disconnect();
     };
-  }, [totalCount, dashboards.length]);
+  }, [totalCount, dashboards?.length]);
 
   const handleChangeDashboard = (dashboard:Dashboard) => {
     setDashboards(prev => [dashboard, ...prev]);
   };
 
   return(
-    <div className="flex">
-      <SideBar dashboards={dashboards} ref={observerRef} onChange={handleChangeDashboard}/>
-      <main className="flex flex-col max-w-[100vw]">
-        {children}
-      </main>
-    </div>
+      <div className="flex">
+        <SideBar dashboards={dashboards} ref={observerRef} onChange={handleChangeDashboard}/>
+        <main className="flex flex-col max-w-[100vw]">
+          {children}
+        </main>
+      </div>
   )
 };
 

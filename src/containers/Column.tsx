@@ -79,6 +79,7 @@ const Column = ({
 
   const handleDeleteTodoCard = async (cardId: number) => {
     await deleteCard(cardId);
+    totalCount.current -= 1;
     setCards((prevs) => prevs.filter((prev) => prev.id !== cardId));
   };
 
@@ -87,7 +88,7 @@ const Column = ({
   };
 
   const handleChangeCard = (card: Card) => {
-    setCards((prev) => [card, ...prev]);
+    setCards((prev) => [...prev, card]);
   };
 
   return (

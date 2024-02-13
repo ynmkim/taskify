@@ -2,24 +2,27 @@ import Link from 'next/link';
 import { cn } from '@/libs/utils';
 import Image from 'next/image';
 import { getDashboards } from '@/api/fetchDashboard';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { DASHBOARD_COLOR } from '@/constants/constants';
 import Pagination from '@/components/domains/mydashboard/Pagination';
 import { IoIosArrowForward } from 'react-icons/io';
 import PlusChip from '@/components/domains/dashboard/column/PlusChip';
 import AddDashboardDialog from '@/components/dialog/AddDashboardDialog';
+import { DashboardContext } from '@/contexts/DashboardProvider';
+import { Dashboard } from '@/types/DashboardType';
 interface DashboardListProps {
   className?: string;
 }
-interface Dashboard {
-  id: number;
-  title: string;
-  createdByMe: boolean;
-  color: string;
-}
+// interface Dashboard {
+//   id: number;
+//   title: string;
+//   createdByMe: boolean;
+//   color: string;
+// }
 
 export default function DashboardList({ className, ...props }: DashboardListProps) {
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);
+  const {dashboards:totalDashboard, setDashboards:setTotalDashboard} = useContext(DashboardContext)
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const pageSize = 5;
@@ -36,11 +39,16 @@ export default function DashboardList({ className, ...props }: DashboardListProp
     handleload();
   }, [currentPage]);
 
+  const handleChangeDashboard = (dashboard:Dashboard) => {
+    setDashboards(prev => [dashboard, ...prev]);
+    setTotalDashboard(prev => [dashboard, ...prev]);
+  };
+
   return (
     <div className={cn(className)} {...props}>
       <ul className="grid grid-rows-1 grid-cols-1 gap-2 md:grid-cols-2 md:gap-2.5 lg:grid-cols-3 lg:gap-[13px] ">
         <li>
-          <AddDashboardDialog>
+          <AddDashboardDialog onChange={handleChangeDashboard}>
             <DashboardAddButton />
           </AddDashboardDialog>
         </li>

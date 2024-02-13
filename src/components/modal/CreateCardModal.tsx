@@ -10,10 +10,10 @@ import AddTag from '@/components/common/AddTag';
 import InputDropdown from '@/components/common/InputDropdown';
 import { DialogClose } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
-import usePostCard from '@/hooks/usePostCard';
+// import usePostCard from '@/hooks/usePostCard';
 import { Card } from '@/types/DashboardType';
-import { useReducer } from 'react';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
+import { postCard } from '@/libs/network';
 
 interface Memberprops {
   label: string;
@@ -45,7 +45,7 @@ export function CreateCardModal({ onChange, toggleModal, dashboardId, columnId }
   });
   const assigneeUserId = form.watch('manager') ? form.watch('manager').value : undefined;
 
-  const { execute: postCard, data } = usePostCard({
+  const cardData = {
     assigneeUserId,
     dashboardId,
     columnId,
@@ -54,12 +54,23 @@ export function CreateCardModal({ onChange, toggleModal, dashboardId, columnId }
     dueDate: form.watch('dueDate')?.toString(),
     imageUrl: form.watch('imageUrl'),
     tags: form.watch('tags'),
-  });
+  }
 
-  const router = useRouter();
-  const handleReload = () => {
-    router.reload();
-  };
+  // const { execute: postCard, data } = usePostCard({
+  //   assigneeUserId,
+  //   dashboardId,
+  //   columnId,
+  //   title: form.watch('title'),
+  //   description: form.watch('description'),
+  //   dueDate: form.watch('dueDate')?.toString(),
+  //   imageUrl: form.watch('imageUrl'),
+  //   tags: form.watch('tags'),
+  // });
+
+  // const router = useRouter();
+  // const handleReload = () => {
+  //   router.reload();
+  // };
 
   const handleCancel = () => {
     form.reset();
@@ -74,10 +85,11 @@ export function CreateCardModal({ onChange, toggleModal, dashboardId, columnId }
   };
 
   const onSubmit = async () => {
-    await postCard();
+    const response = await postCard(cardData);
+    const card = response?.data;
     handleCancel();
-    // onChange(data);
-    handleReload();
+    onChange(card);
+    // handleReload();
   };
 
   return (

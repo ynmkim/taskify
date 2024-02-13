@@ -34,7 +34,7 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({dashboards, onChange}
           </div>
         </div>
         <ul className="px-3 flex flex-col gap-[3px] justify-center">
-          {dashboards.map((data) => <MenuItem key={data.id} link={data.id} createdByMe={data.createdByMe} color={data.color}>{data.title}</MenuItem>)}
+          {dashboards?.map((data) => <MenuItem key={data.id} link={data.id} createdByMe={data.createdByMe} color={data.color}>{data.title}</MenuItem>)}
         </ul>
         <div ref={ref}></div>
       </div>
