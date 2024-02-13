@@ -2,14 +2,17 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { AuthInputType, SignUpFormData } from '@/../type';
+import { AuthInputType, SignUpFormData } from '@/types/AuthType';
 import AuthInput from '@/components/auth/input/AuthInput';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { useForm, useWatch } from 'react-hook-form';
-import useSignUp from '@/hooks/useSignUp';
+import fetchSignUp from '@/api/fetchSignUp';
+import useCheckLogIn from '@/hooks/useCheckLogIn';
 
 export default function SignUp() {
+  useCheckLogIn();
+
   const [isChecked, setIsChecked] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
@@ -39,7 +42,7 @@ export default function SignUp() {
 
   const router = useRouter();
 
-  const signUp = useSignUp();
+  const signUp = fetchSignUp();
 
   const handleSignUp = async (data: SignUpFormData) => {
     const signUpResult = await signUp(data);
@@ -67,7 +70,6 @@ export default function SignUp() {
 
   useEffect(() => {
     setIsActive(isValid && agreement ? true : false);
-    // console.log(isValid, agreement, isActive);
   }, [isValid, agreement, isActive]);
 
   return (

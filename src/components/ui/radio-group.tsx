@@ -2,13 +2,13 @@ import * as React from 'react';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/libs/utils';
-import Image from 'next/image';
+import { FaCheck } from 'react-icons/fa6';
 
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
->(({ className, ...props }, ref) => {
-  return <RadioGroupPrimitive.Root className={cn('grid gap-2.5', className)} {...props} ref={ref} />;
+  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root> & { type?: string }
+>(({ className, type, ...props }, ref) => {
+  return <RadioGroupPrimitive.Root className={cn(type === 'boardEdit' ? 'grid gap-0 lg:gap-2.5 md:gap-2.5' : 'grid gap-2.5', className)} {...props} ref={ref} />;
 });
 RadioGroup.displayName = RadioGroupPrimitive.Root.displayName;
 
@@ -36,9 +36,7 @@ const RadioGroupItem = React.forwardRef<React.ElementRef<typeof RadioGroupPrimit
     return (
       <RadioGroupPrimitive.Item ref={ref} className={cn(radioGroupItemVariants({ color }), className)} {...props}>
         <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-          <div className="relative w-[22px] h-[22px] md:w-[24px] md:h-[24px]">
-            <Image src="/check.svg" alt="선택됨" className="w-full h-full" layout="fill" objectFit="cover" />
-          </div>
+          <FaCheck className=" w-[18px] h-[18px] md:w-5 md:h-5 text-white" aria-label='선택됨'/>
         </RadioGroupPrimitive.Indicator>
       </RadioGroupPrimitive.Item>
     );

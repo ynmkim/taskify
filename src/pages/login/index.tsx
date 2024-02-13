@@ -1,29 +1,36 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { AuthInputType, LoginFormData } from '@/../type';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import fetchLogin from '@/api/fetchLogin';
+import LocalStorage from '@/libs/localstorage';
+import { AuthInputType, LoginFormData } from '@/types/AuthType';
 import AuthInput from '@/components/auth/input/AuthInput';
 import { Button } from '@/components/ui/button';
-import { useForm } from 'react-hook-form';
-import useLogin from '@/hooks/useLogin';
-import { useRouter } from 'next/router';
+import useCheckLogIn from '@/hooks/useCheckLogIn';
 
-export default function SignUp() {
+export default function LogIn() {
+  useCheckLogIn();
+
   const {
     register,
-    formState: { errors },
+    formState: { isValid, errors },
     handleSubmit,
   } = useForm<LoginFormData>({ mode: 'onBlur' });
 
   const router = useRouter();
 
-  const logIn = useLogin();
+  const logIn = fetchLogin();
 
   const handleLogin = async (data: LoginFormData) => {
     const loginResult = await logIn(data);
 
     if (typeof loginResult === 'object') {
-      const acceesToken = loginResult.data.accessToken;
+      const accessToken = loginResult.data.accessToken;
       const userData = loginResult.data.user;
+
+      document.cookie = `accessToken = ${accessToken}`;
+      LocalStorage.setItem('userData', JSON.stringify(userData));
 
       router.push('/mydashboard');
     } else if (typeof loginResult === 'string') {
@@ -82,7 +89,9 @@ export default function SignUp() {
             )}
           </div>
 
-          <Button className="mt-5 w-full bg-gray-9FA6B2 text-lg text-white font-medium py-3 hover:bg-violet-5534DA">
+          <Button
+            className={`mt-5 w-full text-lg text-white font-medium py-3 hover:bg-violet-5534DA ${isValid ? 'bg-violet-5534DA' : 'bg-gray-9FA6B2'}`}
+          >
             로그인
           </Button>
         </form>

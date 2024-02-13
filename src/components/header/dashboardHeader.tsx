@@ -1,100 +1,127 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown';
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
 import GroupAvatar from '@/components/ui/avatarGroup';
-import { FaCrown } from "react-icons/fa";
-import { MdOutlineSettings } from "react-icons/md";
-import { FaRegSquarePlus } from "react-icons/fa6";
+import { FaCrown } from 'react-icons/fa';
+import { MdOutlineSettings } from 'react-icons/md';
 import { Member } from '@/types/DashboardType';
+import Link from 'next/link';
+import { axiosAuthInstance } from '@/libs/axios';
+import InvitationDialog from '../dialog/InvitationDialog';
+import LocalStorage from '@/libs/localstorage';
+import { getHeader } from '@/libs/network';
+const authInstance = axiosAuthInstance();
 
-// 나중에 api연동하면 삭제될 임시 데이터입니다.
-const userData = {
-  nickname: 'dongbin',
-  profileImageUrl: '',
-};
+const SlotSection = ({ dashboardid, createdByMe }: { dashboardid: number; createdByMe?: boolean }) => {
+  const [members, setMembers] = useState<Member[]>([]);
 
-const members = [
-  {
-    id: 1,
-    userId: 1,
-    email: 'example1@example.com',
-    nickname: 'KimDongbin',
-    profileImageUrl: '',
-    createdAt: '2024-01-25T10:21:46.244Z',
-    updatedAt: '2024-01-25T10:21:46.244Z',
-    isOwner: false,
-  }, {
-    id: 2,
-    userId: 2,
-    email: 'example2@example.com',
-    nickname: '김동빈',
-    profileImageUrl: '',
-    createdAt: '2024-01-25T10:21:46.244Z',
-    updatedAt: '2024-01-25T10:21:46.244Z',
-    isOwner: false,
-  }, {
-    id: 3,
-    userId: 3,
-    email: 'example3@example.com',
-    nickname: 'dongbin',
-    profileImageUrl: '',
-    createdAt: '2024-01-25T10:21:46.244Z',
-    updatedAt: '2024-01-25T10:21:46.244Z',
-    isOwner: false,
-  }, {
-    id: 4,
-    userId: 4,
-    email: 'example3@example.com',
-    nickname: 'lauren',
-    profileImageUrl: '',
-    createdAt: '2024-01-25T10:21:46.244Z',
-    updatedAt: '2024-01-25T10:21:46.244Z',
-    isOwner: false,
-  }, {
-    id: 5,
-    userId: 5,
-    email: 'example3@example.com',
-    nickname: 'Kimdongbin',
-    profileImageUrl: '',
-    createdAt: '2024-01-25T10:21:46.244Z',
-    updatedAt: '2024-01-25T10:21:46.244Z',
-    isOwner: false,
-  }
-];
+  useEffect(() => {
+    if (dashboardid) {
+      const fetchMembers = async () => {
+        try {
+          const response = await authInstance.get(`members?page=1&size=20&dashboardId=${dashboardid}`);
+          const data = response.data;
+          setMembers(data.members);
+        } catch (error) {
+          alert('구성원을 불러오는 데 실패하였습니다.: ' + (error as Error).message);
+        }
+      };
 
-const SlotSection = ({members}:{members:Member[]}) =>{
-  return(
-    <>
-      <nav className="flex flex-row items-center gap-4 mr-10">
-        <Button className='text-gray-787486 flex align-middle gap-2 w-[88px]'>
-          <span><MdOutlineSettings className="w-5 h-5" /></span><span>관리</span>
-        </Button>
-        <Button className='text-gray-787486 flex align-middle gap-2 w-[116px]'>
-          <span><FaRegSquarePlus className="w-5 h-5" /></span><span>초대하기</span>
-        </Button>
-      </nav>
-      <GroupAvatar members={members} totalCount={members.length} />
-      <div className='w-px h-[38px] mx-8 bg-gray-D9D9D9'/>
-    </>
-  )
-};
-
-const DashboardHeader: React.FC<{ columnName: string, type?: string }> = ({ columnName, type }) => {
-  const isDashboard = type === 'myDashboard';
-
-  const getTitle = () => (isDashboard ? '내 대시보드' : columnName);
+      fetchMembers();
+    }
+  }, [dashboardid]);
 
   return (
-    <header className='w-full pl-10 pr-20 bg-white border-b border-gray-D9D9D9'>
+    <>
+      <nav className="flex flex-row items-center gap-4 mr-10">
+        {createdByMe && (
+          <Link href={`/dashboard/${dashboardid}/edit`}>
+            <Button className="text-gray-787486 flex align-middle gap-2 w-[50px] lg:w-[88px] md:w-[88px]">
+              <span>
+                <MdOutlineSettings className="w-0 lg:w-5 md:w-5 h-5" />
+              </span>
+              <span>관리</span>
+            </Button>
+          </Link>
+        )}
+        <InvitationDialog dashboardid={dashboardid} />
+      </nav>
+      <GroupAvatar dashboardid={dashboardid} />
+      <div className="w-[1px] h-[38px] mx-8 bg-[#d9d9d9]" />
+    </>
+  );
+};
+
+const DashboardHeader: React.FC<{
+  dashboardName: string;
+  type?: string;
+  createdByMe?: boolean;
+  dashboardid?: number;
+}> = ({ dashboardName, type, createdByMe, dashboardid }) => {
+  const isDashboard = type === 'myDashboard';
+  const [userData, setUserData] = useState<{ nickname: string; profileImageUrl: string }>({
+    nickname: '',
+    profileImageUrl: '',
+  });
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await authInstance.get('users/me', {
+          headers:getHeader()
+        });
+        const data = await response.data;
+        setUserData(data);
+      } catch (error) {
+        alert('Error fetching user data: ' + (error as Error).message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const getTitle = () => (isDashboard ? '내 대시보드' : dashboardName);
+
+  const handleLogOut = () => {
+    document.cookie = 'accessToken' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    LocalStorage.removeItem('userData');
+
+    router.push('/');
+  };
+
+  return (
+    <header className="header-size h-[70px] pl-10 pr-5 lg:pr-20 md:pr-10 bg-white border-b border-gray-D9D9D9">
       <div className="flex flex-row items-center justify-between h-[70px]">
-        <div className="flex items-center font-bold text-xl gap-2">
-          {getTitle()}
-          {!isDashboard && <FaCrown className="w-5 h-4" fill="#FDD446"/>}
-        </div>
-        <div className='flex flex-row items-center'>
-          {!isDashboard && <SlotSection members={members}/>}
-          <Avatar {...userData} />
-          <span className="ml-3 font-medium text-base">{userData.nickname}</span>
+        {isDashboard && <div className="flex min-w-fit items-center font-bold text-xl gap-2">{getTitle()}</div>}
+        {!isDashboard && (
+          <div className="hidden min-w-fit lg:flex items-center font-bold text-xl gap-2 lg:w-[98px]">
+            {getTitle()}
+            {createdByMe && <FaCrown className="w-5 h-4" fill="#FDD446" />}
+          </div>
+        )}
+        <div className="flex flex-row items-center">
+          {dashboardid ? <SlotSection dashboardid={dashboardid} createdByMe={createdByMe} /> : null}
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex flex-row items-center min-w-fit">
+              <Avatar size="lg" {...userData} />
+              <span className="invisible lg:visible min-w-fit md:visible ml-3 font-medium text-base">{userData.nickname}</span>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <div onClick={handleLogOut}>
+                <DropdownMenuItem>로그아웃</DropdownMenuItem>
+              </div>
+              <Link href={`/mypage`}>
+                <DropdownMenuItem>내 정보</DropdownMenuItem>
+              </Link>
+              <Link href={`/mydashboard`}>
+                <DropdownMenuItem>내 대시보드</DropdownMenuItem>
+              </Link>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>
