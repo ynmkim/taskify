@@ -70,7 +70,6 @@ export default function SignUp() {
 
   useEffect(() => {
     setIsActive(isValid && agreement ? true : false);
-    // console.log(isValid, agreement, isActive);
   }, [isValid, agreement, isActive]);
 
   return (

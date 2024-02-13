@@ -46,11 +46,9 @@ export default function InvitedCard(initialInvitationData: InvitationData) {
               if (res) {
                 setInvitationList((prev) => [...prev, ...res.invitations]);
                 setCursorId(res.cursorId);
-                // console.log('추가된 invitations:', res.invitations, '새로운 cursorId:', res.cursorId);
               }
             })
             .catch((error) => {
-              console.log(error);
               throw new Error(error);
             });
         }

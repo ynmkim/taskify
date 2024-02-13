@@ -1,12 +1,26 @@
-import AddTodoDialog from "@/components/dialog/AddTodoDialog";
-import ModifyColumnDialog from "@/components/dialog/ModifyColumnDialog";
-import TodoCardDialog from "@/components/dialog/TodoCardDialog";
-import { Badge } from "@/components/ui/badge";
-import { deleteCard, getCard, getMoreCard } from "@/libs/network";
-import { Card } from "@/types/DashboardType";
-import { useEffect, useState, useRef } from "react";
+import AddTodoDialog from '@/components/dialog/AddTodoDialog';
+import ModifyColumnDialog from '@/components/dialog/ModifyColumnDialog';
+import TodoCardDialog from '@/components/dialog/TodoCardDialog';
+import { Badge } from '@/components/ui/badge';
+import { deleteCard, getCard, getMoreCard } from '@/libs/network';
+import { Card, ColumnType } from '@/types/DashboardType';
+import { useEffect, useState, useRef } from 'react';
 
-const Column = ({title, id, onChange}:{title:string, id:number, onChange:(columnId:number)=>void}) => {
+const Column = ({
+  title,
+  id,
+  onChange,
+  dashboardid,
+  column,
+  columns,
+}: {
+  title: string;
+  id: number;
+  onChange: (columnId: number) => void;
+  dashboardid: number;
+  column: ColumnType;
+  columns: ColumnType[];
+}) => {
   const [cards, setCards] = useState<Card[]>([]);
   const observerRef = useRef<HTMLDivElement | null>(null);
   const [cursorId, setCursorId] = useState(0);
@@ -15,30 +29,29 @@ const Column = ({title, id, onChange}:{title:string, id:number, onChange:(column
   const [columnTitle, setColumnTitle] = useState(title);
 
   useEffect(() => {
-    const getCardData = async() => {
-      try{
-        if(page === 1) {
+    const getCardData = async () => {
+      try {
+        if (page === 1) {
           const cardData = await getCard(id);
-          if(cardData){
+          if (cardData) {
             setCards(cardData.data.cards);
             setCursorId(cardData.data.cursorId);
             totalCount.current = cardData.data.totalCount;
           }
         } else {
           const cardData = await getMoreCard(id, cursorId);
-          if(cardData){
-            setCards((prev) => [...prev, ...cardData.data.cards])
+          if (cardData) {
+            setCards((prev) => [...prev, ...cardData.data.cards]);
             setCursorId(cardData.data.cursorId);
             totalCount.current = cardData.data.totalCount;
           }
         }
-      } catch(error) {
+      } catch (error) {
         alert(error);
       }
     };
-
     getCardData();
-  },[id, page]);
+  }, [id, page]);
 
   useEffect(() => {
     const options = {
@@ -50,7 +63,7 @@ const Column = ({title, id, onChange}:{title:string, id:number, onChange:(column
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting && cards.length < totalCount.current) {
-          setPage(prev => prev + 1)
+          setPage((prev) => prev + 1);
         }
       });
     };
@@ -64,16 +77,21 @@ const Column = ({title, id, onChange}:{title:string, id:number, onChange:(column
     };
   }, [totalCount, cards.length]);
 
-  const handleDeleteTodoCard = async (cardId:number) => {
+  const handleDeleteTodoCard = async (cardId: number) => {
     await deleteCard(cardId);
+    totalCount.current -= 1;
     setCards((prevs) => prevs.filter((prev) => prev.id !== cardId));
   };
 
-  const handleChangeColumnTitle = (value:string) => {
+  const handleChangeColumnTitle = (value: string) => {
     setColumnTitle(value);
   };
 
-  return(
+  const handleChangeCard = (card: Card) => {
+    setCards((prev) => [...prev, card]);
+  };
+
+  return (
     <div className="flex flex-col bg-gray-FAFAFA gap-[25px] px-3 pt-[17px] pb-3 md:px-5 md:pb-5 md:pt-[22px] border-b lg:border-r lg:border-b-0 lg:min-h-screen border-gray-EEEEEE">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
@@ -84,16 +102,30 @@ const Column = ({title, id, onChange}:{title:string, id:number, onChange:(column
           </div>
         </div>
         <div>
-          <ModifyColumnDialog columnId={id} title={columnTitle} onChange={handleChangeColumnTitle} onChangeColumn={onChange}/>
+          <ModifyColumnDialog
+            columnId={id}
+            title={columnTitle}
+            onChange={handleChangeColumnTitle}
+            onChangeColumn={onChange}
+          />
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <AddTodoDialog />
-        {cards?.map((card) => <TodoCardDialog key={card.id} card={card} columnTitle={columnTitle} onClick={handleDeleteTodoCard}/>)}
+        <AddTodoDialog onChange={handleChangeCard} dashboardId={dashboardid} columnId={column?.id} />
+        {cards?.map((card) => (
+          <TodoCardDialog
+            key={card.id}
+            column={column}
+            columns={columns}
+            card={card}
+            columnTitle={columnTitle}
+            onClick={handleDeleteTodoCard}
+          />
+        ))}
         <div ref={observerRef}></div>
       </div>
     </div>
-  )
+  );
 };
 
 export default Column;

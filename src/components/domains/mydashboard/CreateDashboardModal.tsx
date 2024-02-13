@@ -14,7 +14,7 @@ interface FormFields {
   color: string;
 }
 
-export default function CreateDashboardModal({onChange}:{onChange?:(dashboard:Dashboard) => void}) {
+export default function CreateDashboardModal({onChange, onToggle}:{onChange?:(dashboard:Dashboard) => void, onToggle:() => void}) {
   const {
     register,
     reset,
@@ -33,11 +33,12 @@ export default function CreateDashboardModal({onChange}:{onChange?:(dashboard:Da
 
   const onSubmit = async ({ title, color }: FormFields) => {
     const data = { title, color };
-    if(onChange){
-      try{
+    if (onChange) {
+      try {
         const dashboard = await postDashboard(data);
         onChange(dashboard)
-        router.push(`dashboard/${dashboard.id}`);
+        onToggle();
+        router.push(`/dashboard/${dashboard.id}`);
       } catch(error){
         alert(error)
       } finally {
@@ -47,7 +48,7 @@ export default function CreateDashboardModal({onChange}:{onChange?:(dashboard:Da
   };
 
   return (
-    <div className="w-[540px] py-7 px-5 md:pt-8 md:pb-7 md:px-7 rounded-lg bg-white">
+    <div className="md:w-[540px] py-7 px-5 md:pt-8 md:pb-7 md:px-7 rounded-lg bg-white">
       <CardTitle className="mb-6 md:mb-8">새로운 대시보드</CardTitle>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-2.5 md:gap-3 mb-6 md:mb-7">
@@ -71,19 +72,17 @@ export default function CreateDashboardModal({onChange}:{onChange?:(dashboard:Da
           }}
         />
 
-        <div className="flex justify-between md:justify-end gap-[11px] md:gap-3">
-          <DialogClose>
-            <div className='inline-flex items-center justify-center px-14 py-[12px] lg:px-[46px] lg:py-[14px] text-gray-787486 text-[14px] lg:text-[16px] whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50'
+        <div className="flex flex-1 justify-between md:justify-end gap-[11px] md:gap-3">
+          <DialogClose onClick={onToggle} className='inline-flex items-center justify-center w-full md:w-[120px] h-[46px] px-14 py-[12px] lg:px-[46px] lg:py-[14px] text-gray-787486 text-[14px] lg:text-[16px] whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-D9D9D9'
             >
-                취소
-            </div>
+              <span>취소</span>
           </DialogClose>
           <Button
             type="submit"
             variant="violet"
             size="modal"
             text="modal"
-            className="flex-1 h-[42px]"
+            className="w-full md:w-[120px] h-[46px]"
             disabled={!isDirty}
           >
             생성
