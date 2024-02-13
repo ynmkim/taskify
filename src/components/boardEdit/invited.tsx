@@ -56,7 +56,7 @@ const Invited: React.FC<InvitedProps> = ({ dashboardid }) => {
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
-  
+
   const fetchData = async () => {
     try {
       if (dashboardid) {
@@ -67,7 +67,7 @@ const Invited: React.FC<InvitedProps> = ({ dashboardid }) => {
         localStorage.setItem('invitations', JSON.stringify(responseData.invitations));
       }
     } catch (error) {
-      alert('Error fetching invitations: ' + (error as Error).message);
+      alert('초대 정보를 불러오는 중 오류가 발생했습니다: ' + (error as Error).message);
     }
   };
 
@@ -76,9 +76,9 @@ const Invited: React.FC<InvitedProps> = ({ dashboardid }) => {
     if (storedInvitations) {
       setInvitations(JSON.parse(storedInvitations));
     }
-  
+
     fetchData();
-  }, []);
+  }, [currentPage, dashboardid]);
 
   const handleInviteSuccess = () => {
     fetchData();
