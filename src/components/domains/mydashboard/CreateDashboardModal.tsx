@@ -33,8 +33,8 @@ export default function CreateDashboardModal({onChange, onToggle}:{onChange?:(da
 
   const onSubmit = async ({ title, color }: FormFields) => {
     const data = { title, color };
-    if(onChange){
-      try{
+    if (onChange) {
+      try {
         const dashboard = await postDashboard(data);
         onChange(dashboard)
         onToggle();

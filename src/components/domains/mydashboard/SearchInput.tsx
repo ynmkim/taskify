@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { cn } from '@/libs/utils';
-import Image from 'next/image';
+import { IoIosSearch } from 'react-icons/io';
 
 export interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
@@ -9,9 +9,7 @@ export interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputEle
 const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(({ className, ...props }, ref) => {
   return (
     <div className={cn('relative h-10', className)}>
-      <div className="absolute top-1/2 left-3 md:left-4 -translate-y-1/2 w-[22px] h-[22px] md:w-6 md:h-6">
-        <Image fill src="/search.svg" alt="" className="object-cover" />
-      </div>
+      <IoIosSearch className="absolute top-1/2 left-3 md:left-4 -translate-y-1/2 w-[18] h-[18px] md:w-5 md:h-5" />
       <input
         type="text"
         className={cn(

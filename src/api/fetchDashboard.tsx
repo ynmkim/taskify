@@ -1,7 +1,7 @@
 import { instance as axios } from '@/libs/axios';
 import { parse } from 'cookie';
 
-export async function getDashboards(navigationMethod: string, size?: number, page?:number) {
+export async function getDashboards(navigationMethod: string, size?: number, page?: number) {
   const cookies = parse(document.cookie);
   const accessToken = cookies.accessToken;
 
@@ -40,7 +40,8 @@ export async function postDashboard(data: { title: string; color: string }) {
     return res.data;
   } catch (error) {
     if (error instanceof Error) {
-      console.log(error.message);
+      const errorMessage = error.message;
+      throw new Error(errorMessage);
     }
   }
 }
