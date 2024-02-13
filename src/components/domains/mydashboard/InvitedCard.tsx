@@ -32,6 +32,7 @@ export default function InvitedCard(initialInvitationData: InvitationData) {
     replyInvitation(invitationId, inviteAccepted).then(() => {
       setInvitationList((prev) => {
         return prev.filter((e) => e.id !== invitationId);
+
       });
     });
   };
