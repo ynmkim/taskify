@@ -71,10 +71,8 @@
 ### 대시보드 페이지
 #### 일정
 - 각 대시보드 페이지에서 일정들을 추가, 수정, 삭제할 수 있습니다. 제목과 설명은 필수로 기입을 해주어야 하며 담당자, 마감일, 태그, 이미지는 필요에 따라서 추가를 해주면 됩니다. 
-  - 할 일 생성
-<img src="https://github.com/Codeit-part3-team10/Tasky/assets/127473357/26d86018-c145-44ed-bec9-3cf41f5c2b5f" width="200" height="400"/>
-  - 할 일 수정
-<img src="https://github.com/Codeit-part3-team10/Tasky/assets/51733830/daa1c198-8152-4005-9ba3-b53de6db7db6" />
+  - 할 일 생성, 수정
+   - <img src="https://github.com/Codeit-part3-team10/Tasky/assets/127473357/24e85929-ea51-41b6-aac4-0c1236119905" width="300" height="500"/> <img src="https://github.com/Codeit-part3-team10/Tasky/assets/51733830/daa1c198-8152-4005-9ba3-b53de6db7db6" width="300" height="500"/>
 
 #### 대시보드(이해빈)
 - 각 대시보드에 있는 일정들을 칸반보드의 형태로 보여주는 페이지입니다. 옆에 사이드바를 통해 내가 원하는 대시보드로 이동할 수 있습니다. 일정들은 상태(카테고리)별로 나뉘어져 있으며 각 상태들은 수정, 삭제할 수 있습니다. 대시보드를 생성할 경우 To Do, In Progress, Done 이 3개의 상태는 기본적으로 생성됩니다. 기본적으로 생성되는 상태들도 수정, 삭제가 가능하며 원하면 새로운 상태를 생성할 수도 있습니다. 다만, 상태는 총 10개까지 생성 가능하며 각 상태별로 보이는 일정들은 무한스크롤로 구현되어 있습니다.
