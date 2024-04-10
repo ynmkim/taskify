@@ -70,6 +70,9 @@
 
 ### 대시보드 페이지
 #### 일정
+할 일 생성
+![image](https://github.com/Codeit-part3-team10/Tasky/assets/127473357/c94c1d63-843b-4fb2-92b3-b2d63fac555a)
+할 일 수정
 
 #### 대시보드
 
