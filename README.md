@@ -71,7 +71,7 @@
 ### 대시보드 페이지
 #### 일정
 #### 할 일 생성
-<img src="https://github.com/Codeit-part3-team10/Tasky/assets/127473357/1ff7fa0d-ab9f-40bd-bb97-5768897153db width="200" height="400"/>
+<img src="https://github.com/Codeit-part3-team10/Tasky/assets/127473357/26d86018-c145-44ed-bec9-3cf41f5c2b5f width="200" height="400"/>
 
 할 일 수정
 
